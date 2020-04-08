@@ -1,0 +1,71 @@
+.tag {
+    border-radius: 50%;
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+  }
+  
+  .tag-default {
+    background-color: gray;
+  }
+  
+  .tag-success {
+    background-color: green;
+  }
+  
+  .tag-warning {
+    background-color: orange;
+  }
+  
+  .tag-danger {
+    background-color: red;
+  }
+
+  .progressText{
+    display: block;
+    color:#3B4859;
+    text-align: left;
+    padding: 7px 8px;
+    text-decoration: none;
+    font-family: 'Montserrat';
+    font-size: 14px;
+    font-weight: 600;
+    padding-bottom: 3px;
+}
+
+.inputBox {
+    border: 1px solid #C6C9CF;
+    border-radius: 0;
+    color: black;
+    margin-left: 31px;
+    margin-right: 31px;
+    width: 500px;
+    height: 40px;
+    font-family: 'Open Sans';
+  }
+
+  .buttonBox {
+    background-image: linear-gradient(250deg,#0053A9,#1DC4E9);;
+    border-radius: 30px;
+    width: 136px;
+    height: 50px;
+    margin: 2.5%;
+  }
+  
+  .buttonBox:hover {
+    background: #214a80;
+    outline: none;
+  }
+
+   .buttonBox {
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    opacity: 0.9;
+    text-decoration: none;
+  }
+  
+  .buttonBox:active {
+    opacity: 1;
+    text-decoration: none;
+  }

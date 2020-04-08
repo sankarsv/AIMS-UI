@@ -1,0 +1,57 @@
+<div class="login-dark">
+  <form #loginForm="ngForm">
+    <div style="padding-bottom: 30px;"><span class="illustration">Login</span></div>
+    <div class="form-group">
+      <input class="form-control" type="email"  name="email" #emailCtrl="ngModel" placeholder="Email Address"
+        [(ngModel)]="user.userName" [value]="emailCtrl.value" required="true">
+      <!-- pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" -->
+    </div>
+    <div class="form-group">
+      <input class="form-control" type="password" name="password" #passwordCtrl="ngModel" placeholder="Password"
+        [(ngModel)]="user.id" [value]="passwordCtrl.value" required="true">
+    </div>
+
+    <label class="container">
+      <p>Remember Me</p>
+      <input type="checkbox">
+      <span class="checkmark"></span>
+    </label>
+    <div class="form-group">
+      <button class="btn btn-primary btn-block" (click)="submit()" data-toggle="modal"
+        data-target="#ValidationModal">Log In</button>
+    </div>
+    <div class="txt1">
+      Forgot password?
+      <a href="#">
+        <b>Reset</b>
+      </a>
+    </div>
+    <div class="txt1">
+      or just
+      <a href="#">
+        <b>Change Password</b>
+      </a>
+    </div>
+  </form>
+  <div *ngIf="!loginForm.valid" class="modal fade" id="ValidationModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Warning</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p *ngIf="emailCtrl.errors && emailCtrl.errors.required">Email is required</p>
+          <p *ngIf="!(emailCtrl.errors && emailCtrl.errors.required) && emailCtrl.invalid">Email is invalid</p>
+          <p *ngIf="passwordCtrl.errors && passwordCtrl.errors.required">Password is required</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+.home-container{
+  height:100%;
+  width:100%;
+  overflow-y: hidden;
+}
+.listcontainer{
+  width:240px;
+}
+.homeHeading{
+  width: 240px;
+  height: 64px;
+  color: #FFFFFF;
+}
+.headText{
+  width: 120px;
+  height: 22px;
+  size: 18px;
+  text-align: left;
+  color:#3B4859;
+  font-family: 'Montserrat';
+  font-weight: bold;
+}
+
+.closeMenu{
+width: 15.84px;
+height: 13.26px;
+background-image: url('../../../assets/images/CloseMenu.png');
+margin-left: 40px;
+cursor: pointer;
+}
+
+.topBar{
+  width: 100%;
+  height: 64px;
+}
+
+.stroke{
+  width: 21.45px;
+  height: 24px;
+  opacity: 100%;
+  background-image:  url('../../../assets/images/Stroke1.png');
+  cursor: pointer;
+  border: #8998AC;
+  size: 1px;
+}
+.topbarTextApp{
+  width: 30px;
+  height: 18px;
+  font-family: 'Montserrat';
+  text-align: left;
+  color: #8998AC;
+  size: 14px;
+text-align: left;
+}
+.topbarTextNew{
+  width: 32px;
+  height: 18px;
+  font-family: 'Montserrat';
+  text-align: left;
+  color: #8998AC;
+  size: 14px;
+text-align: left;
+}
+.reports{
+  width: 24.4px;
+  height: 23.45px;
+  opacity: 100%;
+  background-image:  url('../../../assets/images/Reports.png');
+  cursor: pointer;
+}
+.topbarTextReports{
+  width: 55px;
+  height: 18px;
+  font-family: 'Montserrat';
+  text-align: left;
+  color: #8998AC;
+  size: 14px;
+  text-align: left;
+}
+.path{
+  width: 22.17px;
+  height: 24px;
+  opacity: 100%;
+  background-image:  url('../../../assets/images/Actions.png');
+  cursor: pointer;
+  border: #8998AC;
+  size: 1px;
+}
+.topbarTextReports{
+  width: 52px;
+  height: 18px;
+  font-family: 'Montserrat';
+  text-align: left;
+  color: #8998AC;
+  size: 14px;
+  text-align: left;
+}
+.search{
+
+  background-image:  url('../../../assets/images/Search.png');
+  cursor: pointer;
+  display: block;
+  padding: 14px 16px;
+  text-decoration: none;
+  background-repeat:no-repeat;
+  margin-left: auto;
+  margin-right: auto;
+  float: right;
+}
+.notification{
+  width: 17.61px;
+  height: 23.96px;
+  opacity: 100%;
+  background-image:  url('../../../assets/images/Notification.png');
+  cursor: pointer;
+}
+.more{
+  float: right;
+  background-image:  url('../../../assets/images/More.png');
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  opacity: 100%;
+  display: block;
+  background-repeat: no-repeat;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+  top:0;
+  right:0;
+}
+.arrow{
+  width: 10px;
+  height: 7.5px;
+  opacity: 100%;
+  background-image:  url('../../../assets/images/arrow.png');
+  cursor: pointer;
+}
+
+
+
+.listheader {
+  display: block;
+  color:#3B4859;
+  padding: 14px 16px;
+  font-family:'Montserrat';
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+  float: left;
+}
+.listheader:before {
+  color:#3B7CFF;
+  content: "AIIMS ";
+  font-family:'Montserrat';
+}
+
+.list a:hover , .list1 a:hover , more a:hover {
+  float: right;
+  background-color: #F0F3F7;
+  color: #3B7CFF;
+}
+
+.dash-container{
+  display: flex;
+}
+
+.main-page{
+  flex-direction: column;
+  max-width: 100%;
+  width: 100%;
+	vertical-align: top;
+}
+.sideBarList a ,.dropdown-btn  {
+  display: block;
+  color:#8998AC;
+  padding: 8px 16px;
+  text-decoration: none;
+  background-color:#F5F8FC;
+  
+}
+
+
+.dropdown-container {
+  display: block;
+  color:#8998AC;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+@media only screen and (max-width: 768px) {
+  .sideBarMenu  {
+    display: block;
+    color:#3B4859;
+    font-family: 'Montserrat';
+    padding: 4px 8px;
+    background-color:white;
+  }
+  .subMenu {
+    display: block;
+    color:#8998AC;
+    padding: 4px 8px;
+  }
+  
+  .sideBarList a.active ,.subMenu  {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .sideBarList a:hover:not(.active) ,.dropdown-btn:hover,.subMenu  {
+    background-color: #F0F3F7;
+    color: #3B7CFF;
+  }
+  .sideBar {
+    flex-direction: column;
+    max-width: 240px;
+    max-height: 700px;
+    background-color:white;
+    cursor: pointer;
+    overflow:fixed;
+  }
+  .topNav{
+    overflow: hidden;
+    background-color:#FFFFFF;
+    max-width:80%;
+    position: relative;	
+  }
+  
+  .list  {
+    float: left;
+    object-fit: cover;
+  }
+  .moreOptions  {
+    float: left;
+    object-fit: cover;
+  }
+  .list1 {
+    float: right;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .list a ,.list1 a , .moreOptions a {
+    display: block;
+    color:#8998AC;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .sideBar {
+    flex-direction: column;
+    width: 240px;
+    height: 700px;
+    background-color:white;
+    cursor: pointer;
+    overflow:auto;
+  }
+  .sideBarMenu  {
+    display: block;
+    color:#3B4859;
+    font-family: 'Montserrat';
+    padding: 8px 16px;
+    text-decoration: none;
+    background-color:white;
+  }
+  .subMenu {
+    display: block;
+    color:#8998AC;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  
+  .sideBarList a.active ,.subMenu  {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .sideBarList a:hover:not(.active) ,.dropdown-btn:hover,.subMenu  {
+    background-color: #F0F3F7;
+    color: #3B7CFF;
+  }
+  .topNav{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color:#FFFFFF;
+    width:80%;
+    position: relative;	
+    margin:0 auto 0 auto;
+    padding: 2px 0px 0px 0px;	
+  }
+  
+  .list {
+    float: left;
+    object-fit: cover;
+  }
+  .list1 {
+    float: right;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .list a ,.list1 a , .more a {
+    display: block;
+    color:#8998AC;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  .moreOptions{
+    display: none;
+  }
+
+}

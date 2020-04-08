@@ -1,0 +1,42 @@
+<div class="topNav">
+  <div class="executiveText" style="float: left; padding-left: 10px; padding-top: 10px;"><a>Employee</a>
+  </div>
+  <div class="executiveText" style="float: right; padding-left: 10px; padding-top: 10px;"><a>{{path}}</a>
+  </div>
+</div>
+<div id="tabs" #tabs>
+
+  <ul class="nav nav-pills">
+      <li class="nav-item" >
+          <a class="nav-link active" href="#search" [ngClass]="{ 'active':activeTab==='search'}"  (click)="searchcomponent()"
+             data-toggle="tab">Search</a>
+        </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="#upload" [ngClass]="{ 'active':activeTab==='upload'}"  (click)="uploadcomponent()"
+         data-toggle="tab">Upload</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#download" [ngClass]="{ 'active':activeTab==='download'}" data-toggle="tab" (click)="Downloadcomponent()"
+         >Download</a>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+      <div class="tab-pane" id="search"  [ngClass]="{ 'active':activeTab==='search'}" >
+          <div >
+              <app-search></app-search>
+          </div>
+      </div>
+    <div class="tab-pane" id="upload"  [ngClass]="{ 'active':activeTab==='upload'}">
+        <div *ngIf= 'loadupload'>
+            <app-upload (onCompleteItem)="onCompleteItem($event)"></app-upload>
+        </div>
+    </div>
+    <div class="tab-pane" id="download"  [ngClass]="{ 'active':activeTab==='download'}">
+    <div *ngIf= 'loaddownload'>
+        <app-download></app-download>
+    </div>
+  </div>
+  </div>
+
+</div>

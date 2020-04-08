@@ -1,0 +1,96 @@
+ .topNav{
+    height: 48px;
+    background-color: #EFF2F7;
+}
+.executiveText{
+    display: block;
+    color:#8998AC;
+    text-align: center;
+    padding: 14px 16px;
+}
+.tab {
+    height: 48px;
+    background-color: white;
+    width: 100%;
+    max-width: 100%;
+      overflow: hidden;
+      background-color: white;
+  }
+  .tablinks{
+    width: 33.3%;
+    max-width: 100%;
+  }
+  
+  .tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    display: block;
+    color:#8998AC;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+  
+  .tab button:hover {
+    background-color: #ddd;
+  }
+
+  .tab button#Search:visited
+  {
+    background-color: #ddd;
+  }
+ .tab button#Search:focus
+  {
+    background-color: #ddd;
+  }
+  .tab button#Upload:visited
+  {
+    background-color: #ddd;
+  }
+ .tab button#Upload:focus
+  {
+    background-color: #ddd;
+  }
+  .tab button#Download:visited
+  {
+    background-color: #ddd;
+  }
+ .tab button#Download:focus
+  {
+    background-color: #ddd;
+  }
+  
+  .tab button.active {
+    border-bottom: 2px solid blue;
+  }
+  
+  .tablinks:focus {border-bottom:1.5px solid blue;}
+
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    flex-direction: column;
+    max-width: 100%;
+    width: 100%;
+    vertical-align: top;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .topNav{
+      height: 48px;
+      background-color: #EFF2F7;
+  }
+  }
+  @media only screen and (min-width: 1200px) {
+    .topNav{
+      height: 48px;
+      background-color: #EFF2F7;
+  }
+  }

@@ -1,0 +1,103 @@
+
+   <div class="navbar-expand">
+    <div class="topNav">
+      <div class="executiveText" style="float: left; padding-left: 10px; padding-top: 10px;"><a>Executive</a>
+      </div>
+      <div class="executiveText" style="float: right; padding-left: 10px; padding-top: 10px;"><a>Home > Dashboard >
+          Executive</a>
+      </div>
+    </div>
+  </div>
+  <div class="grid-container">
+    <div class="item1">
+      <div class="progressBox">
+
+        <div class="progressText">Total Associates</div>
+        <progress max="150"
+          value="{{associatesDetails.totalAssociates}}">{{associatesDetails.totalAssociates }}</progress>
+        <div class="expansionText"><a><span class="attritationnumber">{{associatesDetails.totalAssociates }}</span>
+            (Compliance: {{associatesDetails.totalAssociates}})
+          </a></div>
+
+        <div class="progressText">Monthly Active Billable (MAB)</div>
+        <progress class="monthlyactiveBill" max="150"
+          value="{{associatesDetails.monthlyActiveBillable}}">{{associatesDetails.monthlyActiveBillable}}</progress>
+        <div class="expansionText"><a><span class="attritationnumber">{{associatesDetails.monthlyActiveBillable}}</span>
+          </a></div>
+        <div class="progressText">Active Access Tokens</div>
+        <progress class="activeTokes" max="150"
+          value="{{associatesDetails.activeAccessTokens}}">{{associatesDetails.activeAccessTokens}}</progress>
+        <div class="expansionText"><a><span class="attritationnumber">{{associatesDetails.activeAccessTokens}}</span>
+          </a></div>
+        <div class="progressText">Issues Outstanding</div>
+        <progress class="issuesOutstanding" max="150"
+          value="{{associatesDetails.issuesOutstanding}}">{{associatesDetails.issuesOutstanding}}</progress>
+        <div class="expansionText"><a><span class="attritationnumber">{{associatesDetails.issuesOutstanding}}</span>
+          </a></div>
+      </div>
+    </div>
+    <div class="item2">
+      <div class="accountSpending">
+        <div class="progressText">Account Spending (This Year)</div>
+        <div class="expansionText"><a>Total spendings this year and their projections on each month</a></div>
+        <canvas style="max-height: 100% ; max-width: 100%;" basechart height="350" id="accountSpending"></canvas>
+      </div>
+    </div>
+    <div class="item3">
+      <div class="accountMonthlyGrow">
+        <div class="progressText">Account & Monthly Growth</div>
+        <canvas style="max-height: 100% ; max-width: 100%;" basechart width="700" height="300"
+          id="accountMonthlyGrow"></canvas>
+      </div>
+    </div>
+    <div class="item4">
+      <div class="fianceMonitoring">
+        <div class="progressText">Finance Monitoring</div>
+        <canvas style="max-height: 100% ; max-width: 100%;" basechart width="580" height="240"
+          id="financeMonitoring"></canvas>
+      </div>
+    </div>
+    <div class="item6">
+      <div class="requirementsBox">
+        <div class="progressText">Requirements</div>
+        <div class="center" >
+          <circle-progress [lazy] = "false" [percent]="ltsReq" [radius]="70" [outerStrokeWidth]="8" [innerStrokeWidth]="5"
+            [outerStrokeColor]="'#39579A'" [innerStrokeColor]="'#707070'" [showSubtitle]="false" [showUnits]="true"
+            [imageSrc]="'../../../assets/images/Icon.png'" [imageHeight]="30" [imageWidth]="30" [showImage]="true">
+          </circle-progress>
+        </div>
+        <div class="center">
+          <circle-progress [lazy] = "false" [percent]="clientReq" [radius]="70" [outerStrokeWidth]="8" [innerStrokeWidth]="5"
+            [outerStrokeColor]="'#77EFB7'" [innerStrokeColor]="'#707070'" [showSubtitle]="false" [showUnits]="false"
+            [imageSrc]="'../../../assets/images/Icon-1.png'" [imageHeight]="30" [imageWidth]="30" [showImage]="true">
+          </circle-progress>
+        </div>
+        <div style="border-left: 4px solid #39579A;">
+          <div class="expansionText"><a>Expansion</a></div>
+        </div>
+        <div style="border-left: 4px solid #77EFB7;">
+          <div class="expansionText"><a>New</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="item5">
+      <div class="attriationBox">
+        <div class="expansionHeader"><a> <img src="../../../assets/images/group3.PNG"
+              style="float: left; padding-left: 10px; padding-top: 10px;"></a></div>
+        <div class="expansionHeader"><a>Expansions</a></div>
+        <div class="expansionText"><a>New associates added since last quarter (Q3 FY19)</a></div>
+        <div class="expansionText"><a><span class="expansionnumber">{{expansion[0]}}</span> (Last Month:
+            {{expansion[1]}})</a>
+        </div>
+      </div>
+
+      <div class="attriationBox" style="margin-top: 5px">
+        <div class="expansionHeader"><a> <img src="../../../assets/images/Icon-2.png"
+              style="float: left; padding-left: 10px; padding-top: 10px;"></a></div>
+        <div class="expansionHeader"><a>Attrition</a></div>
+        <div class="expansionText"><a>Associates Initiated seperation since last quarter (Q3 FY19)</a></div>
+        <div class="expansionText"><a><span class="attritationnumber">{{attrition[0]}}</span> (Last Month:
+            {{attrition[1]}})</a></div>
+      </div>
+    </div>
+  </div>

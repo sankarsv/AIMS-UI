@@ -1,0 +1,104 @@
+<div class="topBar">
+      <div class="listcontainer">
+            <div class="listheader">ADMIN</div>
+            <div class="list" (click)="sideNavbar = !sideNavbar"> <a><img
+                              src="../../../assets/images/CloseMenu.png"></a>
+            </div>
+      </div>
+      <div class="topNav">
+            <div class="list"> <a> <img src="../../../assets/images/Stroke1.png"
+                              style="float: left; padding-right: 10px;">
+                        App</a>
+            </div>
+            <div class="moreOptions"><a>More </a></div>
+            <div class="list"><a>New <img src="../../../assets/images/arrow.png"
+                              style="float: right; padding-left: 10px; padding-top: 10px;"></a></div>
+            <div class="list"><a><img src="../../../assets/images/Reports.png"
+                              style="float: left; padding-right: 10px;">Reports<img
+                              src="../../../assets/images/arrow.png"
+                              style="float: right;padding-left: 10px;padding-top: 10px;"></a></div>
+            <div class="list"><a><img src="../../../assets/images/Actions.png"
+                              style="float: left;padding-right: 10px;">Actions<img
+                              src="../../../assets/images/arrow.png"
+                              style="float: right; padding-left: 10px;padding-top: 10px;"></a></div>
+            <div class="list1"> <a> <img src="../../../assets/images/More.png"></a></div>
+            <div class="list1"> <a (click)="logout()"> <img src="../../../assets/images/avatar.PNG"></a></div>
+            <div class="list1"> <a><img src="../../../assets/images/Notification.png"></a></div>
+            <div class="list1"> <a><img src="../../../assets/images/Search.png"></a></div>
+      </div>
+</div>
+<div class="dash-container">
+      <div class="sideBar" *ngIf="!sideNavbar">
+            <div class="sideBarMenu"><a (click)="dashboaardMenus = !dashboaardMenus"><img
+                              src="../../../assets/images/Group.png" style="float: left; padding-right: 20px;"><span
+                              style="cursor: pointer;">Dashboard</span>
+                        <img src="{{ dashboaardMenus ? '../../../assets/images/down.png' : '../../../assets/images/page1.png'}}"
+                              style="float: right; padding-top: 10px;"></a></div>
+            <div class="sideBarList" *ngIf="dashboaardMenus"><a href="#">Associate Analytics</a></div>
+            <div class="sideBarList" *ngIf="dashboaardMenus"><a href="#">Compilance Monitoring</a></div>
+            <div class="sideBarList" *ngIf="dashboaardMenus"><a href="#">Agile Campaign</a></div>
+            <div class="sideBarList" *ngIf="dashboaardMenus"><a href="#">Access Token Reports</a></div>
+            <div class="sideBarList" *ngIf="dashboaardMenus"><a href="#">Billing Management</a></div>
+            <div class="sideBarList" *ngIf="dashboaardMenus"><a href="#">Revenue Monitoring</a></div>
+            <div class="sideBarList" *ngIf="dashboaardMenus"><a href="#">For - Your - Action</a></div>
+            <div class="sideBarList" *ngIf="dashboaardMenus"><a [routerLink]="['./executiveDashboard']">Executive
+                        /
+                        Dashboard</a>
+            </div>
+            <div class="sideBarList" *ngIf="dashboaardMenus"><a href="#">Project Monitoring</a></div>
+            <div class="sideBarList" *ngIf="dashboaardMenus"><a href="#">Leave Management</a></div>
+            <div class="sideBarList" *ngIf="dashboaardMenus"><a href="#">Smart Reports</a></div>
+            <br>
+            <div class="sideBarMenu"><a>COMPONENTS</a></div>
+            <br>
+            <div class="sideBarMenu"><a (click)="projectMenus = !projectMenus"><img
+                              src="../../../assets/images/Base.png"
+                              style="float: left; padding-right: 20px;">Project<img
+                              src="{{ projectMenus ? '../../../assets/images/down.png' : '../../../assets/images/page1.png'}}"
+                              style="float: right;padding-top: 10px;"></a></div>
+            <div class="sideBarList" *ngIf="projectMenus"><a href="#">Allocation</a></div>
+            <div class="sideBarList" *ngIf="projectMenus"><a href="#">Monitoring</a></div>
+            <div class="sideBarList" *ngIf="projectMenus"><a href="#">Utilization</a></div>
+            <div class="sideBarList" *ngIf="projectMenus"><a href="#">Others</a></div>
+
+            <div class="sideBarMenu" *ngIf="isAdmin"><a (click)="adminMenus = !adminMenus"><img
+                              src="../../../assets/images/Base.png" style="float: left; padding-right: 20px;">Admin<img
+                              src="{{ adminMenus ? '../../../assets/images/down.png' : '../../../assets/images/page1.png'}}"
+                              style="float: right;padding-top: 10px;"></a></div>
+            <div class="sideBarList" *ngIf="adminMenus"><a href="#">Roles</a></div>
+            <div class="sideBarList" *ngIf="adminMenus"><a href="#">Privileges</a></div>
+            <div class="sideBarList" *ngIf="adminMenus"><a href="#">Manage User</a></div>
+            <div class="sideBarList" *ngIf="adminMenus"><a href="#">Others</a></div>
+
+            <div class="sideBarMenu"><a (click)="financeMenus = !financeMenus"><img
+                              src="../../../assets/images/Base.png"
+                              style="float: left; padding-right: 20px;">Finance<img
+                              src="{{ financeMenus ? '../../../assets/images/down.png' : '../../../assets/images/page1.png'}}"
+                              style="float: right;padding-top: 10px;"></a></div>
+            <div class="sideBarList" *ngIf="financeMenus"><a href="#">Dashboard</a></div>
+            <div class="sideBarList" *ngIf="financeMenus"><a href="#">Others</a></div>
+
+            <div class="sideBarMenu"><a (click)="employeeMenus = !employeeMenus"><img
+                              src="../../../assets/images/Base.png"
+                              style="float: left; padding-right: 20px;">Employee<img
+                              src="{{ financeMenus ? '../../../assets/images/down.png' : '../../../assets/images/page1.png'}}"
+                              style="float: right;padding-top: 10px;"></a></div>
+            <div class="sideBarList" *ngIf="employeeMenus">
+                  <a routerLink="/employee/homesearch"  >Search</a>
+            </div>
+            <div class="sideBarList" *ngIf="employeeMenus"><a href="#">Others</a></div>
+
+            <div class="sideBarMenu"><a (click)="reportsMenus = !reportsMenus"><img
+                              src="../../../assets/images/Base.png"
+                              style="float: left; padding-right: 20px;">Reports<img
+                              src="{{ reportsMenus ? '../../../assets/images/down.png' : '../../../assets/images/page1.png'}}"
+                              style="float: right;padding-top: 10px;"></a></div>
+            <div class="sideBarList" *ngIf="reportsMenus"><a href="#">Download</a></div>
+            <div class="sideBarList" *ngIf="reportsMenus"><a href="#">Exports</a></div>
+            <div class="sideBarList" *ngIf="reportsMenus"><a href="#">OThers</a></div>
+      </div>
+      <div class="main-page">
+            <router-outlet></router-outlet>
+      </div>
+
+</div>
