@@ -1,2 +1,0 @@
-# AIMS-UI
-AIMS - UI
