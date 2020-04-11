@@ -10,10 +10,11 @@ import { HomeModule } from './home/home.module';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtService } from 'services/jwt.service';
 import { JwtModule } from '@auth0/angular-jwt';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserService } from 'services/user.service';
 import { AuthGuardService } from 'services/auth-guard.service';
 import {httpService } from 'services/httpService';
+import { HttpInterceptorService } from 'services/http-interceptor.service';
 
 
 @NgModule({
@@ -33,12 +34,13 @@ import {httpService } from 'services/httpService';
         tokenGetter: function tokenGetter() {
           return localStorage.getItem('access_token');
         },
-        whitelistedDomains: ['localhost:4200'],
+        whitelistedDomains: [],
       }
     })
 
   ],
-  providers: [JwtService,UserService,AuthGuardService,httpService],
+  providers: [JwtService,UserService,AuthGuardService,httpService,
+  { provide: HTTP_INTERCEPTORS, useClass:HttpInterceptorService, multi: true }],
   bootstrap: [AppComponent],
   exports: []
 })
