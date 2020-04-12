@@ -15,7 +15,7 @@ export class JwtService {
         let data=jwt_decode(token);
         
         user.token = token;
-        user.role = data.roles[0].authority;
+        user.role = data.role;
         console.log(user.role);
         return user;
       }).catch(err => {alert(err.message); return user;}) 
