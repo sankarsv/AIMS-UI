@@ -112,8 +112,8 @@ export class ExecutiveDashboardComponent implements OnInit {
           responsive: true,
           scales: {
             yAxes: [{
-              barThickness: 6,
-              maxBarThickness: 8,
+              // barThickness: 6,
+              // maxBarThickness: 8,
               gridLines: {
                 display: false
               }
@@ -199,8 +199,8 @@ export class ExecutiveDashboardComponent implements OnInit {
               }
             }],
             xAxes: [{
-              barThickness: 6,
-              maxBarThickness: 8,
+              // barThickness: 6,
+              // maxBarThickness: 8,
               stacked: true,
               gridLines: {
                 display: false

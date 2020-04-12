@@ -1,26 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from 'app/Roles/user';
-import { Role } from 'app/Roles/roles';
 import * as jwt_decode from "jwt-decode";
+import { APP_CONSTANTS } from 'app/utils/app-constants';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class JwtService {
   constructor(private httpClient: HttpClient) { }
   login(user: User) :Promise<User>{
-    return this.httpClient.post('/login', user,
-      {
-        headers: { 'Content-Type': 'application/json' },
-        responseType: 'text'
-
-      }).toPromise().then((result: any) => {
-        localStorage.setItem('access_token', result);
-        user.token=result;
-        let data=jwt_decode(result);
-        console.log(data);
+    return this.httpClient.post(APP_CONSTANTS.URL[environment.type].LOGIN, user).toPromise().then((result: any) => {
+        const token = result.token;
+        localStorage.setItem('access_token', token);
+        let data=jwt_decode(token);
         
-        user.token=result;
-        user.role=data.role;
+        user.token = token;
+        user.role = data.roles[0].authority;
+        console.log(user.role);
         return user;
       }).catch(err => {alert(err.message); return user;}) 
 

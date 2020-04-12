@@ -11,11 +11,7 @@ export class httpService {
 
     httpGet(url: string):Promise<void|Object> {
         let token = localStorage.getItem("access_token");
-        return this.httpClient.get("/aims/"+url, {
-            headers: {Authorisation: "Token " +token},
-            responseType: 'text'
-        
-        }).toPromise().then(
+        return this.httpClient.get("/aims/"+url).toPromise().then(
                 (result:any) => {
                        return result;
                 },

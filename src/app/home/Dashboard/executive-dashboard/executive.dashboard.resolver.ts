@@ -13,10 +13,10 @@ export class DashboardResolver implements Resolve<any> {
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
         
             return forkJoin([
-                this.httpService.httpGet("getAssociatesDetails"),
+                /*this.httpService.httpGet("getAssociatesDetails"),
                 this.httpService.httpGet("getAccountGrowth"),
                 this.httpService.httpGet("getFinanceDetails"),
-                this.httpService.httpGet("getAccountSpending")
+                this.httpService.httpGet("getAccountSpending")*/
             ])
         
     };
