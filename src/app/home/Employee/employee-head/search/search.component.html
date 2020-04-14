@@ -1,10 +1,14 @@
 <br>
+
 <div class="progressText">Search By
-  <select class="inputBox" [(ngModel)]="searchBy" (ngModelChange)="SearchBy(searchBy)">
+  <select class="inputBox" [(ngModel)]="searchBy" >
     <option *ngFor="let search of searchByFilters" [ngValue]="search">{{search}} </option>
   </select>
-  <select class="inputBox" [(ngModel)]="searchBySelected" *ngIf="searchBy=='DM' || searchBy=='BRM'">
-    <option *ngFor="let search of searchSelectedFilters" [ngValue]="search">{{search}} </option>
+  <select class="inputBox" [(ngModel)]="searchBySelected" *ngIf="searchBy=='Branch'">
+    <option *ngFor="let search of branch" [ngValue]="search">{{search}} </option>
+  </select>
+  <select class="inputBox" [(ngModel)]="searchBySelected" *ngIf="searchBy=='Type'">
+    <option *ngFor="let search of empType" [ngValue]="search">{{search}} </option>
   </select>
   <input class="inputBox" [(ngModel)]="searchString" *ngIf="searchBy=='Name' ||searchBy=='EmployeeID'">
 </div>
@@ -13,7 +17,5 @@
   <button class="buttonBox" (click)="reset()">Reset</button>
 </div>
 <div *ngIf="showTable">
-  <ng2-smart-table [settings]="settings" [source]="data" (custom)="route($event)" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
-  <button class="buttonBox" style="float: right">Save</button>
-  <button class="buttonBox" style="float: right">Baseline</button>
+  <ng2-smart-table [settings]="settings" [source]="data" (custom)="dataRoute($event)" (edit)="onEdit($event)"></ng2-smart-table>
 </div>

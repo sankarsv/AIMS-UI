@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { JwtService } from 'services/jwt.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'services/user.service';
+import { httpService } from 'services/httpService';
+import { MatDialog } from '@angular/material/dialog';
+import { Inject } from '@angular/core';
+import { MAT_DIALOG_DATA ,MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'app-search',
@@ -9,22 +13,20 @@ import { UserService } from 'services/user.service';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
- // activeTab = 'search';
+  // activeTab = 'search';
   searchBy: String;
   searchBySelected: String;
   searchString: String;
-  searchByFilters = ["Name", "EmployeeID", "DM", "BRM"];
-  searchSelectedFilters = ["Selected1", "Selected2", "Selected3"];
+  searchByFilters = ["Name", "EmployeeID", "Branch", "Type" , "Authorization"];
+  empType = ["Permanent", "Temporary"];
+  branch = ["Chennai", "Bangalore", "Hyderabad", "Pune"];
   settings: any;
-  data: any;
+  data: any[];
   showTable: boolean = false;
-  // loadupload:boolean = false;
-  // loaddownload:boolean =false;
-  // loadsearch:boolean = false;
-  constructor(public jwtService:JwtService,public router:Router,public route: ActivatedRoute, public userService:UserService) { }
+  constructor(public jwtService: JwtService, public router: Router, public route: ActivatedRoute, public userService: UserService, private httpService: httpService, public dialog: MatDialog) { }
 
   ngOnInit() {
-      
+
     this.searchBy = null;
     this.searchBySelected = null;
     this.searchString = null;
@@ -37,7 +39,6 @@ export class SearchComponent implements OnInit {
         { name: 'Edit', title: `<img src="../../../assets/images/editnew.png">` },
         { name: 'Delete', title: `<img src="../../../assets/images/delete.png">` }],
         delete: false,
-
         position: 'right'
       },
       columns: {
@@ -47,56 +48,133 @@ export class SearchComponent implements OnInit {
         name: {
           title: 'Name'
         },
-        portfolio: {
-          title: 'Portfolio'
+        allExp: {
+          title: 'Over All Experience'
         },
-        brm: {
-          title: 'BRM'
+        sdsExp: {
+          title: 'SDS Experience'
         },
-        dm: {
-          title: 'DM'
+        empType: {
+          title: 'Employee Type'
+        },
+        branch: {
+          title: 'Branch'
         }
       },
     };
   }
 
- 
-  submit() {
-    this.showTable = true;
-    this.data = [
-      {
-        id: 678923,
-        name: "Leanne Graham",
-        brm: "Bret",
-        dm: "Sincere@april.biz",
-        portfolio: "Channel"
-      },
-      {
-        id: 267298,
-        name: "Ervin Howell",
-        brm: "Antonette",
-        dm: "Shanna@melissa.tv",
-        portfolio: "CustomerConnect"
-      },
 
-      {
-        id: 310923,
-        name: "Nicholas DuBuque",
-        brm: "Nicholas.Stanton",
-        dm: "Rey.Padberg@rosamond.biz",
-        portfolio: "Ananad"
+  submit() {
+    let response;
+    this.data = [];
+    let tableData;
+    if(this.searchBy =="Authorization"){
+      tableData = "listUnAuth";
+      this.settings["actions"]["custom"] = [{ name: 'Approve', title: 'Approve' }]
+    }else{
+      tableData = "getEmployeeDetails";
+    }
+    this.httpService.httpGet(tableData).then(result => {
+      if (result) {
+        response = JSON.parse(result.toString());
+
+        response.forEach(element => {
+          let key = {
+            id: element["employeeId"],
+            name: element["firstName"],
+            allExp: element["overallExp"],
+            sdsExp: element["sdsExp"],
+            empType: element["employeeType"],
+            branch: element["baseBranch"]
+          }
+          this.data.push(key);
+        });
+
+        this.showTable = true;
       }
-    ];
+    });
+
+
   }
   reset() {
     this.ngOnInit();
   }
-  onDeleteConfirm(event) {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
+
+
+
+
+  dataRoute(event) {
+    console.log(event);
+    switch (event.action) {
+      case 'View':
+        let viewObj = event.data;
+        Object.assign(viewObj, { "dialogType": "View" });
+        const viewdialogRef = this.dialog.open(ViewDialog, { data: viewObj , height:'600px'});
+        break;
+      case 'Edit':
+        let editObj = event.data;
+        Object.assign(editObj, { "dialogType": "Edit" });
+        const editdialogRef = this.dialog.open(ViewDialog, { data: editObj ,height:'600px' } );
+        break;
+      case 'Delete':
+        this.deleteRecord(event.data);
+        break;
+        case 'Approve':
+          this.httpService.httpPost("saveUnAuth",{ "empNo": event.data.id }).then(result =>{
+            if (result) {
+              alert("Record approved successfully");
+            }
+            else{
+              alert("Error in Record approval successfully");
+            }
+          })
     }
   }
+
+  deleteRecord(formData: any) {
+    this.httpService.httpPost("delete", { "empNo": formData.id }).then(result => {
+      if (result) {
+        alert("Record deleted successfully");
+        this.submit();
+      }
+    });
+  }
+
 }
 
+
+
+@Component({
+  selector: 'view-dialog',
+  templateUrl: 'view-dialog.html',
+  styleUrls: ['./search.component.css']
+})
+
+export class ViewDialog {
+  constructor(
+    public dialogRef: MatDialogRef<ViewDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private httpService: httpService
+  ) { }
+  empType = ["Permanent", "Temporary"];
+  branch = ["Chennai", "Bangalore", "Hyderabad", "Pune"];
+  public updatedData:any;
+  ngOnInit() {
+  }
+
+  onCancel(){
+    this.dialogRef.close();
+  }
+
+  onSave(){
+
+    this.httpService.httpPost("update", this.data).then(result => {
+      if (result) {
+        alert("Record updated successfully");
+      }
+    });
+    this.dialogRef.close();
+  }
+
+}

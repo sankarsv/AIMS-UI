@@ -1,0 +1,63 @@
+<h1 mat-dialog-title> {{data.dialogType}} Record </h1>
+<br>
+<hr style="border-top: dotted 3px;"/>
+<mat-dialog-content class="matcontent">
+    <br>
+    <div class="progressText" >Employee ID
+        <input class="inputBox" style="float: right" type="text" name="id" [(ngModel)]="data.id" [disabled]='true'>
+    </div>
+    <br>
+    <div class="progressText">Name
+        <input class="inputBox" style="float: right" type="text" name="name" [(ngModel)]="data.name"
+            [disabled]="data.dialogType=='View'">
+    </div>
+    <br>
+    <div class="progressText">Over All Experience
+        <input class="inputBox" style="float: right" type="text" name="allExp" [(ngModel)]="data.allExp"
+            [disabled]="data.dialogType=='View'">
+    </div>
+    <br>
+    <div class="progressText">SDS Experience
+        <input class="inputBox" style="float: right" type="text" name="sdsExp" [(ngModel)]="data.sdsExp"
+            [disabled]="data.dialogType=='View'">
+    </div>
+    <br>
+    <div class="progressText">Branch
+        <select class="inputBox" style="float: right" [(ngModel)]="data.branch" [disabled]="data.dialogType=='View'">
+            <option *ngFor='let option of branch' [ngValue]="data.branch">{{option}}</option>
+        </select>
+    </div>
+    <br>
+    <div class="progressText">Employee Type
+        <select class="inputBox" style="float: right" [(ngModel)]="data.empType" [disabled]="data.dialogType=='View'">
+            <option *ngFor='let option of empType' [ngValue]="data.empType">{{option}}</option>
+        </select>
+    </div>
+    <br>
+    <div class="progressText">DM Employee Number
+        <input class="inputBox" style="float: right" type="text" name="dmEmpNo" 
+            [disabled]="data.dialogType=='View'">
+    </div>
+    <br>
+    <div class="progressText">DM Employee Number
+        <input class="inputBox" style="float: right" type="text" name="dmEmpNo" 
+            [disabled]="data.dialogType=='View'">
+    </div>
+    <br>
+    <div class="progressText">WON Number
+        <input class="inputBox" style="float: right" type="text" name="WON" 
+            [disabled]="data.dialogType=='View'">
+    </div>
+    <br>
+    <div class="progressText">BRM
+        <input class="inputBox" style="float: right" type="text" name="BRM" 
+            [disabled]="data.dialogType=='View'">
+    </div>
+    <br>
+
+</mat-dialog-content>
+<hr style="border-top: dotted 3px;"/>
+<div mat-dialog-actions align="end">
+    <button class="buttonBox" (click)="onSave()" *ngIf="data.dialogType=='Edit'">Save</button>
+    <button class="buttonBox" (click)="onCancel()">Close</button>
+</div>

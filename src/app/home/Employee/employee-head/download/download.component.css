@@ -1,0 +1,25 @@
+.buttonBox {
+    background-image: linear-gradient(250deg,#0053A9,#1DC4E9);;
+    border-radius: 30px;
+    width: 200px;
+    height: 50px;
+    margin: 2.5%;
+  }
+  
+  .buttonBox:hover {
+    background: #214a80;
+    outline: none;
+  }
+
+   .buttonBox {
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    opacity: 0.9;
+    text-decoration: none;
+  }
+  
+  .buttonBox:active {
+    opacity: 1;
+    text-decoration: none;
+  }
