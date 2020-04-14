@@ -42,12 +42,11 @@ export class FileQueueObject {
 @Injectable()
 export class FileUploaderService {
 
-  public url: string = 'https://jsonplaceholder.typicode.com/posts';
 
   private _queue: BehaviorSubject<FileQueueObject[]>;
   private _files: FileQueueObject[] = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private httpClient: HttpClient) {
     this._queue = <BehaviorSubject<FileQueueObject[]>>new BehaviorSubject(this._files);
   }
 
@@ -105,32 +104,17 @@ export class FileUploaderService {
     const form = new FormData();
     form.append('file', queueObj.file, queueObj.file.name);
 
-    // upload file and report progress
-    const req = new HttpRequest('POST', this.url, form, {
-      reportProgress: true,
-    });
+      let token = localStorage.getItem("token");
+        return this.httpClient.post("aims/upload", {"xlsBytes": queueObj.file.name},
+          {
+            headers: new HttpHeaders().set('Authorization' , 'Bearer ' +token),
+            responseType: 'text'
+    
+          }).toPromise().then((result: any) => {
+            this._uploadComplete(queueObj,result);
+          }).catch(err => this._uploadFailed(queueObj, err)) 
+    
 
-    // upload file and report progress
-    queueObj.request = this.http.request(req).subscribe(
-      (event: any) => {
-        if (event.type === HttpEventType.UploadProgress) {
-          this._uploadProgress(queueObj, event);
-        } else if (event instanceof HttpResponse) {
-          this._uploadComplete(queueObj, event);
-        }
-      },
-      (err: HttpErrorResponse) => {
-        if (err.error instanceof Error) {
-          // A client-side or network error occurred. Handle it accordingly.
-          this._uploadFailed(queueObj, err);
-        } else {
-          // The backend returned an unsuccessful response code.
-          this._uploadFailed(queueObj, err);
-        }
-      }
-    );
-
-    return queueObj;
   }
 
   private _cancel(queueObj: FileQueueObject) {

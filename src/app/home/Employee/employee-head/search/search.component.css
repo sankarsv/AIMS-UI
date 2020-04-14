@@ -16,7 +16,7 @@
     color: black;
     margin-left: 31px;
     margin-right: 31px;
-    width: 500px;
+    width: 400px;
     height: 40px;
     font-family: 'Open Sans';
   }
@@ -46,6 +46,8 @@
     opacity: 1;
     text-decoration: none;
   }
+
+
   /* :host/deep/ table tbody tr:nth-child(odd){
     background: rgb(220,220,220)!important;
   } */
