@@ -15,6 +15,7 @@ import { UserService } from 'services/user.service';
 import { AuthGuardService } from 'services/auth-guard.service';
 import {httpService } from 'services/httpService';
 import { HttpInterceptorService } from 'services/http-interceptor.service';
+import { EmployeeService } from 'services/employee.service';
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import { HttpInterceptorService } from 'services/http-interceptor.service';
     })
 
   ],
-  providers: [JwtService,UserService,AuthGuardService,httpService,
+  providers: [JwtService, UserService, AuthGuardService, httpService, EmployeeService,
   { provide: HTTP_INTERCEPTORS, useClass:HttpInterceptorService, multi: true }],
   bootstrap: [AppComponent],
   exports: []
