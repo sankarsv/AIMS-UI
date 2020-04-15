@@ -57,11 +57,10 @@ export class DownloadComponent implements OnInit {
         });
       }
     });
-    console.log(this.data);
   }
 
   dataRoute(event){
-    this.httpService.exportBaseline("export", { "baseLine": event.data.id }).then(result => {
+    /* this.httpService.exportBaseline("export", { "baseLine": event.data.id }).then(result => {
       if (!result) {
         alert("Error in downloading the report");
       }
@@ -73,18 +72,18 @@ export class DownloadComponent implements OnInit {
         const exportData = window.URL.createObjectURL(fileName);
         window.open(exportData);
       }
-    });
+    }); */
   }
 
   baseLine() {
-    this.httpService.httpPost("genbaseLine", null).then(result =>{
+    /* this.httpService.httpPost("genbaseLine", null).then(result =>{
       if(result){
         alert("Basline Generated");
       }
       else{
         alert("Error in generating the Baseline");
       }
-    });
+    }); */
   }
 
 }

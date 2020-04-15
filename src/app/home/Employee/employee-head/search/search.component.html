@@ -13,7 +13,7 @@
   <button class="buttonBox" (click)="reset()">Reset</button>
 </div>
 <div *ngIf="showTable">
-  <ng2-smart-table [settings]="settings" [source]="dataSearched" (custom)="route($event)" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+  <ng2-smart-table [settings]="settings" [source]="data" (custom)="route($event)" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
   <!-- <button class="buttonBox" style="float: right">Save</button>
   <button class="buttonBox" style="float: right">Baseline</button> -->
 </div>

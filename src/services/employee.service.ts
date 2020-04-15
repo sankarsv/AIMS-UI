@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { APP_CONSTANTS } from 'app/utils/app-constants';
 import { environment } from 'environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { EmployeeDetails } from 'app/interfaces/employee-details-interface';
 
@@ -12,8 +12,10 @@ export class EmployeeService {
 
   constructor(private http:HttpClient) { }
 
-  getEmployeeDetails():Promise<EmployeeDetails[]> {
-    return this.http.get(APP_CONSTANTS.URL[environment.type].SEARCH).toPromise().then(
+  getEmployeeDetails(key, value):Promise<EmployeeDetails[]> {
+    let params = new HttpParams();
+    params = params.append(key, value);
+    return this.http.get(APP_CONSTANTS.URL[environment.type].SEARCH, { params:params }).toPromise().then(
       (result:any) => {
              return result;
       },
