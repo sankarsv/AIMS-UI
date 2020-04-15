@@ -15,7 +15,7 @@ export class EmployeeService {
   getEmployeeDetails(key, value):Promise<EmployeeDetails[]> {
     let params = new HttpParams();
     params = params.append(key, value);
-    return this.http.get(APP_CONSTANTS.URL[environment.type].SEARCH, { params:params }).toPromise().then(
+    return this.http.post(APP_CONSTANTS.URL[environment.type].SEARCH, params).toPromise().then(
       (result:any) => {
              return result;
       },

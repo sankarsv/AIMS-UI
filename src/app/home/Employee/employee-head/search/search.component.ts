@@ -11,7 +11,7 @@ export class SearchComponent implements OnInit {
  // activeTab = 'search';
   searchBy: String;
   searchString: String;
-  searchByFilters = ["All", "Name", "Employee_ID", "Base Branch", "Role", "DM_ID", "GL_ID"];
+  searchByFilters = ["Employee_ID", "DM_ID", "GL_ID"];
   searchSelectedFilters = ["All","Selected1", "Selected2", "Selected3"];
   settings: any;
   data: EmployeeDetails[];
