@@ -11,7 +11,7 @@ export class SearchComponent implements OnInit {
  // activeTab = 'search';
   searchBy: String;
   searchString: String;
-  searchByFilters = ["All", "Name", "EmployeeID", "Location", "Role"];
+  searchByFilters = ["All", "Name", "Employee_ID", "Base Branch", "Role", "DM_ID", "GL_ID"];
   searchSelectedFilters = ["All","Selected1", "Selected2", "Selected3"];
   settings: any;
   data: EmployeeDetails[];
@@ -19,10 +19,12 @@ export class SearchComponent implements OnInit {
   showTable: boolean = false;
   empDetailsUpdated:EmployeeDetails[] = [];
   searchCreteria = {
-    "Name": "empFullName",
-    "Role": "categoryName",
-    "Location": "baseBranch",
-    "EmployeeID": "employeeId",
+    "Name": "empName",
+    "Role": "teamRole",
+    "Base Branch": "baseBranch",
+    "Employee_ID": "empId",
+    "DM_ID": "dmId",
+    "GL_ID": "glId",
     "All":"",
   }
   searchField:string;
@@ -31,24 +33,26 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.initSetting();
-    this.employeeService.getEmployeeDetails().then(
-      result => {
-        for (const emp of result) {
-          emp.empFullName = `${emp.firstName} ${emp.lastName}`;
-          emp.dob = emp.dob.substr(0, 10);
-          this.empDetailsUpdated.push(emp);
-        }
-        this.data = this.empDetailsUpdated;
-        return this.data;
-      }
-    );;
+    
   }
  
   submit() {
     this.showTable = true;
-    this.dataSearched = this.data.filter((str : EmployeeDetails) => { 
+    this.employeeService.getEmployeeDetails(this.searchField, this.searchString).then(
+      result => {
+        for (const emp of result) {
+          emp.empFullName = `${emp.firstName} ${(emp.lastName) ? emp.lastName : ''}`;
+          emp.dob = emp.dob.substr(0, 10);
+          this.empDetailsUpdated.push(emp);
+        }
+        this.data = this.empDetailsUpdated;
+      }
+    );
+
+    // Used for initial testing of search without backend
+    /* this.dataSearched = this.data.filter((str : EmployeeDetails) => { 
        return String(str[this.searchField]).toLowerCase().includes(this.searchString.toString().toLowerCase());
-    });
+    }); */
   }
 
   searchByInput(keyStr) {
@@ -89,14 +93,20 @@ export class SearchComponent implements OnInit {
         empFullName: {
           title: 'Employee Name'
         },
-        categoryName: {
+        teamRole: {
           title: 'Role'
         },
-        dob: {
-          title: 'DOB'
+        overallExp: {
+          title: 'Experience'
         },
         baseBranch: {
           title: 'Base Branch'
+        },
+        dmEmpId: {
+          title: 'Delivery Manager'
+        },
+        brmEmpId: {
+          title: 'BRM'
         }
       },
     };

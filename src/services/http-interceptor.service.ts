@@ -20,7 +20,7 @@ export class HttpInterceptorService implements HttpInterceptor {
       .append('Accept', 'application/json')
       .append('Cache-Control', 'application/json: charset=utf-8');
 
-    this.customHeaderParams(request, headers);
+      headers = this.customHeaderParams(request, headers);
 
     (environment.production) ? req = request.clone({ headers }) : req = request.clone({ headers, method: 'GET' });
 
@@ -38,5 +38,6 @@ export class HttpInterceptorService implements HttpInterceptor {
         headers = headers.append(paramKey, request.params.get(paramKey));
       }
     }
+    return headers;
   }
 }

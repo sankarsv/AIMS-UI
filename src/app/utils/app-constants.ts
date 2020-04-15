@@ -9,8 +9,8 @@ export const APP_CONSTANTS = {
         PROD: {
             LOGIN: "aims/login",
             REGISTER: "aims/register",
-            UPLOAD: "aims/upload",
-            SEARCH: "aims/getEmployeeDetails",
+            UPLOAD: "aims/user/upload",
+            SEARCH: "aims/user/getEmployeeDetails",
         }
     }
 }
