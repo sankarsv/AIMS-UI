@@ -1,10 +1,12 @@
 import * as _ from 'lodash';
 
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Injectable, Output } from '@angular/core';
+import { Injectable, Output, ViewChild, ElementRef } from '@angular/core';
 
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
+import { APP_CONSTANTS } from 'app/utils/app-constants';
+import { environment } from 'environments/environment';
 
 export enum FileQueueStatus {
   Pending,
@@ -19,7 +21,9 @@ export class FileQueueObject {
   public progress: number = 0;
   public request: Subscription = null;
   public response: HttpResponse<any> | HttpErrorResponse = null;
-
+  
+  
+   
   constructor(file: any) {
     this.file = file;
   }
@@ -42,7 +46,11 @@ export class FileQueueObject {
 @Injectable()
 export class FileUploaderService {
 
+  //@ViewChild('fileInput') fileInput;
 
+  @ViewChild('fileInput') myInputVariable: ElementRef;
+
+ 
   private _queue: BehaviorSubject<FileQueueObject[]>;
   private _files: FileQueueObject[] = [];
 
@@ -68,7 +76,11 @@ export class FileUploaderService {
 
   public clearQueue() {
     // clear the queue
+    //const fileBrowser = this.fileInput.nativeElement
+    
+    //this.myInputVariable.nativeElement.value = '';
     this._files = [];
+    
     this._queue.next(this._files);
   }
 
@@ -104,8 +116,8 @@ export class FileUploaderService {
     const form = new FormData();
     form.append('file', queueObj.file, queueObj.file.name);
 
-      let token = localStorage.getItem("token");
-        return this.httpClient.post("aims/upload", {"xlsBytes": queueObj.file.name},
+      let token = localStorage.getItem("access_token");
+        return this.httpClient.post(APP_CONSTANTS.URL[environment.type].upload, {"xlsBytes": queueObj.file.name},
           {
             headers: new HttpHeaders().set('Authorization' , 'Bearer ' +token),
             responseType: 'text'
