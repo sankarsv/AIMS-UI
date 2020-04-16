@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   email: string;
   password: number;
   public user: User;
+  isloading: boolean = false;
   constructor(public jwtService: JwtService, public router: Router, public route:ActivatedRoute,public userService:UserService) { }
 
   ngOnInit() {
@@ -34,6 +35,6 @@ export class LoginComponent implements OnInit {
         }
       );
     }
-
+    this.isloading = true;
   }
 }

@@ -15,12 +15,16 @@ import { UserService } from 'services/user.service';
 import { AuthGuardService } from 'services/auth-guard.service';
 import {httpService } from 'services/httpService';
 import { HttpInterceptorService } from 'services/http-interceptor.service';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner/loading-spinner.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent  ],
+    LoginComponent,
+    LoadingSpinnerComponent,
+     ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
