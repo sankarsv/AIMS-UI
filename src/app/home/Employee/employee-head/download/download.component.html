@@ -1,3 +1,6 @@
-<p>
-  download works!
-</p>
+<br>
+<div>
+  <ng2-smart-table [settings]="settings" [source]="data" (custom)="dataRoute($event)"></ng2-smart-table>
+  <br>
+  <button class="buttonBox" style="float: right" (click)="baseLine()">Generate Baseline</button>
+</div>

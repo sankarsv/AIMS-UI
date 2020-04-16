@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { JwtService } from 'services/jwt.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from 'services/user.service';
+import { EmployeeService } from 'services/employee.service';
+import { EmployeeDetails } from 'app/interfaces/employee-details-interface';
 
 @Component({
   selector: 'app-search',
@@ -11,23 +10,70 @@ import { UserService } from 'services/user.service';
 export class SearchComponent implements OnInit {
  // activeTab = 'search';
   searchBy: String;
-  searchBySelected: String;
   searchString: String;
-  searchByFilters = ["Name", "EmployeeID", "DM", "BRM"];
-  searchSelectedFilters = ["Selected1", "Selected2", "Selected3"];
+  searchByFilters = ["Employee_ID", "DM_ID", "GL_ID"];
+  searchSelectedFilters = ["All","Selected1", "Selected2", "Selected3"];
   settings: any;
-  data: any;
+  data: EmployeeDetails[];
+  dataSearched: EmployeeDetails[];
   showTable: boolean = false;
-  // loadupload:boolean = false;
-  // loaddownload:boolean =false;
-  // loadsearch:boolean = false;
-  constructor(public jwtService:JwtService,public router:Router,public route: ActivatedRoute, public userService:UserService) { }
+  empDetailsUpdated:EmployeeDetails[] = [];
+  searchCreteria = {
+    "Name": "empName",
+    "Role": "teamRole",
+    "Base Branch": "baseBranch",
+    "Employee_ID": "empId",
+    "DM_ID": "dmId",
+    "GL_ID": "glId",
+    "All":"",
+  }
+  searchField:string;
+
+  constructor(private employeeService:EmployeeService) { }
 
   ngOnInit() {
-      
-    this.searchBy = null;
-    this.searchBySelected = null;
-    this.searchString = null;
+    this.initSetting();
+    
+  }
+ 
+  submit() {
+    this.showTable = true;
+    this.employeeService.getEmployeeDetails(this.searchField, this.searchString).then(
+      result => {
+        for (const emp of result) {
+          emp.empFullName = `${emp.firstName} ${(emp.lastName) ? emp.lastName : ''}`;
+          emp.dob = emp.dob.substr(0, 10);
+          this.empDetailsUpdated.push(emp);
+        }
+        this.data = this.empDetailsUpdated;
+      }
+    );
+
+    // Used for initial testing of search without backend
+    /* this.dataSearched = this.data.filter((str : EmployeeDetails) => { 
+       return String(str[this.searchField]).toLowerCase().includes(this.searchString.toString().toLowerCase());
+    }); */
+  }
+
+  searchByInput(keyStr) {
+    this.searchField = this.searchCreteria[keyStr];
+  }
+
+  reset() {
+    this.initSetting();
+  }
+
+  onDeleteConfirm(event) {
+    if (window.confirm('Are you sure you want to delete?')) {
+      event.confirm.resolve();
+    } else {
+      event.confirm.reject();
+    }
+  }
+
+  initSetting() {
+    this.searchBy = 'All';
+    this.searchString = "";
     this.showTable = false;
     this.settings = {
       actions: {
@@ -41,62 +87,29 @@ export class SearchComponent implements OnInit {
         position: 'right'
       },
       columns: {
-        id: {
+        employeeId: {
           title: 'Employee ID'
         },
-        name: {
-          title: 'Name'
+        empFullName: {
+          title: 'Employee Name'
         },
-        portfolio: {
-          title: 'Portfolio'
+        teamRole: {
+          title: 'Role'
         },
-        brm: {
+        overallExp: {
+          title: 'Experience'
+        },
+        baseBranch: {
+          title: 'Base Branch'
+        },
+        dmEmpId: {
+          title: 'Delivery Manager'
+        },
+        brmEmpId: {
           title: 'BRM'
-        },
-        dm: {
-          title: 'DM'
         }
       },
     };
-  }
-
- 
-  submit() {
-    this.showTable = true;
-    this.data = [
-      {
-        id: 678923,
-        name: "Leanne Graham",
-        brm: "Bret",
-        dm: "Sincere@april.biz",
-        portfolio: "Channel"
-      },
-      {
-        id: 267298,
-        name: "Ervin Howell",
-        brm: "Antonette",
-        dm: "Shanna@melissa.tv",
-        portfolio: "CustomerConnect"
-      },
-
-      {
-        id: 310923,
-        name: "Nicholas DuBuque",
-        brm: "Nicholas.Stanton",
-        dm: "Rey.Padberg@rosamond.biz",
-        portfolio: "Ananad"
-      }
-    ];
-  }
-  reset() {
-    this.ngOnInit();
-  }
-  onDeleteConfirm(event) {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve();
-    } else {
-      event.confirm.reject();
-    }
   }
 }
 

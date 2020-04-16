@@ -17,6 +17,7 @@ import {httpService } from 'services/httpService';
 import { HttpInterceptorService } from 'services/http-interceptor.service';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner/loading-spinner.component';
 
+import { EmployeeService } from 'services/employee.service';
 
 
 @NgModule({
@@ -43,7 +44,7 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner/loadi
     })
 
   ],
-  providers: [JwtService,UserService,AuthGuardService,httpService,
+  providers: [JwtService, UserService, AuthGuardService, httpService, EmployeeService,
   { provide: HTTP_INTERCEPTORS, useClass:HttpInterceptorService, multi: true }],
   bootstrap: [AppComponent],
   exports: []
