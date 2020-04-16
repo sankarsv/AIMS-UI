@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeRoutingModule } from './home-routing.module';
 import { SmartReportsComponent } from './Dashboard/smart-reports/smart-reports.component';
 import { LeaveManagementComponent } from './Dashboard/leave-management/leave-management.component';
@@ -32,6 +32,7 @@ import { FileUploaderService } from './Employee/employee-head/upload/file-upload
     HomeRoutingModule,
     FormsModule,
     Ng2SmartTableModule,
+    ReactiveFormsModule,
     NgCircleProgressModule.forRoot({
     })
     
@@ -53,7 +54,10 @@ import { FileUploaderService } from './Employee/employee-head/upload/file-upload
     UploadComponent,
     DownloadComponent,
     HeadcountSearchComponent
+    
   ],
   providers:[ DashboardResolver,FileUploaderService]
+ 
 })
 export class HomeModule { }
+

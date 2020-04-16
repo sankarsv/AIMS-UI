@@ -1,5 +1,6 @@
 <div class="login-dark">
-  <form #loginForm="ngForm">
+ 
+  <form #loginForm="ngForm" >
     <div style="padding-bottom: 30px;"><span class="illustration">Login</span></div>
     <div class="form-group">
       <input class="form-control" type="email"  name="email" #emailCtrl="ngModel" placeholder="Email Address"
@@ -34,7 +35,7 @@
     </div>
   </form>
   <div *ngIf="!loginForm.valid" class="modal fade" id="ValidationModal">
-    <div class="modal-dialog" role="document">
+      <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Warning</h5>
@@ -52,6 +53,9 @@
         </div>
       </div>
     </div>
+    <div *ngIf="!loginForm.valid || !isloading " style="text-align: center">
+      <app-loading-spinner></app-loading-spinner>
+  </div>
   </div>
 
 </div>
