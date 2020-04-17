@@ -21,8 +21,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.user = new User();
-    this.user.userName = 'admin';
-    this.user.id=123456;
+    this.user.userid = 2344344;
+    this.user.password ="123456";
   }
   submit() {
     if (this.loginForm.valid) {
