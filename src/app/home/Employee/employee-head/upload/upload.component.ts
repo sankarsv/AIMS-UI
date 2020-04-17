@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { FileQueueObject, FileUploaderService } from '../upload/file-uploader.service';
+
 
 import { Observable } from 'rxjs';
 
@@ -14,6 +15,10 @@ export class UploadComponent implements OnInit {
   @Output() onCompleteItem = new EventEmitter();
 
   @ViewChild('fileInput') fileInput;
+
+  @ViewChild('fileInput')
+ myInputVariable: ElementRef;
+
   queue: Observable<FileQueueObject[]>;
 
   constructor(public uploader: FileUploaderService) { }
@@ -31,4 +36,8 @@ export class UploadComponent implements OnInit {
     const fileBrowser = this.fileInput.nativeElement;
     this.uploader.addToQueue(fileBrowser.files);
   }
+  reset() {
+    this.myInputVariable.nativeElement.value = "";
+  }
+
 }

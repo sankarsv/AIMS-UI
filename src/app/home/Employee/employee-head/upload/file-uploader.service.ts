@@ -47,8 +47,7 @@ export class FileQueueObject {
 export class FileUploaderService {
 
   //@ViewChild('fileInput') fileInput;
-
-  @ViewChild('fileInput') myInputVariable: ElementRef;
+  isloading: boolean = false;
 
  
   private _queue: BehaviorSubject<FileQueueObject[]>;
@@ -125,6 +124,8 @@ export class FileUploaderService {
           }).toPromise().then((result: any) => {
             this._uploadComplete(queueObj,result);
           }).catch(err => this._uploadFailed(queueObj, err)) 
+
+          
     
 
   }
@@ -143,6 +144,7 @@ export class FileUploaderService {
     queueObj.progress = progress;
     queueObj.status = FileQueueStatus.Progress;
     this._queue.next(this._files);
+    this.isloading = true;
   }
 
   private _uploadComplete(queueObj: FileQueueObject, response: HttpResponse<any>) {

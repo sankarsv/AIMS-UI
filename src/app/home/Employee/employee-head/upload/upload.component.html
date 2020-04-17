@@ -27,7 +27,9 @@
 						<span *ngIf="item.isPending()" class="tag tag-default"></span>
 						<span *ngIf="item.isSuccess()" class="tag tag-success"></span>
 						<span *ngIf="item.inProgress()" class="tag tag-warning"></span>
-						<span *ngIf="item.isError()" class="tag tag-danger"></span>
+						<span *ngIf="item.isError()" class="tag tag-danger">
+							
+						</span>
 					</td>
 					<td class="text-right">
 						<a tooltip="Upload file" (click)="item.upload()" *ngIf="item.isUploadable()">
@@ -44,9 +46,11 @@
 			</tbody>
 		</table>
 		<div>
-			<button class="buttonBox" (click)="uploader.clearQueue()">Clear</button>
+			<button class="buttonBox" (click)="uploader.clearQueue();reset()" >Clear</button>
 			<button class="buttonBox" (click)="uploader.uploadAll()">Upload</button>
 		</div>
 	</div>
-
+	<div *ngIf="!isloading" style="text-align: center">
+		<app-loading-spinner></app-loading-spinner>
+	</div>
 </div>
