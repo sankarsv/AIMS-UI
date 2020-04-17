@@ -1,8 +1,8 @@
 import { Role } from "./roles";
 
 export class User {
-    userName: string;
-    id: number;
+    password: string;
+    userid: number;
     role: Role;
     token?: string;
     constructor(){
