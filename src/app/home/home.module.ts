@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeRoutingModule } from './home-routing.module';
@@ -37,6 +37,7 @@ import { FileUploaderService } from './Employee/employee-head/upload/file-upload
     })
     
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     HomepageComponent,
     AssociateAnalyticsComponent,
@@ -54,6 +55,7 @@ import { FileUploaderService } from './Employee/employee-head/upload/file-upload
     UploadComponent,
     DownloadComponent,
     HeadcountSearchComponent
+  
     
   ],
   providers:[ DashboardResolver,FileUploaderService]
