@@ -60,17 +60,24 @@ export class DownloadComponent implements OnInit {
   }
 
   dataRoute(event){
-    this.httpService.exportBaseline(APP_CONSTANTS.URL[environment.type].Download, { "versionNo": event.data.id }).then(result => {
+    this.httpService.exportBaseline(APP_CONSTANTS.URL[environment.type].Download, { "versionNo": event.data.baselineNumber }).then(result => {
       if (!result) {
         alert("Error in downloading the report");
       }
       else{
 
-        let excelData = result.toString();
-        const downloadExcel = new Blob([(excelData)] , {type:'application/vnd.ms-excel'});
-        const fileName = new File ([downloadExcel],'BaseLineReport'+event.data.id , {type:'application/vnd.ms-excel'})
-        const exportData = window.URL.createObjectURL(fileName);
-        window.open(exportData);
+        //let excelData = result.data();
+        //const downloadExcel = new Blob([(result)] , {type:'application/vnd.ms-excel'});
+        var downloadUrl = window.URL.createObjectURL(result);
+        var link = document.createElement('a');
+        link.href = downloadUrl;
+        var fileName = localStorage.getItem('filename');
+        if(!fileName) {
+          fileName = "BaseLineReport.xlsx";
+          localStorage.removeItem('filename');
+        }
+        link.download = fileName;
+        link.click();
       }
     });
   }

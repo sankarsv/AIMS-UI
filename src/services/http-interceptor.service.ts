@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { tap,catchError, map } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 
 @Injectable({
@@ -34,6 +34,17 @@ export class HttpInterceptorService implements HttpInterceptor {
     (environment.production) ? req = request.clone({ headers }) : req = request.clone({ headers, method: 'GET' });
 
     return handler.handle(req).pipe(
+      map((event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
+           var contentDisposition= event.headers.get('content-disposition');
+           if(contentDisposition){
+           var filename = contentDisposition.split(';')[1].split('filename')[1].split('=')[1].trim();
+           console.log(filename);
+           localStorage.setItem('filename',filename);
+           }
+        }
+        return event;
+    }),
       catchError((error: HttpErrorResponse) => {
         return throwError(error);
       })
