@@ -14,12 +14,20 @@ export class HttpInterceptorService implements HttpInterceptor {
   intercept(request: HttpRequest<any>, handler: HttpHandler): Observable<HttpEvent<any>> {
     let req;
     let headers = request.headers;
-    
-    headers = headers.append('Cache-Control', 'no-cache')
+
+    let fileupload = localStorage.getItem("fileupload");
+
+    if(!fileupload)
+    {
+      headers = headers.append('Cache-Control', 'no-cache')
       .append('Pragma', 'no-cache')
       .append('Accept', 'application/json')
       .append('Cache-Control', 'application/json: charset=utf-8')
       .append('Content-Type', 'application/json');
+
+    }
+
+  
 
     if(request.method === 'GET')  headers = this.customHeaderParams(request, headers);
 

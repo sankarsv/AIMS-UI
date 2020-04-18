@@ -1,12 +1,11 @@
 import * as _ from 'lodash';
 
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
-import { Injectable, Output, ViewChild, ElementRef } from '@angular/core';
-
+import { HttpClient, HttpErrorResponse,HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { HttpEventType } from '@angular/common/http';
 import { APP_CONSTANTS } from 'app/utils/app-constants';
 import { environment } from 'environments/environment';
+
 
 export enum FileQueueStatus {
   Pending,
@@ -44,10 +43,11 @@ export class FileQueueObject {
 
 // tslint:disable-next-line:max-classes-per-file
 @Injectable()
-export class FileUploaderService {
+
+export class FileUploaderService{
 
   //@ViewChild('fileInput') fileInput;
-  isloading: boolean = false;
+
 
  
   private _queue: BehaviorSubject<FileQueueObject[]>;
@@ -67,17 +67,15 @@ export class FileUploaderService {
     return { queueObj, response };
   }
 
-  // public functions
+  
   public addToQueue(data: any) {
     // add file to the queue
     _.each(data, (file: any) => this._addToQueue(file));
   }
 
+ 
   public clearQueue() {
-    // clear the queue
-    //const fileBrowser = this.fileInput.nativeElement
-    
-    //this.myInputVariable.nativeElement.value = '';
+    //// clear the queue
     this._files = [];
     
     this._queue.next(this._files);
@@ -112,23 +110,17 @@ export class FileUploaderService {
 
   private _upload(queueObj: FileQueueObject) {
     // create form data for file
-    const form = new FormData();
-    form.append('file', queueObj.file, queueObj.file.name);
-
-      let token = localStorage.getItem("access_token");
-        return this.httpClient.post(APP_CONSTANTS.URL[environment.type].upload, {"xlsBytes": queueObj.file.name},
-          {
-            headers: new HttpHeaders().set('Authorization' , 'Bearer ' +token),
-            responseType: 'text'
     
-          }).toPromise().then((result: any) => {
+    let token = localStorage.getItem("access_token");
+    const form = new FormData();
+    form.append('file', queueObj.file);
+    localStorage.setItem('fileupload', 'fileupload');
+    return this.httpClient.post(APP_CONSTANTS.URL[environment.type].UPLOAD, form).toPromise().then((result: any) => {
             this._uploadComplete(queueObj,result);
           }).catch(err => this._uploadFailed(queueObj, err)) 
 
-          
-    
-
   }
+ 
 
   private _cancel(queueObj: FileQueueObject) {
     // update the FileQueueObject as cancelled
@@ -136,6 +128,7 @@ export class FileUploaderService {
     queueObj.progress = 0;
     queueObj.status = FileQueueStatus.Pending;
     this._queue.next(this._files);
+    localStorage.removeItem('fileupload');
   }
 
   private _uploadProgress(queueObj: FileQueueObject, event: any) {
@@ -144,7 +137,6 @@ export class FileUploaderService {
     queueObj.progress = progress;
     queueObj.status = FileQueueStatus.Progress;
     this._queue.next(this._files);
-    this.isloading = true;
   }
 
   private _uploadComplete(queueObj: FileQueueObject, response: HttpResponse<any>) {
@@ -154,6 +146,7 @@ export class FileUploaderService {
     queueObj.response = response;
     this._queue.next(this._files);
     this.onCompleteItem(queueObj, response.body);
+    localStorage.removeItem('fileupload');
   }
 
   private _uploadFailed(queueObj: FileQueueObject, response: HttpErrorResponse) {
@@ -162,6 +155,8 @@ export class FileUploaderService {
     queueObj.status = FileQueueStatus.Error;
     queueObj.response = response;
     this._queue.next(this._files);
+    localStorage.removeItem('fileupload');
   }
+ 
 
 }
