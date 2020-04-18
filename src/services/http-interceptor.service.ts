@@ -18,7 +18,8 @@ export class HttpInterceptorService implements HttpInterceptor {
     headers = headers.append('Cache-Control', 'no-cache')
       .append('Pragma', 'no-cache')
       .append('Accept', 'application/json')
-      .append('Cache-Control', 'application/json: charset=utf-8');
+      .append('Cache-Control', 'application/json: charset=utf-8')
+      .append('Content-Type', 'application/json');
 
     if(request.method === 'GET')  headers = this.customHeaderParams(request, headers);
 

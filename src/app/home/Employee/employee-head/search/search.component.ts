@@ -40,6 +40,7 @@ export class SearchComponent implements OnInit {
     this.showTable = true;
     this.employeeService.getEmployeeDetails(this.searchField, this.searchString).then(
       result => {
+        this.empDetailsUpdated = [];
         for (const emp of result) {
           emp.empFullName = `${emp.firstName} ${(emp.lastName) ? emp.lastName : ''}`;
           emp.dob = emp.dob.substr(0, 10);
