@@ -8,6 +8,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import { APP_CONSTANTS } from 'app/utils/app-constants';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { element } from '@angular/core/src/render3/instructions';
 
 @Component({
   selector: 'app-download',
@@ -15,22 +16,17 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./download.component.css']
 })
 export class DownloadComponent implements OnInit {
-  data: any[];
+  data: any[] | any;
   settings:any;
   constructor(public jwtService: JwtService, public router: Router, public route: ActivatedRoute, public userService: UserService, private httpService: httpService, public dialog: MatDialog,
     private http:HttpClient,private sanitizer: DomSanitizer) { }
   
   ngOnInit() {
-
-
-
-
-    let response;
     this.data = [];
     //this.httpService.httpGet("versioninfo").then(result => {
       this.http.get(APP_CONSTANTS.URL[environment.type].VERSION).toPromise().then(result => {
       if (result) {
-        response = JSON.stringify(result.toString());
+       // response = JSON.parse(result.toString());
         this.settings = {
           actions: {
             add: false,
@@ -47,8 +43,9 @@ export class DownloadComponent implements OnInit {
               title: 'Baseline Number'
             }
           }
+          
         };
-        response.forEach(element => {
+        result.map(element => {
           let key = {
             date: element["loadDate"],
             baselineNumber: element["versionNo"]
