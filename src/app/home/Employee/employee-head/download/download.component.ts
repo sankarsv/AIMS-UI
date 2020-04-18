@@ -8,7 +8,9 @@ import {DomSanitizer} from '@angular/platform-browser';
 import { APP_CONSTANTS } from 'app/utils/app-constants';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { element } from '@angular/core/src/render3/instructions';
+import { map } from 'rxjs/operators';
+
+
 
 @Component({
   selector: 'app-download',
@@ -58,7 +60,7 @@ export class DownloadComponent implements OnInit {
   }
 
   dataRoute(event){
-    this.httpService.exportBaseline("export", { "baseLine": event.data.id }).then(result => {
+    this.httpService.exportBaseline(APP_CONSTANTS.URL[environment.type].Download, { "versionNo": event.data.id }).then(result => {
       if (!result) {
         alert("Error in downloading the report");
       }
