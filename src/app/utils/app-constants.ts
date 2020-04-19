@@ -14,7 +14,7 @@ export const APP_CONSTANTS = {
             UPLOAD: "aims/user/upload",
             SEARCH: "aims/user/getEmployeeDetails",
             VERSION: "aims/user/versioninfo",
-            Download: "export"
+            Download: "download"
         }
     }
 }
