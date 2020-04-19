@@ -3,6 +3,7 @@ import { FileQueueObject, FileUploaderService } from '../upload/file-uploader.se
 
 
 import { Observable } from 'rxjs';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-upload',
@@ -11,6 +12,9 @@ import { Observable } from 'rxjs';
 })
 
 export class UploadComponent implements OnInit {
+
+  form: FormGroup;
+  submitted = false;
 
   @Output() onCompleteItem = new EventEmitter();
 
@@ -21,12 +25,18 @@ export class UploadComponent implements OnInit {
 
   queue: Observable<FileQueueObject[]>;
 
-  constructor(public uploader: FileUploaderService) { }
-
+  constructor(public uploader: FileUploaderService,private formBuilder: FormBuilder) {}
+   
   ngOnInit() {
+
+    this.form = new FormGroup({
+      'upload': new FormControl('', [Validators.required])
+    });
     this.queue = this.uploader.queue;
     this.uploader.onCompleteItem = this.completeItem;
   }
+
+  get f() { return this.form.controls; }
 
   completeItem = (item: FileQueueObject, response: any) => {
     this.onCompleteItem.emit({ item, response });
@@ -37,7 +47,14 @@ export class UploadComponent implements OnInit {
     this.uploader.addToQueue(fileBrowser.files);
   }
   reset() {
-    this.myInputVariable.nativeElement.value = "";
+     this.form.controls["upload"].reset();
+  }
+  onSubmit() {
+    this.submitted = true;
+    if (this.form.invalid) {
+            return;
+    }
+    
   }
 
 }

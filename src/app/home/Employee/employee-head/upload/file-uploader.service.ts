@@ -48,8 +48,9 @@ export class FileUploaderService{
 
   //@ViewChild('fileInput') fileInput;
 
-
  
+  public isloading:boolean =false;
+  private nextLibAvailable = false;
   private _queue: BehaviorSubject<FileQueueObject[]>;
   private _files: FileQueueObject[] = [];
 
@@ -76,6 +77,7 @@ export class FileUploaderService{
  
   public clearQueue() {
     //// clear the queue
+
     this._files = [];
     
     this._queue.next(this._files);
@@ -83,11 +85,13 @@ export class FileUploaderService{
 
   public uploadAll() {
     // upload all except already successfull or in progress
+    this.isloading = false;
     _.each(this._files, (queueObj: FileQueueObject) => {
       if (queueObj.isUploadable()) {
         this._upload(queueObj);
       }
     });
+    
   }
 
   // private functions
@@ -133,10 +137,14 @@ export class FileUploaderService{
 
   private _uploadProgress(queueObj: FileQueueObject, event: any) {
     // update the FileQueueObject with the current progress
+    
     const progress = Math.round(100 * event.loaded / event.total);
     queueObj.progress = progress;
     queueObj.status = FileQueueStatus.Progress;
     this._queue.next(this._files);
+    
+    this.isloading = true;
+    
   }
 
   private _uploadComplete(queueObj: FileQueueObject, response: HttpResponse<any>) {
