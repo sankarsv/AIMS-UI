@@ -44,6 +44,9 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.loginForm.valid) {
+      this.user = new User();
+    this.user.userId = this.f.uid.value;
+    this.user.password =this.f.password.value;
     this.jwtService.login(this.user).then((data) => {
        if (!this.jwtService.invalidtoken) {
         this.router.navigate(['Dashboard/executiveDashboard']);

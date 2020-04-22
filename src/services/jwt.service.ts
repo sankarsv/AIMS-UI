@@ -17,6 +17,7 @@ export class JwtService {
         
         user.token = token;
         user.role = data.role;
+        this.invalidtoken = false;
         return user;
       }).catch(err => {
         this.invalidtoken = true; 
