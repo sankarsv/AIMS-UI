@@ -1,6 +1,6 @@
 <br>
 <div class="progressText">Search By
-  <select class="inputBox" [(ngModel)]="searchBy" (ngModelChange)="searchByInput(searchBy)">
+  <select class="inputBox" [(ngModel)]="searchBy" (ngModelChange)="searchByInput(searchBy);onChange($event)">
     <option *ngFor="let search of searchByFilters" [ngValue]="search">{{search}} </option>
   </select>
   <!-- <select class="inputBox" [(ngModel)]="searchBySelected" >

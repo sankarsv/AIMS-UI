@@ -7,7 +7,8 @@ import { environment } from 'environments/environment';
 
 @Injectable()
 export class JwtService {
-  constructor(private httpClient: HttpClient) { }
+  public invalidtoken:boolean =false;
+   constructor(private httpClient: HttpClient) { }
   login(user: User) :Promise<User>{
     return this.httpClient.post(APP_CONSTANTS.URL[environment.type].LOGIN, user).toPromise().then((result: any) => {
         const token = result.token;
@@ -17,7 +18,10 @@ export class JwtService {
         user.token = token;
         user.role = data.role;
         return user;
-      }).catch(err => {alert(err.message); return user;}) 
+      }).catch(err => {
+        this.invalidtoken = true; 
+        return err;
+      }) 
 
   }
   logout():boolean{

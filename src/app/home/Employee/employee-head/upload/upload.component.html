@@ -3,7 +3,8 @@
             <div class="col-md-6 offset-md-3">
                 
                     <div class="form-group">
-						<input type="file" formControlName="upload"  #fileInput multiple (change)="addToQueue()" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.upload.errors }" />
+						<input type="file" formControlName="upload"  #fileInput multiple (change)="addToQueue()"  accept=".xlsx, .xls"
+						class="form-control" [ngClass]="{ 'is-invalid': submitted && f.upload.errors }" />
 						 <div *ngIf="submitted && f.upload.errors" class="invalid-feedback">
 							<div  class="alert alert-danger"  *ngIf="f.upload.errors.required">Please Select file</div>
 						</div> 

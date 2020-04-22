@@ -35,6 +35,10 @@ export class SearchComponent implements OnInit {
     this.initSetting();
     
   }
+  onChange(event) {
+   this.searchString = "";
+
+  }
  
   submit() {
     this.showTable = true;
