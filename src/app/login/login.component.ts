@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators  } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { User } from '../Roles/user'
 import { JwtService } from 'services/jwt.service';
@@ -11,30 +11,52 @@ import { UserService } from 'services/user.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('loginForm') loginForm: FormGroup;
+ // @ViewChild('loginForm') loginForm: FormGroup;
   error: string;
   email: string;
   password: number;
   public user: User;
   isloading: boolean = false;
-  constructor(public jwtService: JwtService, public router: Router, public route:ActivatedRoute,public userService:UserService) { }
+  message:any;
+  constructor(public jwtService: JwtService, public router: Router, public route:ActivatedRoute,
+    public userService:UserService,private formBuilder: FormBuilder) { }
+  
+  loginForm: FormGroup;
+  submitted = false;
+  loginError: string;
+  loginmsg:boolean;
 
   ngOnInit() {
+
+    this.loginForm = this.formBuilder.group({
+      uid: ['', Validators.required],
+      password: ['', Validators.required]
+     
+  });
     this.user = new User();
-    this.user.userId = 2344344;
-    this.user.password ="123456";
-  }
-  submit() {
+    this.user.userId = this.f.uid.value;
+    this.user.password =this.f.password.value;
+   }
+  
+   get f() { return this.loginForm.controls; }
+ 
+ 
+  onSubmit() {
+    this.submitted = true;
     if (this.loginForm.valid) {
-      this.jwtService.login(this.user).then(
-        result => {
-          if (result) {
-            this.router.navigate(['Dashboard/executiveDashboard']);
-            this.userService.putUser(result);
-          }
+    this.jwtService.login(this.user).then((data) => {
+       if (!this.jwtService.invalidtoken) {
+        this.router.navigate(['Dashboard/executiveDashboard']);
+        this.userService.putUser(data);
+        } else {
+          this.loginmsg =true;
         }
-      );
+      },
+      error => this.error = error
+    );
     }
-    this.isloading = true;
   }
+    
+
+  
 }

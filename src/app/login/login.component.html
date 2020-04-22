@@ -1,40 +1,49 @@
 <div class="login-dark">
- 
-  <form #loginForm="ngForm" >
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+    <div class="form-row">
     <div style="padding-bottom: 30px;"><span class="illustration">Login</span></div>
     <div class="form-group">
-      <input class="form-control" type="email"  name="email" #emailCtrl="ngModel" placeholder="Email Address"
-        [(ngModel)]="user.userId" [value]="emailCtrl.value" required="true">
-      <!-- pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" -->
+      <input type="text"  formControlName="uid"  name="uid" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.uid.errors }" />
+      <div *ngIf="submitted && f.uid.errors" class="invalid-feedback">
+          <div  class="alert alert-danger"  *ngIf="f.uid.errors.required">USER  ID is required</div>
+      </div>
     </div>
     <div class="form-group">
-      <input class="form-control" type="password" name="password" #passwordCtrl="ngModel" placeholder="Password"
-        [(ngModel)]="user.password" [value]="passwordCtrl.value" required="true">
+      <input type="password" formControlName="password"  name="password"  class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+      <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+          <div  class="alert alert-danger"  *ngIf="f.password.errors.required">Password is required</div>
+      </div>
     </div>
-
+  </div>
     <label class="container">
       <p>Remember Me!!</p>
       <input type="checkbox">
       <span class="checkmark"></span>
     </label>
-    <div class="form-group">
-      <button class="btn btn-primary btn-block" (click)="submit()" data-toggle="modal"
-        data-target="#ValidationModal">Log In</button>
+    <div *ngIf="loginmsg">
+      <div  class="alert alert-danger">Invalid useranme or password</div>
     </div>
-    <div class="txt1">
+    <div class="form-group">
+      <button class="btn btn-primary btn-block" [ngClass]="{ 'is-invalid': submitted }" (click)="onSubmit()" 
+        >Log In</button>
+    </div>
+    
+    <div >
       Forgot password?
       <a href="#">
         <b>Reset</b>
       </a>
     </div>
-    <div class="txt1">
+     <div class="txt1">
       or just
       <a href="#">
         <b>Change Password</b>
       </a>
-    </div>
+    </div> 
   </form>
-  <div *ngIf="!loginForm.valid" class="modal fade" id="ValidationModal">
+  
+ 
+  <!-- <div *ngIf="!loginForm.valid" class="modal fade" id="ValidationModal">
       <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -56,6 +65,6 @@
     <div *ngIf="!loginForm.valid || !isloading " style="text-align: center">
       <app-loading-spinner></app-loading-spinner>
   </div>
-  </div>
+  </div> -->
 
 </div>
