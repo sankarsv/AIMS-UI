@@ -6,7 +6,8 @@ export const APP_CONSTANTS = {
             UPLOAD: "assets/mock/aims/upload.json",
             SEARCH: "assets/mock/aims/getEmployeeDetails.json",
             VERSION: "assets/mock/aims/getVersionNo.json",
-            Download: "assets/mock/aims/download.json"
+            Download: "assets/mock/aims/download.json",
+            Dashboard: "assets/mock/aims/getAssociatesDetails.json"
         },
         PROD: {
             LOGIN: "aims/login",
@@ -15,6 +16,7 @@ export const APP_CONSTANTS = {
             SEARCH: "aims/user/getEmployeeDetails",
             VERSION: "aims/user/versioninfo",
             Download: "download"
+            //Dashboard: "assets/mock/aims/getAssociatesDetails.json"
         }
     }
 }

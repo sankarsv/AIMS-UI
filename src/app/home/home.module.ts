@@ -15,7 +15,7 @@ import { ForYourActionComponent } from './Dashboard/for-your-action/for-your-act
 import { ExecutiveDashboardComponent } from './Dashboard/executive-dashboard/executive-dashboard.component';
 import { ProjectMonitoringComponent } from './Dashboard/project-monitoring/project-monitoring.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
-import { DashboardResolver } from './Dashboard/executive-dashboard/executive.dashboard.resolver';
+//import { DashboardResolver } from './Dashboard/executive-dashboard/executive.dashboard.resolver';
 
 
 import { Ng2SmartTableModule } from 'ngx-smart-table';
@@ -58,7 +58,8 @@ import { FileUploaderService } from './Employee/employee-head/upload/file-upload
   
     
   ],
-  providers:[ DashboardResolver,FileUploaderService]
+  providers:[ FileUploaderService]
+  /* DashboardResolver */
  
 })
 export class HomeModule { }

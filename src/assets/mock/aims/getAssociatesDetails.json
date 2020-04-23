@@ -1,0 +1,63 @@
+[
+
+	{
+		"totalAssociates": 150,
+		"monthlyActiveBillable": 103,
+		"activeAccessTokens": 90,
+		"issuesOutstanding": 13,
+		"Expansions": {
+			"total": 123,
+			"lastMonth": 111
+		},
+		"Attrition": {
+			"total": 23,
+			"lastMonth": 13
+		}
+	},
+	{
+		"January": {
+			"Growth": 300,
+			"Plan": 1000
+		},
+		"February": {
+			"Growth": 600,
+			"Plan": 1000
+		},
+		"March": {
+			"Growth": 400,
+			"Plan": 1000
+		}
+	},
+	{
+		"January": {
+			"accountsReceivable": 212,
+			"accountsPayable": 250,
+			"netMonthlyBurn": 240
+		},
+		"February": {
+			"accountsReceivable": 300,
+			"accountsPayable": 250,
+			"netMonthlyBurn": 240
+		},
+		"March": {
+			"accountsReceivable": 300,
+			"accountsPayable": 25,
+			"netMonthlyBurn": 240
+		}
+	},
+	{
+		"January": {
+			"total": 300,
+			"new": 1000
+		},
+		"February": {
+			"total": 500,
+			"new": 1000
+		},
+		"March": {
+			"total": 450,
+			"new": 1000
+		}
+	}
+
+]
