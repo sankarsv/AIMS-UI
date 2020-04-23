@@ -11,6 +11,16 @@
 
 }
 
+.executiveImage{
+  height: 635px;
+  background-size: cover;
+  position: relative;
+  background-image: url("../../../../assets/images/dashboard.png");
+  padding-top: 0px;
+}
+
+
+
 
 
 progress[value] {

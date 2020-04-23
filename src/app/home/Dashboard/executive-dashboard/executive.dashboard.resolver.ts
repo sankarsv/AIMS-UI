@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+/* import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { httpService } from 'services/httpService';
 import { Observable, forkJoin, of } from 'rxjs';
@@ -13,11 +13,11 @@ export class DashboardResolver implements Resolve<any> {
     resolve(route: ActivatedRouteSnapshot): Observable<any> {
         
             return forkJoin([
-                /*this.httpService.httpGet("getAssociatesDetails"),
+                this.httpService.httpGet("getAssociatesDetails"),
                 this.httpService.httpGet("getAccountGrowth"),
                 this.httpService.httpGet("getFinanceDetails"),
-                this.httpService.httpGet("getAccountSpending")*/
+                this.httpService.httpGet("getAccountSpending")
             ])
         
     };
-}
+} */

@@ -1,4 +1,25 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-executive-dashboard',
+  templateUrl: './executive-dashboard.component.html',
+  styleUrls: ['./executive-dashboard.component.css'],
+
+})
+export class ExecutiveDashboardComponent implements OnInit {
+
+  constructor() { };
+
+  ngOnInit() {
+  }
+
+}
+
+
+
+
+
+/* import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
 import * as Chart from 'chart.js';
 import { progressbar } from '../../../Roles/constants';
 import { NgCircleProgressModule } from 'ng-circle-progress';
@@ -222,3 +243,4 @@ export class ExecutiveDashboardComponent implements OnInit {
 
 
 
+ */
