@@ -8,9 +8,6 @@ import {DomSanitizer} from '@angular/platform-browser';
 import { APP_CONSTANTS } from 'app/utils/app-constants';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-
-
 
 @Component({
   selector: 'app-download',
@@ -21,43 +18,54 @@ export class DownloadComponent implements OnInit {
   data: any[] | any;
   settings:any;
   constructor(public jwtService: JwtService, public router: Router, public route: ActivatedRoute, public userService: UserService, private httpService: httpService, public dialog: MatDialog,
-    private http:HttpClient,private sanitizer: DomSanitizer) { }
+    private http:HttpClient,private sanitizer: DomSanitizer) {}
   
-  ngOnInit() {
-    this.data = [];
-    //this.httpService.httpGet("versioninfo").then(result => {
-      this.http.get(APP_CONSTANTS.URL[environment.type].VERSION).toPromise().then(result => {
-      if (result) {
-       // response = JSON.parse(result.toString());
-        this.settings = {
-          actions: {
-            add: false,
-            edit: false,
-            delete: false,
-            position: 'right',
-            custom: [{name: 'View', title: `Download Baseline`}]
-          },
-          columns: {
-            date: {
-              title: 'Date'
-            },
-            baselineNumber: {
-              title: 'Baseline Number'
-            }
-          }
-          
-        };
-        result.map(element => {
-          let key = {
-            date: element["loadDate"],
-            baselineNumber: element["versionNo"]
-          }
-          this.data.push(key);
-        });
+  ngOnInit()
+   {
+       this.data = [];
+       this.http
+             .get(APP_CONSTANTS.URL[environment.type].VERSION)
+             .toPromise()
+             .then(
+                 (res:any) =>{
+                                 this.mapData(res);
+                                 this.initializeSettings();
+                              }
+                  )
+       console.log(this.data);   
+   }
+
+mapData(response:any)
+{
+  this.data=response.map((element: { [x: string]: any; }) => {
+    let key = {
+      date: element["loadDate"],
+      baselineNumber: element["versionNo"]
+    }
+    return key;
+  });
+}
+
+initializeSettings()
+{
+  this.settings = {
+    actions: {
+      add: false,
+      edit: false,
+      delete: false,
+      position: 'right',
+      custom: [{name: 'View', title: `Download Baseline`}]
+    },
+    columns: {
+      date: {
+        title: 'Date'
+      },
+      baselineNumber: {
+        title: 'Baseline Number'
       }
-    });
-    console.log(this.data);
-  }
+    }            
+  };
+}
 
   dataRoute(event){
     this.httpService.exportBaseline(APP_CONSTANTS.URL[environment.type].Download, { "versionNo": event.data.baselineNumber }).then(result => {
