@@ -8,16 +8,13 @@ import { map, catchError } from 'rxjs/operators';
 
 @Injectable()
 export class DashboardResolver implements Resolve<any> {
-    chartData:any
     constructor(private httpService: httpService) { }
     resolve(route: ActivatedRouteSnapshot,rstate:RouterStateSnapshot): Observable<any> {
-        this.chartData =  
-        forkJoin([
-                this.httpService.httpGet("getAssociatesDetails.json"),
-                this.httpService.httpGet("getAccountGrowth.json"),
-                this.httpService.httpGet("getFinanceDetails.json"),
-                this.httpService.httpGet("getAccountSpending.json")
-            ])
-            return this.chartData;
+         this.httpService.httpGet("years.json").then(res=>
+            {
+                return res;
+            });
+return null;
+    
     };
 } 
