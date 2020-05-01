@@ -57,11 +57,11 @@ initializeSettings()
       custom: [{name: 'View', title: `Download Baseline`}]
     },
     columns: {
-      date: {
-        title: 'Date'
-      },
       baselineNumber: {
         title: 'Baseline Number'
+      },
+      date: {
+        title: 'Date'
       }
     }            
   };

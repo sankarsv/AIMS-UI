@@ -1,3 +1,4 @@
+/*
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -15,11 +16,9 @@ export class ExecutiveDashboardComponent implements OnInit {
 
 }
 
+*/
 
-
-
-
-/* import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
 import * as Chart from 'chart.js';
 import { progressbar } from '../../../Roles/constants';
 import { NgCircleProgressModule } from 'ng-circle-progress';
@@ -27,6 +26,11 @@ import { forkJoin } from 'rxjs';
 import { httpService } from '../../../../services/httpService';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { APP_CONSTANTS } from 'app/utils/app-constants';
+import { environment } from 'environments/environment';
+import { element } from '@angular/core/src/render3/instructions';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-executive-dashboard',
@@ -36,8 +40,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 
 export class ExecutiveDashboardComponent implements OnInit {
-  chartData: any[];
-  getAssociatesDetails: string;
+  getAssociatesDetails: any;
   getAccountGowth: any[];
   getFinanceDetails: any[];
   getAccountSpending: any[]
@@ -49,10 +52,6 @@ export class ExecutiveDashboardComponent implements OnInit {
   ctxaccountMonthlyGrow: any;
   accountSpending: any;
   ctxaccountSpending: any;
-  totalAssociates: progressbar;
-  monthyActiveBillable: progressbar;
-  activeAccessTokens: progressbar;
-  issuesOutstanding: progressbar;
   ltsReq: number;
   clientReq: number;
   associatesDetails: any;
@@ -60,28 +59,47 @@ export class ExecutiveDashboardComponent implements OnInit {
   accountMonthlyGrowData:any;
   accountSpendingData:any;
   @ViewChild('fileInput') fileInput:ElementRef;
-  constructor(public httpService: httpService, public router: Router, public activatedRoute: ActivatedRoute,private renderer:Renderer) {
+  constructor(public httpService: httpService, public router: Router, public activatedRoute: ActivatedRoute,private renderer:Renderer,
+    private http:HttpClient) {
+    this.activatedRoute.data.map(data=>data.chartData.JSON()).subscribe((res)=>{
+console.log(res);
+    })
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
     }
 
   }
 
-
-
   ngOnInit() {
-    this.chartData = this.activatedRoute.snapshot.data.chartData;
-    if (this.chartData[0].length > 0 && this.chartData[1].length > 0 && this.chartData[2].length > 0 && this.chartData[3].length > 0) {
+    this.getAssociatesDetails = [];
+    this.activatedRoute.data.subscribe(chartData=>
+      this.getAssociatesDetails=chartData
+    );
+    
+    this.initializeView();
+  }
+    // this.http
+    //       .get(APP_CONSTANTS.URL[environment.type].Dashboard)
+    //       .toPromise()
+    //       .then(
+    //           (res:any) =>{
+    //             this.getAssociatesDetails = res;
+    //             this.initializeView();})};
 
-      this.associatesDetails = JSON.parse(this.chartData[0]);
-      this.accountSpendingData = JSON.parse(this.chartData[2]);
-      this.accountMonthlyGrowData = JSON.parse(this.chartData[1]);
-      this.financeMonitoringData = JSON.parse(this.chartData[3]);
+initializeView()                          
+{
+    if (this.getAssociatesDetails[0] !=null && this.getAssociatesDetails[1] !=null&& this.getAssociatesDetails[2] !=null&& this.getAssociatesDetails[3] !=null) 
+    {
+
+      this.PrefillAssociateDetails(this.getAssociatesDetails[0]);
+      this.accountSpendingData = JSON.parse(this.getAssociatesDetails[2]);
+      this.accountMonthlyGrowData = JSON.parse(this.getAssociatesDetails[1]);
+      this.financeMonitoringData = JSON.parse(this.getAssociatesDetails[3]);
 
       this.ltsReq = this.associatesDetails.Requirements.new;
       this.clientReq = this.associatesDetails.Requirements.expansions;
-      this.attrition = [this.associatesDetails.Attrition.total, this.associatesDetails.Attrition.lastMonth];
-      this.expansion = [this.associatesDetails.Expansions.total, this.associatesDetails.Expansions.lastMonth];
+      this.attrition = [this.associatesDetails.Attritiontotal, this.associatesDetails.AttritionlastMonth];
+      this.expansion = [this.associatesDetails.ExpansionsTotal, this.associatesDetails.ExpansionsLastMonth];
 
       this.financeMonitoring = document.getElementById('financeMonitoring');
       this.ctxfinanceMonitoring = this.financeMonitoring.getContext('2d');
@@ -237,10 +255,22 @@ export class ExecutiveDashboardComponent implements OnInit {
       alert("Session Expired!");
       this.router.navigate(['/']);
     }
-
   }
+
+  PrefillAssociateDetails(associateDetails:any)
+  {
+     this.associatesDetails = {
+                                totalAssociates: associateDetails ["totalAssociates"],
+                                monthlyActiveBillable: associateDetails["monthlyActiveBillable"],
+                                activeAccessTokens: associateDetails["activeAccessTokens"],
+                                issuesOutstanding: associateDetails["issuesOutstanding"],
+                                ExpansionsTotal: associateDetails["Expansions"]["total"],
+                                ExpansionsLastMonth:associateDetails["Expansions"]["lastMonth"],
+                                Attritiontotal: associateDetails["Attrition"]["total"],
+                                AttritionlastMonth:associateDetails["Attrition"]["lastMonth"],
+                             };
+   }
+  
 }
 
 
-
- */
