@@ -1,0 +1,96 @@
+GET
+/aims/user/dashboard
+
+Req
+Body
+{
+    {	
+	
+	"reportType":"" {possible vlaues : "billable", "srjrratio","hcratio","trnratio","baratio"
+	
+    }]
+
+
+}
+header :
+{
+authorisation : token <tokenvalue>
+
+}
+
+Response for Billable Count
+Response (
+[
+    {	
+	
+	"billableCountTot":""
+	"nbCountTot":"",
+	"billableCountPerc":"",
+	"nbCountPerc":"",
+	"onbillableCount":"",
+	"offbillabeCount":"",
+	"onbillabePerc":"",
+	"offbillabePerc":"",
+    }
+]
+)
+
+Response for Sr/Jr Ratio
+Response (
+[
+    {	
+	
+	"srCountTot":"",
+	"jrCountTot":"",
+	"srCountPerc":""
+	"jrCountPerc":"",
+	"onsrCountTot":""
+	"onjrCountTot":"",
+	"offsrCountPerc":""
+	"offjrCountPerc":"",
+
+    }
+]
+)
+
+Response for HC report
+Response (
+[
+    {	
+	"offTot":"",
+	"onsiteTot":"",
+	"offPerc":"",
+	"onsitePerc":"",
+
+    }
+]
+)
+
+
+Response for Tr Count
+Response (
+[
+    {	
+	
+	"trCountTot":"",
+	"trCountPerc":""
+	"ontrCountTot":""
+	"ontrCountPerc":"",
+	"offtrCountTot":""
+	"offtrCountPerc":"",
+
+    }
+]
+)
+
+Response for BA COunt
+Response (
+[
+    {	
+	
+	"baCountTot":"",
+	"baCountPerc":"",
+
+    }
+]
+)

@@ -1,0 +1,28 @@
+GET
+/aims/user/getBRMDetails
+
+Req
+Body
+{
+
+}
+header :
+{
+authorisation : token <tokenvalue>
+
+}
+
+Response
+[
+    {	
+	"brmId":"",
+	"brmName":"",
+		
+    },
+
+    {	
+
+	"brmId":"",
+	"brmName":"",
+		
+    }]

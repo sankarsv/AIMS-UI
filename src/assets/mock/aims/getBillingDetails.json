@@ -1,0 +1,65 @@
+GET
+/aims/user/getBillingDetails
+
+Req
+Body
+[
+{
+month="",
+brmId= ""
+}
+]
+
+}
+header :
+{
+authorisation : token <tokenvalue>
+
+}
+
+Response
+[
+       {	
+	
+"locationId":"",
+	"projectId":"",
+	"empId":"",
+	"empName":"",
+	"brmId":"",
+	"brmName":"",
+	"dmId":"",
+	"dmName":"",
+	"wonNumber":"",
+	"stoName":""
+	"officeId",
+	"billableHrs",
+	"billableDays",	
+	"effortHrs",
+	"extraHrs",
+	"extraBilling",
+	"billingAmount",
+	"remarks"
+		
+    },
+
+    {	
+	"locationId":"",
+	"projectId":"",
+	"empId":"",
+	"empName":"",
+	"brmId":"",
+	"brmName":"",
+	"dmId":"",
+	"dmName":"",
+	"wonNumber":"",
+	"stoName":""
+	"officeId",
+	"billableHrs",
+	"billableDays",	
+	"effortHrs",
+	"extraHrs",
+	"extraBilling",
+	"billingAmount",
+	"remarks"
+	
+    }]
