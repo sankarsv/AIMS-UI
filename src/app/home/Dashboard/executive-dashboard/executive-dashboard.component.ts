@@ -47,21 +47,10 @@ export class ExecutiveDashboardComponent implements OnInit {
   HeadCounts: Dictionary<any>;
   TraineeDetails: Dictionary<any>;
   BACounts: Dictionary<any>;
-  @ViewChild('fileInput') fileInput:ElementRef;
   constructor(public httpService: httpService, public router: Router, public activatedRoute: ActivatedRoute,private renderer:Renderer,
-    private http:HttpClient) {
-    this.activatedRoute.data.map(data=>data.chartData.JSON()).subscribe((res)=>{
-console.log(res);
-    })
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
-      return false;
-    }
+    private http:HttpClient) {}
 
-  }
-
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
   fetchYearlyDetails(year:string,month:string)
   {
