@@ -63,14 +63,14 @@ console.log(res);
     
   }
 
-  fetchYearlyDetails(year:string)
+  fetchYearlyDetails(year:string,month:string)
   {
     forkJoin([
-      this.httpService.getDashBoardDetails("billing.json",{ reportType:"billable",year:""}),
-      this.httpService.getDashBoardDetails("SeniorJuniorRatio.json",{ reportType:"srjrratio",year:""}),
-      this.httpService.getDashBoardDetails("HeadCount.json",{ reportType:"hcratio",year:""}),
-      this.httpService.getDashBoardDetails("Trainee.json",{ reportType:"trnratio",year:""}),
-      this.httpService.getDashBoardDetails("BACount.json",{ reportType:"baratio",year:""})
+      this.httpService.getDashBoardDetails("billing.json",{ reportType:"billable",year:year,momth:month}),
+      this.httpService.getDashBoardDetails("SeniorJuniorRatio.json",{ reportType:"srjrratio",year:year,momth:month}),
+      this.httpService.getDashBoardDetails("HeadCount.json",{ reportType:"hcratio",year:year,momth:month}),
+      this.httpService.getDashBoardDetails("Trainee.json",{ reportType:"trnratio",year:year,momth:month}),
+      this.httpService.getDashBoardDetails("BACount.json",{ reportType:"baratio",year:year,momth:month})
   ]).subscribe(res=>
     {
       this.dashBoardDetails=res;
