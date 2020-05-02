@@ -1,23 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-executive-dashboard',
-  templateUrl: './executive-dashboard.component.html',
-  styleUrls: ['./executive-dashboard.component.css'],
-
+  selector: "app-executive-dashboard",
+  templateUrl: "./executive-dashboard.component.html",
+  styleUrls: ["./executive-dashboard.component.css"]
 })
-export class ExecutiveDashboardComponent implements OnInit {
+export class ExecutiveDashboardComponent {
+  dashYear: number;
+  dashMonth: string;
+  years: Array<number>;
+  curYear = new Date().getFullYear();
 
-  constructor() { };
-
-  ngOnInit() {
+  get fnyears(): number[] {
+    this.years = new Array<number>();
+    for (var y = this.curYear; y >= 2020; y--) {
+      console.log(y);
+      this.years.push(y);
+    }
+    return this.years;
   }
-
 }
-
-
-
-
 
 /* import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
 import * as Chart from 'chart.js';
