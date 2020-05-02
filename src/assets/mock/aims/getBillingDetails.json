@@ -1,65 +1,45 @@
-GET
-/aims/user/getBillingDetails
-
-Req
-Body
 [
-{
-month="",
-brmId= ""
-}
+	{	
+		"locationId":"1234",
+		 "projectId":"763",
+		 "empId":"1290827",
+		 "empName":"Goutham Mayaluri",
+		 "brmId":"1478955",
+		 "brmName":"Akkaiah",
+		 "dmId":"4585955",
+		 "dmName":"Narayanan",
+		 "wonNumber":"02147585",
+		 "stoName":"Voitech",
+		 "officeId":"gmayalu",
+		 "billableHrs":"85",
+		 "billableDays":"47",	
+		 "effortHrs":"47",
+		 "extraHrs":"25",
+		 "extraBilling":"85$",
+		 "billingAmount":"250$",
+		 "remarks":"good",
+		 "version":"1"
+		 },
+		 {	
+			"locationId":"1234",
+			 "projectId":"763",
+			 "empId":"1290827",
+			 "empName":"Goutham Mayaluri",
+			 "brmId":"1478955",
+			 "brmName":"Narayanan",
+			 "dmId":"4585955",
+			 "dmName":"Narayanan",
+			 "wonNumber":"02147585",
+			 "stoName":"Voitech",
+			 "officeId":"gmayalu",
+			 "billableHrs":"85",
+			 "billableDays":"47",	
+			 "effortHrs":"47",
+			 "extraHrs":"25",
+			 "extraBilling":"85$",
+			 "billingAmount":"250$",
+			 "remarks":"good",
+			 "version":"1"
+			 }
 ]
 
-}
-header :
-{
-authorisation : token <tokenvalue>
-
-}
-
-Response
-[
-       {	
-	
-"locationId":"",
-	"projectId":"",
-	"empId":"",
-	"empName":"",
-	"brmId":"",
-	"brmName":"",
-	"dmId":"",
-	"dmName":"",
-	"wonNumber":"",
-	"stoName":""
-	"officeId",
-	"billableHrs",
-	"billableDays",	
-	"effortHrs",
-	"extraHrs",
-	"extraBilling",
-	"billingAmount",
-	"remarks"
-		
-    },
-
-    {	
-	"locationId":"",
-	"projectId":"",
-	"empId":"",
-	"empName":"",
-	"brmId":"",
-	"brmName":"",
-	"dmId":"",
-	"dmName":"",
-	"wonNumber":"",
-	"stoName":""
-	"officeId",
-	"billableHrs",
-	"billableDays",	
-	"effortHrs",
-	"extraHrs",
-	"extraBilling",
-	"billingAmount",
-	"remarks"
-	
-    }]
