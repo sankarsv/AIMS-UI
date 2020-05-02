@@ -1,0 +1,21 @@
+Download
+
+post
+/aims/user/downloadBilling
+
+Req
+{
+header :
+authorisation : token <tokenvalue>
+
+"month" :
+"year":
+}
+
+Res
+{
+ File steam
+}
+
+
+Download

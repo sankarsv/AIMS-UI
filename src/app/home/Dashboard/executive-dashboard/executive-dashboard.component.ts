@@ -1,25 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-
-@Component({
-  selector: 'app-executive-dashboard',
-  templateUrl: './executive-dashboard.component.html',
-  styleUrls: ['./executive-dashboard.component.css'],
-
-})
-export class ExecutiveDashboardComponent implements OnInit {
-
-  constructor() { };
-
-  ngOnInit() {
-  }
-
-}
-
-
-
-
-
-/* import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
 import * as Chart from 'chart.js';
 import { progressbar } from '../../../Roles/constants';
 import { NgCircleProgressModule } from 'ng-circle-progress';
@@ -27,6 +6,12 @@ import { forkJoin } from 'rxjs';
 import { httpService } from '../../../../services/httpService';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { APP_CONSTANTS } from 'app/utils/app-constants';
+import { environment } from 'environments/environment';
+import { element } from '@angular/core/src/render3/instructions';
+import 'rxjs/add/operator/map';
+import { Dictionary } from 'app/utils/Dictionary';
 
 @Component({
   selector: 'app-executive-dashboard',
@@ -36,211 +21,137 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 
 export class ExecutiveDashboardComponent implements OnInit {
-  chartData: any[];
-  getAssociatesDetails: string;
-  getAccountGowth: any[];
-  getFinanceDetails: any[];
-  getAccountSpending: any[]
-  attrition: string[];
-  expansion: string[];
-  financeMonitoring: any;
-  ctxfinanceMonitoring: any;
-  accountMonthlyGrow: any;
-  ctxaccountMonthlyGrow: any;
-  accountSpending: any;
-  ctxaccountSpending: any;
-  totalAssociates: progressbar;
-  monthyActiveBillable: progressbar;
-  activeAccessTokens: progressbar;
-  issuesOutstanding: progressbar;
-  ltsReq: number;
-  clientReq: number;
-  associatesDetails: any;
-  financeMonitoringData: any;
-  accountMonthlyGrowData:any;
-  accountSpendingData:any;
-  @ViewChild('fileInput') fileInput:ElementRef;
-  constructor(public httpService: httpService, public router: Router, public activatedRoute: ActivatedRoute,private renderer:Renderer) {
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
-      return false;
-    }
+  dashBoardDetails: any[];
+  BillingDetails: Dictionary<any>;
+  SRJrRatios: Dictionary<any>;
+  HeadCounts: Dictionary<any>;
+  TraineeDetails: Dictionary<any>;
+  BACounts: Dictionary<any>;
+  constructor(public httpService: httpService, public router: Router, public activatedRoute: ActivatedRoute,private renderer:Renderer,
+    private http:HttpClient) {}
 
+  ngOnInit() {}
+
+  fetchYearlyDetails(year:string,month:string)
+  {
+    forkJoin([
+      this.httpService.getDashBoardDetails("billing.json",{ reportType:"billable",year:year,momth:month}),
+      this.httpService.getDashBoardDetails("SeniorJuniorRatio.json",{ reportType:"srjrratio",year:year,momth:month}),
+      this.httpService.getDashBoardDetails("HeadCount.json",{ reportType:"hcratio",year:year,momth:month}),
+      this.httpService.getDashBoardDetails("Trainee.json",{ reportType:"trnratio",year:year,momth:month}),
+      this.httpService.getDashBoardDetails("BACount.json",{ reportType:"baratio",year:year,momth:month})
+  ]).subscribe(res=>
+    {
+      this.dashBoardDetails=res;
+      this.initializeView();
+    });
   }
-
-
-
-  ngOnInit() {
-    this.chartData = this.activatedRoute.snapshot.data.chartData;
-    if (this.chartData[0].length > 0 && this.chartData[1].length > 0 && this.chartData[2].length > 0 && this.chartData[3].length > 0) {
-
-      this.associatesDetails = JSON.parse(this.chartData[0]);
-      this.accountSpendingData = JSON.parse(this.chartData[2]);
-      this.accountMonthlyGrowData = JSON.parse(this.chartData[1]);
-      this.financeMonitoringData = JSON.parse(this.chartData[3]);
-
-      this.ltsReq = this.associatesDetails.Requirements.new;
-      this.clientReq = this.associatesDetails.Requirements.expansions;
-      this.attrition = [this.associatesDetails.Attrition.total, this.associatesDetails.Attrition.lastMonth];
-      this.expansion = [this.associatesDetails.Expansions.total, this.associatesDetails.Expansions.lastMonth];
-
-      this.financeMonitoring = document.getElementById('financeMonitoring');
-      this.ctxfinanceMonitoring = this.financeMonitoring.getContext('2d');
-      let financeMonitoring = new Chart(this.ctxfinanceMonitoring, {
-        type: 'horizontalBar',
-        data: {
-          labels: this.financeMonitoringData[0]['labels'],
-          datasets: [{
-            label: this.financeMonitoringData[1]["datasets"]["label"],
-            data: this.financeMonitoringData[1]["datasets"]["data"],
-            backgroundColor: [
-              '#B8E986',
-              '#B8E986',
-              '#B8E986',
-              '#B8E986',
-              '#B8E986',
-              '#B8E986'
-
-            ],
-            borderWidth: 1
-          },
-          {
-            label: this.financeMonitoringData[2]["datasets"]["label"],
-            data: this.financeMonitoringData[2]["datasets"]["data"],
-            backgroundColor: [
-              '#7ED321',
-              '#7ED321',
-              '#7ED321',
-              '#7ED321',
-              '#7ED321',
-              '#7ED321'
-            ],
-            borderWidth: 1
-          }, {
-            label: this.financeMonitoringData[3]["datasets"]["label"],
-            data: this.financeMonitoringData[3]["datasets"]["data"],
-            backgroundColor: [
-              '#39579A',
-              '#39579A',
-              '#39579A',
-              '#39579A',
-              '#39579A',
-              '#39579A'
-            ],
-            borderWidth: 1,
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            yAxes: [{
-              // barThickness: 6,
-              // maxBarThickness: 8,
-              gridLines: {
-                display: false
-              }
-            }],
-            xAxes: [{
-              gridLines: {
-                display: false
-              }
-            }]
-          }
-        },
-
-      });
-
-      this.accountMonthlyGrow = document.getElementById('accountMonthlyGrow');
-      this.ctxaccountMonthlyGrow = this.accountMonthlyGrow.getContext('2d');
-      let accountMonthlyGrow = new Chart(this.ctxaccountMonthlyGrow, {
-        type: 'line',
-        data: {
-          labels: this.accountMonthlyGrowData[0]['labels'],
-          datasets: [{
-            label: this.accountMonthlyGrowData[1]["datasets"]["label"],
-            data: this.accountMonthlyGrowData[1]["datasets"]["data"],
-            backgroundColor: [
-              '#42E0FC'
-            ],
-            borderWidth: 1
-          }, {
-            label: this.accountMonthlyGrowData[2]["datasets"]["label"],
-            data: this.accountMonthlyGrowData[2]["datasets"]["data"],
-            backgroundColor: [
-              '#9013FE'
-            ],
-
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            yAxes: [{
-              stacked: true,
-              gridLines: {
-                display: false
-              }
-            }],
-            xAxes: [{
-              gridLines: {
-                display: false
-              }
-            }]
-          }
-        }
-      });
-
-      this.accountSpending = document.getElementById('accountSpending');
-      this.ctxaccountSpending = this.accountSpending.getContext('2d');
-      let accountSpending = new Chart(this.ctxaccountSpending, {
-        type: 'bar',
-        data: {
-          labels: this.accountSpendingData[0]['labels'],
-          datasets: [{
-            label: this.accountSpendingData[1]["datasets"]["label"],
-            data: this.accountSpendingData[1]["datasets"]["data"],
-            backgroundColor: ['#FFCC41', '#FFCC41', '#FFCC41', '#FFCC41'],
-            borderWidth: 1
-          },
-          {
-            label:this.accountSpendingData[2]["datasets"]["label"],
-            data: this.accountSpendingData[2]["datasets"]["data"],
-            backgroundColor: ['#39475B', '#39475B', '#39475B', '#39475B'],
-            borderWidth: 1
-          },
-          ]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            yAxes: [{
-
-              gridLines: {
-                display: false
-              }
-            }],
-            xAxes: [{
-              // barThickness: 6,
-              // maxBarThickness: 8,
-              stacked: true,
-              gridLines: {
-                display: false
-              }
-            }]
-          }
-        }
-      });
-
-
+initializeView()                          
+{
+    if (this.dashBoardDetails[0] !=null && this.dashBoardDetails[1] !=null
+      && this.dashBoardDetails[2] !=null&& this.dashBoardDetails[3] !=null&&
+      this.dashBoardDetails[3] !=null) 
+    {
+      this.FillBillingDetails(this.dashBoardDetails[0]);
+      this.FillSeniorJuniorRatio(this.dashBoardDetails[1])
+      this.FillHeadCounts(this.dashBoardDetails[2]);
+      this.FillTraineeDetails(this.dashBoardDetails[3]);
+      this.FillBACount(this.dashBoardDetails[4]);;
     }
     else {
       alert("Session Expired!");
       this.router.navigate(['/']);
     }
-
   }
+
+  FillBillingDetails(billingDetails:any)
+  {
+    this.BillingDetails = new Dictionary<any>();
+     billingDetails.map((billingDetail)=>{
+       let billingDetailsLocal =  {
+        BRMName: billingDetail ["brmName"],
+        BRMNumber: billingDetail["brnNumber"],
+        BillCount: billingDetail["billableCountTot"],
+        NBillCOunt: billingDetail["nbCountTot"],
+        BillPerc: billingDetail["billableCountPerc"],
+        NBillPerc:billingDetail["nbCountPerc"],
+        OnBillCOunt: billingDetail["onbillableCount"],
+        OffBillCount:billingDetail["offbillabeCount"],
+        OnBillPerc:billingDetail["onbillabePerc"],
+        OfBillPerc:billingDetail["ofbillabePerc"]
+       };
+       this.BillingDetails.Add(billingDetailsLocal.BRMName,billingDetailsLocal);
+   });
+ }
+
+ FillSeniorJuniorRatio(srjrRatios:any)
+  {
+    this.SRJrRatios = new Dictionary<any>();
+     srjrRatios.map((srjrRatio)=>{
+      let srjrRatioLocal ={
+        BRMName: srjrRatio ["brmName"],
+        BRMNumber: srjrRatio["brnNumber"],
+        SrCount: srjrRatio["srCountTot"],
+        JrCount: srjrRatio["jrCountTot"],
+        SrCountPerc: srjrRatio["srCountPerc"],
+        JrCountPerc:srjrRatio["jrCountPerc"],
+        OnSrCountTot: srjrRatio["onsrCountTot"],
+        OnJrCountTot:srjrRatio["onjrCountTot"],
+        OffSrCountPerc:srjrRatio["offsrCountPerc"],
+        OffJrCountPerc:srjrRatio["offjrCountPerc"]
+       };
+       this.SRJrRatios.Add(srjrRatioLocal.BRMName,srjrRatioLocal);
+   });
+ }
+
+ FillHeadCounts(headCounts:any)
+  {
+    this.HeadCounts = new Dictionary<any>();
+      headCounts.map((headCount)=>{
+        let headCountLocal = {
+        BRMName: headCount ["brmName"],
+        BRMNumber: headCount["brnNumber"],
+        OffTotal: headCount ["offTot"],
+        OnShoreTotal: headCount["onsiteTot"],
+        OffPerc: headCount["offPerc"],
+        OnshorePerc: headCount["onsitePerc"],
+       };
+       this.HeadCounts.Add(headCountLocal.BRMName,headCountLocal);
+   });
+ }
+
+ FillTraineeDetails(traineeDetails:any)
+ {
+  this.TraineeDetails = new Dictionary<any>();
+  traineeDetails.map((traineeDetail)=>{
+      let traineeDetailLocal = {
+        BRMName: traineeDetail ["brmName"],
+        BRMNumber: traineeDetail["brnNumber"],
+       TraineeCountTotal: traineeDetail ["trCountTot"],
+       TraineeCountPer: traineeDetail["trCountPerc"],
+       OnTraineeCount: traineeDetail["ontrCountTot"],
+       OnShoreTraineePerc: traineeDetail["ontrCountPerc"],
+       OffShoreTraineeCount: traineeDetail["offtrCountTot"],
+       OffShoreTraineePerc: traineeDetail["offtrCountPerc"],
+      };
+     this.TraineeDetails.Add(traineeDetailLocal.BRMName,traineeDetailLocal) ;
+  }
+  );
+}
+FillBACount(baCounts:any)
+ {
+  this.BACounts = new Dictionary<any>();
+  baCounts.map((baCount)=>{
+      let baCountLocal = {
+        BRMName: baCount ["brmName"],
+        BRMNumber: baCount["brnNumber"],
+       BACountTotal: baCount ["baCountTot"],
+       BACountPerc: baCount["baCountPerc"],
+      };
+     this.BACounts.Add(baCountLocal.BRMName,baCountLocal) ;
+  }
+  );
+}
 }
 
 
-
- */
