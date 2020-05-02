@@ -49,5 +49,17 @@ export class httpService {
 
     }
 
+    getDashBoardDetails(url:string,body:any):Promise<any>{
+        let token = localStorage.getItem("access_token");
+        return this.httpClient.post("assets\\mock\\aims\\dashBoard\\"+url,body,
+        {
+            headers: new HttpHeaders().set('Authorization', 'Bearer ' + token)
+        }).toPromise().then((result:any)=>{
+            console.log(result);
+            return result;
+        }).catch(msg=>{alert(msg.message);
+        return null;})
+        }
+
 }
 

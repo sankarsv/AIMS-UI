@@ -1,3 +1,31 @@
-<p>
-  billing-management works!
-</p>
+<div class="topNav">
+  <div class="executiveText" style="float: left; padding-left: 10px; padding-top: 10px;">
+    <a>Billing-Management</a>
+  </div>
+  <div class="executiveText" style="float: right; padding-left: 10px; padding-top: 10px;">
+    <a>Home > Dashboard > Billing-Management</a>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-6 progressTexts"> Period
+    <select class="inputBox" [(ngModel)]="searchBy" (ngModelChange)="searchByInput(searchBy);onChange($event)">
+      <option *ngFor="let search of searchByFilters" [ngValue]="search">{{search}} </option>
+    </select>
+  </div>
+
+  <div class="col-md-6 progressText"> BRM Search
+    <select class="inputBoxOne" [(ngModel)]="searchBy" (ngModelChange)="searchByInput(searchBy);onChange($event)">
+      <option *ngFor="let search of searchByFilters" [ngValue]="search">{{search}} </option>
+    </select>
+  </div>
+</div>
+<div *ngIf="showTable">
+  <ng2-smart-table [settings]="settings" [source]="data" (custom)="route($event)"
+    (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+</div>
+<div>
+  <button class="buttonBox" (click)="submit()">Upload</button>
+  <button class="buttonBox" (click)="reset()">Download</button>
+  <button class="buttonBox" (click)="reset()">Freeze</button>
+</div>

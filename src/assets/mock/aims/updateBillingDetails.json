@@ -1,0 +1,46 @@
+GET
+/aims/user/updateBillingDetails
+
+Req
+Body
+{
+    {	
+	
+	"empId":"",
+	"billableHrs",
+	"billableDays",	
+	"effortHrs",
+	"extraHrs",
+	"extraBilling",
+	"billingAmount",
+	"remarks"
+	
+    },
+
+    {	
+	
+	"empId":"",
+	"billableHrs",
+	"billableDays",	
+	"effortHrs",
+	"extraHrs",
+	"extraBilling",
+	"billingAmount",
+	"remarks"
+	
+    }]
+
+
+}
+header :
+{
+authorisation : token <tokenvalue>
+
+}
+
+Response
+[
+    {	
+	"status":"success"
+	}
+]

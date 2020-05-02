@@ -1,0 +1,21 @@
+POST
+/aims/user/updateFreeze
+
+Req
+Body
+{
+freezeInd: Y or N ( 'Y' for Freeze and 'N' for UnFreeze)
+}
+header :
+{
+authorisation : token <tokenvalue>
+
+}
+
+Response
+[
+    {
+
+	status ="success"	
+    }
+]

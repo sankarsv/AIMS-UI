@@ -1,0 +1,22 @@
+File Upload
+
+Upload
+post
+aims/user/uploadBilling
+
+
+Req
+{
+header :
+authorisation : token <tokenvalue>
+
+form-data 
+file=$file.xls
+}
+
+Res
+
+{
+ http status 200
+}
+
