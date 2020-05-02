@@ -21,6 +21,7 @@ import { Dictionary } from 'app/utils/Dictionary';
 })
 
 export class ExecutiveDashboardComponent implements OnInit {
+  yearsList:number[];
   dashBoardDetails: any[];
   BillingDetails: Dictionary<any>;
   SRJrRatios: Dictionary<any>;
@@ -32,14 +33,15 @@ export class ExecutiveDashboardComponent implements OnInit {
 
   ngOnInit() {}
 
+
   fetchYearlyDetails(year:string,month:string)
   {
     forkJoin([
-      this.httpService.getDashBoardDetails("billing.json",{ reportType:"billable",year:year,momth:month}),
-      this.httpService.getDashBoardDetails("SeniorJuniorRatio.json",{ reportType:"srjrratio",year:year,momth:month}),
-      this.httpService.getDashBoardDetails("HeadCount.json",{ reportType:"hcratio",year:year,momth:month}),
-      this.httpService.getDashBoardDetails("Trainee.json",{ reportType:"trnratio",year:year,momth:month}),
-      this.httpService.getDashBoardDetails("BACount.json",{ reportType:"baratio",year:year,momth:month})
+      this.httpService.PostDetails("billing.json",{ reportType:"billable",year:year,momth:month}),
+      this.httpService.PostDetails("SeniorJuniorRatio.json",{ reportType:"srjrratio",year:year,momth:month}),
+      this.httpService.PostDetails("HeadCount.json",{ reportType:"hcratio",year:year,momth:month}),
+      this.httpService.PostDetails("Trainee.json",{ reportType:"trnratio",year:year,momth:month}),
+      this.httpService.PostDetails("BACount.json",{ reportType:"baratio",year:year,momth:month})
   ]).subscribe(res=>
     {
       this.dashBoardDetails=res;

@@ -1,28 +1,14 @@
-GET
-/aims/user/getBRMDetails
-
-Req
-Body
-{
-
-}
-header :
-{
-authorisation : token <tokenvalue>
-
-}
-
-Response
 [
     {	
-	"brmId":"",
-	"brmName":"",
-		
+	"brmId":"1587854",
+	"brmName":"Akkaiah"		
     },
-
     {	
-
-	"brmId":"",
-	"brmName":"",
-		
-    }]
+	"brmId":"1247897",
+	"brmName":"Narayanan"		
+    },
+    {	
+        "brmId":"147857",
+        "brmName":"Ashok"		
+    }
+]
