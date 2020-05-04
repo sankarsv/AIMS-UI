@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { FileQueueObject, FileUploaderService } from '../upload/file-uploader.service';
-
-
+import { APP_CONSTANTS } from 'app/utils/app-constants';
+import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
@@ -39,12 +39,13 @@ export class UploadComponent implements OnInit {
   get f() { return this.form.controls; }
 
   completeItem = (item: FileQueueObject, response: any) => {
+    alert("test")
     this.onCompleteItem.emit({ item, response });
   }
 
   addToQueue() {
     const fileBrowser = this.fileInput.nativeElement;
-    this.uploader.addToQueue(fileBrowser.files);
+    this.uploader.addToQueue(fileBrowser.files, APP_CONSTANTS.URL[environment.type].UPLOAD);
   }
   reset() {
      this.form.controls["upload"].reset();

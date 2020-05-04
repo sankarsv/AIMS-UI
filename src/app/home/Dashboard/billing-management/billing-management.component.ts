@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { httpService } from '../../../../services/httpService';
 import { APP_CONSTANTS } from 'app/utils/app-constants';
 import { environment } from 'environments/environment';
 import { Dictionary } from 'app/utils/Dictionary';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { FileQueueObject, FileUploaderService } from '../../../home/Employee/employee-head/upload/file-uploader.service';
 
 @Component({
   selector: 'app-billing-management',
   templateUrl: './billing-management.component.html',
   styleUrls: ['./billing-management.component.css']
 })
+
 export class BillingManagementComponent implements OnInit {
   searchBy: String;
   showTable: boolean = false;
@@ -18,11 +19,18 @@ export class BillingManagementComponent implements OnInit {
   settings: any;
   data:any;
   input:string='<input type="checkbox"></input>';
-BRMList:Dictionary<any>;
-UnderBRMBillingDetailsList:Dictionary<any>;
-YearsList:[];
-BrmNamesList:string[];
-  constructor(public httpService: httpService,private _sanitizer:DomSanitizer) { }
+  BRMList:Dictionary<any>;
+  UnderBRMBillingDetailsList:Dictionary<any>;
+  YearsList:[];
+  BrmNamesList:string[];
+  fileUpload: boolean;
+  uploadMessage: string;
+  versionId:string;
+  @ViewChild('fileInput') fileInput;
+  @Output() onCompleteItem = new EventEmitter();
+  @Output() onUploadFailed = new EventEmitter();
+
+  constructor(public httpService: httpService,private _sanitizer:DomSanitizer, public uploader: FileUploaderService) { }
 
   ngOnInit() {
     this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].YearValues).then((res:any)=>{
@@ -30,8 +38,9 @@ BrmNamesList:string[];
         return yearname["MonthYearName"];
       });
   });
-
-    this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].BRMDetailsList).then((res:any)=>{
+  this.uploader.onCompleteItem = this.completeItem;
+  this.uploader.onUploadFailed = this.uploadFailed;
+  this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].BRMDetailsList).then((res:any)=>{
       this.BRMList = new Dictionary<any>();
       res.map((brmDetail: { [x: string]: any; })=>{
         let brmDetalLocal =  {
@@ -44,6 +53,39 @@ BrmNamesList:string[];
   });
   
 }
+upload(){
+  this.fileInput.nativeElement.click();
+}
+uplodFile() {
+  const fileBrowser = this.fileInput.nativeElement;  
+  this.uploader.addToQueue(fileBrowser.files, APP_CONSTANTS.URL[environment.type].BillingUpload);
+  this.uploader.uploadAll();
+}
+download(brmName:string, yearValue:string) {  
+  var brmID =this.BRMList.Item(brmName).BRMNumber;
+  var monthName= yearValue.split(" ")[0];
+  var yearName= yearValue.split(" ")[1];
+  var data = {month:monthName, year:yearName, brmID:brmID, versionId: this.versionId };
+  console.log(data);
+  this.httpService.downloadFile(APP_CONSTANTS.URL[environment.type].DownloadBillingFile, data ).then(result => {
+    if (!result) {
+      alert("Error in downloading the report");
+    }    
+  });
+
+}
+completeItem = (item: FileQueueObject, response: any) => {
+  this.fileUpload = true;  
+  this.uploadMessage = "File uploaded successfully";  
+  this.onCompleteItem.emit({ item, response });
+}
+
+uploadFailed = (item: FileQueueObject, response: any) => {
+  this.fileUpload = false;
+  this.uploadMessage = "File upload failed";
+  this.onUploadFailed.emit({ item, response });
+}
+
 searchByInput(brmName:string,yearValue:string)
 {
  var monthName= yearValue.split(" ")[0];
@@ -75,6 +117,9 @@ searchByInput(brmName:string,yearValue:string)
       };
       this.UnderBRMBillingDetailsList.Add(brmDetalLocal.BRMName,brmDetalLocal); 
       this.data= this.UnderBRMBillingDetailsList.Values()    ;
+      if(this.data.length >0){
+        this.versionId = this.data[0].version;        
+      }
     })
     this.initSetting();
 });

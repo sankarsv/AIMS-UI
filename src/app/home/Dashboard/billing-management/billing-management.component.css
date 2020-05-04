@@ -85,6 +85,14 @@
     text-decoration: none;
   }
 
+  .lblSuccess{
+    color: green;
+    font-weight: bold;
+  }
+  .lblFailed{
+    color: red;
+    font-weight: bold;
+  }
 
   /* :host/deep/ table tbody tr:nth-child(odd){
     background: rgb(220,220,220)!important;

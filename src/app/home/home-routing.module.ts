@@ -15,7 +15,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import {
   AuthGuardService as AuthGuard
 } from '../../services/auth-guard.service';
-import { DashboardResolver } from './Dashboard/executive-dashboard/executive.dashboard.resolver';
+// import { DashboardResolver } from './Dashboard/executive-dashboard/executive.dashboard.resolver';
 import { SearchComponent } from './Employee/Employee-head/search/search.component';
 import { HeadcountSearchComponent } from './Employee/Employee-head/headcount-search.component';
 
@@ -46,7 +46,7 @@ const routes: Routes = [
 
       { path: 'executiveDashboard', component: ExecutiveDashboardComponent, pathMatch: 'full' },
 
-      { path: 'executiveDashboard', resolve: { chartData: DashboardResolver }, component: ExecutiveDashboardComponent, pathMatch: 'full' },
+    //  { path: 'executiveDashboard', resolve: { chartData: DashboardResolver }, component: ExecutiveDashboardComponent, pathMatch: 'full' },
 
       { path: 'projectMonitoring', component: ProjectMonitoringComponent, pathMatch: 'full' },
 
@@ -73,6 +73,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers:[DashboardResolver]
+  providers:[]
 })
 export class HomeRoutingModule { }
