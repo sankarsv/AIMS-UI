@@ -46,6 +46,7 @@ BrmNamesList:string[];
 }
 searchByInput(brmName:string,yearValue:string)
 {
+  this.initSetting();
  var monthName= yearValue.split(" ")[0];
  var yearName= yearValue.split(" ")[1];
   var brmID =this.BRMList.Item(brmName).BRMNumber;
@@ -73,10 +74,11 @@ searchByInput(brmName:string,yearValue:string)
        BRMID: brmDetail ["brmId"],
        BRMName: brmDetail ["brmName"]
       };
-      this.UnderBRMBillingDetailsList.Add(brmDetalLocal.BRMName,brmDetalLocal); 
-      this.data= this.UnderBRMBillingDetailsList.Values()    ;
+      this.UnderBRMBillingDetailsList.Add(brmDetalLocal.empNo,brmDetalLocal); 
+      this.data= this.UnderBRMBillingDetailsList.Values();
+      
     })
-    this.initSetting();
+    
 });
 
 }
@@ -90,7 +92,7 @@ searchByInput(brmName:string,yearValue:string)
         add: false,
         edit: true,
         delete: false,
-custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">` }],
+custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`, }],
         position: 'right'
       },
       columns: {
