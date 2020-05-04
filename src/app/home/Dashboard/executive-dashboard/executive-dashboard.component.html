@@ -18,27 +18,29 @@
     <a>Home > Dashboard > Executive</a>
   </div>
 </div>
+<!-- <div style="width: 200px; height: 200px;">
+  <app-brm-barchart></app-brm-barchart>
+</div> -->
+<br />
+<div>
+  <app-billable-piechart [billableData]="test"></app-billable-piechart>
+</div>
+<!-- <div>
+  <app-billable-piechart [test]="data"></app-billable-piechart>
+</div> -->
+<!-- <div>{{ BillingDetails | json }}</div> -->
+<br />
+<!-- <div><app-exp-doughnutchart></app-exp-doughnutchart></div> -->
 
 <!--<div class="executiveImage"></div>-->
 
-<<<<<<< HEAD
-<div class="navbar-expand">
-  <div class="topNav">
-    <div
-      class="executiveText"
-      style="float: left; padding-left: 10px; padding-top: 10px;"
-    >
-      <a>Executive</a>
-=======
-
-   <!-- <div class="navbar-expand">
+<!-- <div class="navbar-expand">
     <div class="topNav">
       <div class="executiveText" style="float: right; padding-right: 10px; padding-top: 10px;"><a>Executive</a>
       </div>
       <div class="executiveText" style="float: left; padding-left: 10px; padding-top: 10px;"><a>Home > Dashboard >
           Executive</a>
       </div>
->>>>>>> e4ab471322e875b52df82aa97feed16744ccad14
     </div>
     <div
       class="executiveText"
@@ -46,23 +48,6 @@
     >
       <a>Home > Dashboard > Executive</a>
     </div>
-<<<<<<< HEAD
-  </div>
-</div>
-<div class="grid-container">
-  <div class="item1">
-    <select [(ngModel)]="dashyear">
-      <option *ngFor="let country of fnyears" [value]="country">
-        {{ country }}
-      </option>
-    </select>
-    <select class="form-control" ng-model="Month" required>
-      <option>Select month</option>
-      <option ng-repeat="Month in Months">{{ Month }}</option>
-    </select>
-  </div>
-</div>
-=======
     <div class="item5">
       <div class="attriationBox">
         <div class="expansionHeader"><a> <img src="../../../assets/images/group3.PNG"
@@ -84,4 +69,3 @@
       </div>
     </div>
   </div>  -->
->>>>>>> e4ab471322e875b52df82aa97feed16744ccad14

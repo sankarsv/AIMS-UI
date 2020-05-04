@@ -315,3 +315,6 @@ progress.issuesOutstanding::-webkit-progress-value {
     grid-column: 3;
   }
 }
+p {
+  font-family: Lato;
+}

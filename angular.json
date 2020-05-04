@@ -19,10 +19,10 @@
             "assets": ["src/assets", "src/favicon.ico"],
             "styles": [
               "src/styles.css",
-              "AIMS-UI/node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
-              "AIMS-UI/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js.map"
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js.map"
             ]
           },
           "configurations": {
