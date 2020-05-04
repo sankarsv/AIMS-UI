@@ -53,7 +53,7 @@ export class FileUploaderService{
   private nextLibAvailable = false;
   private _queue: BehaviorSubject<FileQueueObject[]>;
   private _files: FileQueueObject[] = [];
-
+  private _uploadUrl ='';
   constructor(private http: HttpClient,private httpClient: HttpClient) {
     this._queue = <BehaviorSubject<FileQueueObject[]>>new BehaviorSubject(this._files);
   }
@@ -64,12 +64,16 @@ export class FileUploaderService{
   }
 
   // public events
-  public onCompleteItem(queueObj: FileQueueObject, response: any): any {
+  public onCompleteItem(queueObj: FileQueueObject, response: any): any {    
     return { queueObj, response };
   }
 
+  public onUploadFailed(queueObj: FileQueueObject, response: any): any {    
+    return { queueObj, response };
+  }
   
-  public addToQueue(data: any) {
+  public addToQueue(data: any, uploadUrl) {
+    this._uploadUrl  = uploadUrl;
     // add file to the queue
     _.each(data, (file: any) => this._addToQueue(file));
   }
@@ -87,7 +91,7 @@ export class FileUploaderService{
     // upload all except already successfull or in progress
     this.isloading = false;
     _.each(this._files, (queueObj: FileQueueObject) => {
-      if (queueObj.isUploadable()) {
+      if (queueObj.isUploadable()) {        
         this._upload(queueObj);
       }
     });
@@ -119,7 +123,7 @@ export class FileUploaderService{
     const form = new FormData();
     form.append('file', queueObj.file);
     localStorage.setItem('fileupload', 'fileupload');
-    return this.httpClient.post(APP_CONSTANTS.URL[environment.type].UPLOAD, form).toPromise().then((result: any) => {
+    return this.httpClient.post(this._uploadUrl, form).toPromise().then((result: any) => {      
             this._uploadComplete(queueObj,result);
           }).catch(err => this._uploadFailed(queueObj, err)) 
 
@@ -152,7 +156,7 @@ export class FileUploaderService{
     queueObj.progress = 100;
     queueObj.status = FileQueueStatus.Success;
     queueObj.response = response;
-    this._queue.next(this._files);
+    this._queue.next(this._files);    
     this.onCompleteItem(queueObj, response.body);
     localStorage.removeItem('fileupload');
   }
@@ -163,7 +167,9 @@ export class FileUploaderService{
     queueObj.status = FileQueueStatus.Error;
     queueObj.response = response;
     this._queue.next(this._files);
+    this.onUploadFailed(queueObj, response);
     localStorage.removeItem('fileupload');
+    
   }
  
 

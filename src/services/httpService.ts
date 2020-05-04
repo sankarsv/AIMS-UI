@@ -47,6 +47,19 @@ export class httpService {
 
     }
 
+    downloadFile(url: string, body: any) {
+        let token = localStorage.getItem("access_token");
+        return this.httpClient.post("/aims/user/" + url, body,
+        {
+            headers: new HttpHeaders().set('Authorization', 'Bearer ' + token),
+            responseType: 'blob'
+
+        }).toPromise().then((result: any) => {
+            return result;
+        }).catch(err => { alert(err.message); return null; })
+
+    }
+
     PostDetails(url:string,body:any):Promise< any >{
         let token = localStorage.getItem("access_token");
         return this.httpClient.post("assets\\mock\\aims\\dashBoard\\"+url,body,

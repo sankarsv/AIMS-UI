@@ -1,21 +1,3 @@
-Download
-
-post
-/aims/user/downloadBilling
-
-Req
 {
-header :
-authorisation : token <tokenvalue>
-
-"month" :
-"year":
+    "status":200
 }
-
-Res
-{
- File steam
-}
-
-
-Download
