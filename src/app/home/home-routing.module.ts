@@ -68,7 +68,7 @@ const routes: Routes = [
  },
  {
   path: 'reports',
-  component: UploadreportsComponent,
+  component: HomepageComponent,
    canActivate: [AuthGuard],
    children: [
     { path: 'uploadreports', component: UploadreportsComponent, pathMatch: 'full' },
