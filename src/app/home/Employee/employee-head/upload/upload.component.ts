@@ -28,7 +28,6 @@ export class UploadComponent implements OnInit {
   constructor(public uploader: FileUploaderService,private formBuilder: FormBuilder) {}
    
   ngOnInit() {
-
     this.form = new FormGroup({
       'upload': new FormControl('', [Validators.required])
     });
@@ -38,8 +37,7 @@ export class UploadComponent implements OnInit {
 
   get f() { return this.form.controls; }
 
-  completeItem = (item: FileQueueObject, response: any) => {
-    alert("test")
+  completeItem = (item: FileQueueObject, response: any) => {    
     this.onCompleteItem.emit({ item, response });
   }
 

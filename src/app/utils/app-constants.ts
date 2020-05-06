@@ -13,6 +13,8 @@ export const APP_CONSTANTS = {
             DownloadBillingFile:"assets/mock/aims/downloadBilling.json",
             YearValues:"assets/mock/aims/YearsList.json",
             BRMDetailsList:"assets/mock/aims/getBRMDetails.json",
+            GetFreeze:"assets/mock/aims/updateFreeze.json",
+            UpdateBillingDetails:"assets/mock/aims/updateBillingDetails.json",
             UPLOADREPORTS:"assets/mock/aims/getFileStatus.json"
         },
         PROD: {
@@ -28,6 +30,8 @@ export const APP_CONSTANTS = {
             DownloadBillingFile:"/aims/user/downloadBilling",
             YearValues:"assets/mock/aims/YearsList.json",
             BRMDetailsList:"/aims/user/getBRMDetails",
+            GetFreeze:"/aims/user/updateFreeze",
+            UpdateBillingDetails:"/aims/user/updateBillingDetails",
             UPLOADREPORTS:"assets/mock/aims/getFileStatus.josn"
         }
     }

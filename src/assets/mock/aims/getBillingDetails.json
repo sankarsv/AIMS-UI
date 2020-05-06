@@ -18,7 +18,8 @@
 		 "extraBilling":"85$",
 		 "billingAmount":"250$",
 		 "remarks":"good",
-		 "version":"1"
+		 "version":"1",
+		 "freezeInd":"N"
 		 },
 		 {	
 			"locationId":"1234",
@@ -39,7 +40,8 @@
 			 "extraBilling":"85$",
 			 "billingAmount":"250$",
 			 "remarks":"good",
-			 "version":"1"
+			 "version":"1",
+			 "freezeInd":"N"
 			 }
 ]
 
