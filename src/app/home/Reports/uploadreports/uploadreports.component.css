@@ -2,3 +2,8 @@
     margin: 0 auto;
     width: 80%;
 }
+
+.topNav{
+    height: 48px;
+    background-color: #EFF2F7;
+}
