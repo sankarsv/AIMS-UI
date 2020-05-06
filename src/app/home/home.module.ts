@@ -24,6 +24,7 @@ import { UploadComponent } from './Employee/employee-head/upload/upload.componen
 import { DownloadComponent } from './Employee/employee-head/download/download.component';
 import { HeadcountSearchComponent } from './Employee/Employee-head/headcount-search.component';
 import { FileUploaderService } from './Employee/employee-head/upload/file-uploader.service';
+import { UploadreportsComponent } from './Reports/uploadreports/uploadreports.component';
 //import { DashboardResolver } from './Dashboard/executive-dashboard/executive.dashboard.resolver';
 
 @NgModule({
@@ -54,7 +55,9 @@ import { FileUploaderService } from './Employee/employee-head/upload/file-upload
     SearchComponent,
     UploadComponent,
     DownloadComponent,
-    HeadcountSearchComponent
+    HeadcountSearchComponent,
+    UploadreportsComponent
+    
   
     
   ],
