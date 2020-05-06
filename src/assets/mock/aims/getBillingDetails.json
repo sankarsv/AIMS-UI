@@ -18,13 +18,8 @@
 		 "extraBilling":"85$",
 		 "billingAmount":"250$",
 		 "remarks":"good",
-<<<<<<< HEAD
-		 "freeze":"Y",
-		 "version":"1"
-=======
 		 "version":"1",
 		 "freezeInd":"N"
->>>>>>> 110b1ed28539afa1c1266880e1598efd9c24b246
 		 },
 		 {	
 			"locationId":"1234",

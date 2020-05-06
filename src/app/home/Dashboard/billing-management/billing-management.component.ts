@@ -126,13 +126,6 @@ searchByInput(brmName:string,yearValue:string)
        BRMName: brmDetail ["brmName"],
        freezeInd: brmDetail ["freezeInd"]
       };
-<<<<<<< HEAD
-      this.UnderBRMBillingDetailsList.Add(brmDetalLocal.empNo,brmDetalLocal); 
-      this.data= this.UnderBRMBillingDetailsList.Values();
-      
-    })
-    
-=======
       this.UnderBRMBillingDetailsList.Add(brmDetalLocal.BRMName,brmDetalLocal); 
       this.data= this.UnderBRMBillingDetailsList.Values();
      
@@ -143,7 +136,6 @@ searchByInput(brmName:string,yearValue:string)
     }
 
     this.initSetting();
->>>>>>> 110b1ed28539afa1c1266880e1598efd9c24b246
 });
 
 }
