@@ -1,3 +1,4 @@
+import { UploadreportsComponent } from './Reports/uploadreports/uploadreports.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AssociateAnalyticsComponent } from './Dashboard/associate-analytics/associate-analytics.component';
@@ -65,7 +66,15 @@ const routes: Routes = [
       //  { path: 'download', component: DownloadComponent, pathMatch: 'full' },
      ]
  },
- 
+ {
+  path: 'reports',
+  component: UploadreportsComponent,
+   canActivate: [AuthGuard],
+   children: [
+    { path: 'uploadreports', component: UploadreportsComponent, pathMatch: 'full' },
+   
+  ]
+},
 
 
 ];

@@ -14,7 +14,8 @@ export const APP_CONSTANTS = {
             YearValues:"assets/mock/aims/YearsList.json",
             BRMDetailsList:"assets/mock/aims/getBRMDetails.json",
             GetFreeze:"assets/mock/aims/updateFreeze.json",
-            UpdateBillingDetails:"assets/mock/aims/updateBillingDetails.json"
+            UpdateBillingDetails:"assets/mock/aims/updateBillingDetails.json",
+            UPLOADREPORTS:"assets/mock/aims/getFileStatus.json"
         },
         PROD: {
             LOGIN: "aims/login",
@@ -30,7 +31,8 @@ export const APP_CONSTANTS = {
             YearValues:"assets/mock/aims/YearsList.json",
             BRMDetailsList:"/aims/user/getBRMDetails",
             GetFreeze:"/aims/user/updateFreeze",
-            UpdateBillingDetails:"/aims/user/updateBillingDetails"
+            UpdateBillingDetails:"/aims/user/updateBillingDetails",
+            UPLOADREPORTS:"assets/mock/aims/getFileStatus.josn"
         }
     }
 }
