@@ -21,11 +21,20 @@
   </div>
 </div>
 <div *ngIf="showTable">
-  <ng2-smart-table [settings]="settings" [source]="data" (custom)="route($event)"
+  <ng2-smart-table [settings]="settings" [source]="data" (custom)="route($event)" (editConfirm)="onSaveConfirm($event)"
     (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
 </div>
+
 <div>
-  <button class="buttonBox" (click)="submit()">Upload</button>
-  <button class="buttonBox" (click)="reset()">Download</button>
-  <button class="buttonBox" (click)="reset()">Freeze</button>
+  <input type="file" formControlName="upload"  #fileInput multiple (change)="uplodFile()"  accept=".xlsx, .xls"
+						class="d-none" />
+</div>
+
+<div>
+  <button class="buttonBox" (click)="upload()">Upload</button>
+  <button class="buttonBox" (click)="download(searchByBRM,searchByYear)">Download</button>
+  <button class="buttonBox" (click)="reset()">{{btnFreezeText}}</button>
+</div>
+<div>
+  <label [ngClass]= "{'lblSuccess': fileUpload, 'lblFailed': !fileUpload }"  >{{uploadMessage}}</label>
 </div>

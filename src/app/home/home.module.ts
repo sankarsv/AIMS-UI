@@ -24,7 +24,8 @@ import { UploadComponent } from './Employee/employee-head/upload/upload.componen
 import { DownloadComponent } from './Employee/employee-head/download/download.component';
 import { HeadcountSearchComponent } from './Employee/Employee-head/headcount-search.component';
 import { FileUploaderService } from './Employee/employee-head/upload/file-uploader.service';
-import { DashboardResolver } from './Dashboard/executive-dashboard/executive.dashboard.resolver';
+import { UploadreportsComponent } from './Reports/uploadreports/uploadreports.component';
+//import { DashboardResolver } from './Dashboard/executive-dashboard/executive.dashboard.resolver';
 
 @NgModule({
   imports: [
@@ -54,13 +55,15 @@ import { DashboardResolver } from './Dashboard/executive-dashboard/executive.das
     SearchComponent,
     UploadComponent,
     DownloadComponent,
-    HeadcountSearchComponent
+    HeadcountSearchComponent,
+    UploadreportsComponent
+    
   
     
   ],
   providers:[ 
-    FileUploaderService,
-    DashboardResolver]
+    FileUploaderService
+    ]
   /* DashboardResolver */
  
 })
