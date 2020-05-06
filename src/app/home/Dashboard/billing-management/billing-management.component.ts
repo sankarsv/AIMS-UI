@@ -53,8 +53,7 @@ export class BillingManagementComponent implements OnInit {
       this.BRMList = new Dictionary<any>();
       res.map((brmDetail: { [x: string]: any; })=>{
         let brmDetalLocal =  {
-         BRMName: brmDetail ["brmName"],
-         BRMNumber: brmDetail["brmId"],
+         BRMName: brmDetail ["brmName"]
         };
         this.BRMList.Add(brmDetalLocal.BRMName,brmDetalLocal);
         this.BrmNamesList =this.BRMList.Keys();
@@ -100,8 +99,8 @@ searchByInput(brmName:string,yearValue:string)
   this.initSetting();
  var monthName= yearValue.split(" ")[0];
  var yearName= yearValue.split(" ")[1];
-  var brmID =this.BRMList.Item(brmName).BRMNumber;
-  this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,{month:monthName,year:yearName,brmID:brmID}).then((res:any)=>{
+  var name =brmName;
+  this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,{month:monthName,year:yearName,bramName:name}).then((res:any)=>{
     this.UnderBRMBillingDetailsList = new Dictionary<any>();
     res.map((brmDetail: { [x: string]: any; })=>{      
       let brmDetalLocal =  {
@@ -122,7 +121,6 @@ searchByInput(brmName:string,yearValue:string)
        WONNumber: brmDetail ["wonNumber"],
        STOName: brmDetail ["stoName"],
        OfficeID: brmDetail ["officeId"],
-       BRMID: brmDetail ["brmId"],
        BRMName: brmDetail ["brmName"],
        freezeInd: brmDetail ["freezeInd"]
       };
