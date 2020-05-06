@@ -26,6 +26,8 @@ export class BillingManagementComponent implements OnInit {
   fileUpload: boolean;
   uploadMessage: string;
   versionId:string;
+  freezeInd:boolean = false;
+  btnFreezeText: string;
   @ViewChild('fileInput') fileInput;
   @Output() onCompleteItem = new EventEmitter();
   @Output() onUploadFailed = new EventEmitter();
@@ -36,8 +38,15 @@ export class BillingManagementComponent implements OnInit {
     this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].YearValues).then((res:any)=>{
       this.YearsList = res.map(yearname=>{
         return yearname["MonthYearName"];
-      });
-  });
+      });     
+    });
+    this.btnFreezeText ="UnFreeze";
+
+    // this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].GetFreeze).then((res:any)=>{
+    //   this.YearsList = res.map(yearname=>{
+    //     return yearname["MonthYearName"];
+    //   });
+    // });
   this.uploader.onCompleteItem = this.completeItem;
   this.uploader.onUploadFailed = this.uploadFailed;
   this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].BRMDetailsList).then((res:any)=>{
@@ -93,7 +102,7 @@ searchByInput(brmName:string,yearValue:string)
   var brmID =this.BRMList.Item(brmName).BRMNumber;
   this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,{month:monthName,year:yearName,brmID:brmID}).then((res:any)=>{
     this.UnderBRMBillingDetailsList = new Dictionary<any>();
-    res.map((brmDetail: { [x: string]: any; })=>{
+    res.map((brmDetail: { [x: string]: any; })=>{      
       let brmDetalLocal =  {
         version: brmDetail ["version"],
         location: brmDetail["locationId"],
@@ -113,14 +122,18 @@ searchByInput(brmName:string,yearValue:string)
        STOName: brmDetail ["stoName"],
        OfficeID: brmDetail ["officeId"],
        BRMID: brmDetail ["brmId"],
-       BRMName: brmDetail ["brmName"]
+       BRMName: brmDetail ["brmName"],
+       freezeInd: brmDetail ["freezeInd"]
       };
       this.UnderBRMBillingDetailsList.Add(brmDetalLocal.BRMName,brmDetalLocal); 
-      this.data= this.UnderBRMBillingDetailsList.Values()    ;
-      if(this.data.length >0){
-        this.versionId = this.data[0].version;        
-      }
+      this.data= this.UnderBRMBillingDetailsList.Values();
+     
     })
+    if(this.data.length >0){
+      this.versionId = this.data[0].version;      
+      this.freezeInd = (this.data[0].freezeInd == "Y");      
+    }
+
     this.initSetting();
 });
 
@@ -130,10 +143,13 @@ searchByInput(brmName:string,yearValue:string)
     this.searchString = "";
     this.showTable = true;
     this.settings = {
+      mode: 'inline',
       selectionMode:'multi',
+      edit: {confirmSave: true},
       actions: {
         add: false,
-        edit: true,
+        edit:true,
+        update: true,
         delete: false,
 custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">` }],
         position: 'right'
@@ -180,9 +196,48 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">` 
         }
       },
     };
+    if(this.freezeInd) {
+      this.freezeSettings();
+    }
+  }
+
+  freezeSettings() {    
+    this.settings.selectionMode = null;
+    delete this.settings.columns["checkbox"];    
+    this.settings.actions = null;
+    this.btnFreezeText ="Freeze";
+  }
+
+  onDeleteConfirm(event) {
+    alert();
+
+  }
+  onSaveConfirm(event) {
+    var data ={
+      version: this.versionId,
+      billingDetailsList:[]
+    };
+    var employee ={
+      empId:event.newData["empNo"],
+      billableHrs:event.newData["billablehrs"],
+      billableDays:event.newData["billabledays"],      
+      effortHrs: event.newData["efforthr"],
+      extraBilling:event.newData["extrabiling"],
+      billingAmount: event.newData["billableamt"],
+      remarks:event.newData["remarks"]
+    }
+   data.billingDetailsList.push(employee);
+   alert(JSON.stringify(data));
+   
+    this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].UpdateBillingDetails, data).then(result =>{      
+        alert("Saved Successfully");      
+    });
+   
+    
   }
 
 }
+
 
 
 

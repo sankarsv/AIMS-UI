@@ -12,7 +12,9 @@ export const APP_CONSTANTS = {
             BillingManagment:"assets/mock/aims/getBillingDetails.json",
             DownloadBillingFile:"assets/mock/aims/downloadBilling.json",
             YearValues:"assets/mock/aims/YearsList.json",
-            BRMDetailsList:"assets/mock/aims/getBRMDetails.json"
+            BRMDetailsList:"assets/mock/aims/getBRMDetails.json",
+            GetFreeze:"assets/mock/aims/updateFreeze.json",
+            UpdateBillingDetails:"assets/mock/aims/updateBillingDetails.json"
         },
         PROD: {
             LOGIN: "aims/login",
@@ -26,7 +28,9 @@ export const APP_CONSTANTS = {
             BillingManagment:"/aims/user/getBillingDetails",
             DownloadBillingFile:"/aims/user/downloadBilling",
             YearValues:"assets/mock/aims/YearsList.json",
-            BRMDetailsList:"/aims/user/getBRMDetails"
+            BRMDetailsList:"/aims/user/getBRMDetails",
+            GetFreeze:"/aims/user/updateFreeze",
+            UpdateBillingDetails:"/aims/user/updateBillingDetails"
         }
     }
 }
