@@ -1,23 +1,23 @@
 [
 	{	
-		"locationId":"1234",
+		"locationId":"1233",
 		 "projectId":"763",
-		 "empId":"1290827",
-		 "empName":"Goutham Mayaluri",
+		 "empId":"1290828",
+		 "empName":"Ganesh",
 		 "brmId":"1478955",
 		 "brmName":"Akkaiah",
 		 "dmId":"4585955",
 		 "dmName":"Narayanan",
 		 "wonNumber":"02147585",
 		 "stoName":"Voitech",
-		 "officeId":"gmayalu",
-		 "billableHrs":"85",
-		 "billableDays":"47",	
-		 "effortHrs":"47",
-		 "extraHrs":"25",
-		 "extraBilling":"85$",
+		 "officeId":"gkdagkk",
+		 "billableHrs":"95",
+		 "billableDays":"50",	
+		 "effortHrs":"55",
+		 "extraHrs":"30",
+		 "extraBilling":"90$",
 		 "billingAmount":"250$",
-		 "remarks":"good",
+		 "remarks":"Good",
 		 "version":"1",
 		 "freezeInd":"N"
 		 },
@@ -40,13 +40,8 @@
 			 "extraBilling":"85$",
 			 "billingAmount":"250$",
 			 "remarks":"good",
-<<<<<<< HEAD
-			 "freeze":"Y",
-			 "version":"1"
-=======
 			 "version":"1",
 			 "freezeInd":"N"
->>>>>>> 110b1ed28539afa1c1266880e1598efd9c24b246
 			 }
 ]
 
