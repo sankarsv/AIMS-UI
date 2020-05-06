@@ -34,14 +34,14 @@ export class ExecutiveDashboardComponent implements OnInit {
   ngOnInit() {}
 
 
-  fetchYearlyDetails(year:string,month:string)
+  fetchYearlyDetails(year:string,month:string,brmName:string)
   {
     forkJoin([
-      this.httpService.PostDetails("billing.json",{ reportType:"billable",year:year,momth:month}),
-      this.httpService.PostDetails("SeniorJuniorRatio.json",{ reportType:"srjrratio",year:year,momth:month}),
-      this.httpService.PostDetails("HeadCount.json",{ reportType:"hcratio",year:year,momth:month}),
-      this.httpService.PostDetails("Trainee.json",{ reportType:"trnratio",year:year,momth:month}),
-      this.httpService.PostDetails("BACount.json",{ reportType:"baratio",year:year,momth:month})
+      this.httpService.PostDetails("billing.json",{ reportType:"billable",year:year,momth:month,bramName:brmName}),
+      this.httpService.PostDetails("SeniorJuniorRatio.json",{ reportType:"srjrratio",year:year,momth:month,brmName:brmName}),
+      this.httpService.PostDetails("HeadCount.json",{ reportType:"hcratio",year:year,momth:month,brmName:brmName}),
+      this.httpService.PostDetails("Trainee.json",{ reportType:"trnratio",year:year,momth:month,brmName:brmName}),
+      this.httpService.PostDetails("BACount.json",{ reportType:"baratio",year:year,momth:month,brmName:brmName})
   ]).subscribe(res=>
     {
       this.dashBoardDetails=res;
@@ -72,7 +72,6 @@ initializeView()
      billingDetails.map((billingDetail)=>{
        let billingDetailsLocal =  {
         BRMName: billingDetail ["brmName"],
-        BRMNumber: billingDetail["brnNumber"],
         BillCount: billingDetail["billableCountTot"],
         NBillCOunt: billingDetail["nbCountTot"],
         BillPerc: billingDetail["billableCountPerc"],
@@ -92,7 +91,6 @@ initializeView()
      srjrRatios.map((srjrRatio)=>{
       let srjrRatioLocal ={
         BRMName: srjrRatio ["brmName"],
-        BRMNumber: srjrRatio["brnNumber"],
         SrCount: srjrRatio["srCountTot"],
         JrCount: srjrRatio["jrCountTot"],
         SrCountPerc: srjrRatio["srCountPerc"],
@@ -112,8 +110,8 @@ initializeView()
       headCounts.map((headCount)=>{
         let headCountLocal = {
         BRMName: headCount ["brmName"],
-        BRMNumber: headCount["brnNumber"],
         OffTotal: headCount ["offTot"],
+        TotalCOunt:headCount["totalCnt"],
         OnShoreTotal: headCount["onsiteTot"],
         OffPerc: headCount["offPerc"],
         OnshorePerc: headCount["onsitePerc"],
@@ -128,7 +126,6 @@ initializeView()
   traineeDetails.map((traineeDetail)=>{
       let traineeDetailLocal = {
         BRMName: traineeDetail ["brmName"],
-        BRMNumber: traineeDetail["brnNumber"],
        TraineeCountTotal: traineeDetail ["trCountTot"],
        TraineeCountPer: traineeDetail["trCountPerc"],
        OnTraineeCount: traineeDetail["ontrCountTot"],
@@ -146,9 +143,12 @@ FillBACount(baCounts:any)
   baCounts.map((baCount)=>{
       let baCountLocal = {
         BRMName: baCount ["brmName"],
-        BRMNumber: baCount["brnNumber"],
        BACountTotal: baCount ["baCountTot"],
        BACountPerc: baCount["baCountPerc"],
+       BACountTotalOn: baCount ["baCountTotOn"],
+       BACountTotalOff: baCount["baCountTotOff"],
+       BACountPercOn: baCount ["baCountPerOn"],
+       BACountPercOff: baCount["baCountPerOff"],
       };
      this.BACounts.Add(baCountLocal.BRMName,baCountLocal) ;
   }
