@@ -1,3 +1,12 @@
-<p>
-  trainee-barchart works!
-</p>
+<div style="display: block;">
+  <canvas
+    baseChart
+    [chartType]="chartType"
+    [datasets]="chartDatasets"
+    [labels]="chartLabels"
+    [legend]="true"
+    [options]="chartOptions"
+    (chartHover)="chartHovered($event)"
+  >
+  </canvas>
+</div>

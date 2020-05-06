@@ -29,6 +29,7 @@ import { ChartsModule } from "ng2-charts";
 import { BillablePiechartComponent } from './Dashboard/executive-dashboard/charts-dashboard/billable-piechart/billable-piechart.component';
 import { ExpDoughnutchartComponent } from './Dashboard/executive-dashboard/charts-dashboard/exp-doughnutchart/exp-doughnutchart.component';
 import { TraineeBarchartComponent } from './Dashboard/executive-dashboard/charts-dashboard/trainee-barchart/trainee-barchart.component';
+import { BaHorizontalbarchartComponent } from './Dashboard/executive-dashboard/charts-dashboard/ba-horizontalbarchart/ba-horizontalbarchart.component';
 
 @NgModule({
   imports: [
@@ -62,6 +63,7 @@ import { TraineeBarchartComponent } from './Dashboard/executive-dashboard/charts
     BillablePiechartComponent,
     ExpDoughnutchartComponent,
     TraineeBarchartComponent,
+    BaHorizontalbarchartComponent,
   ],
   providers: [FileUploaderService, DashboardResolver],
   /* DashboardResolver */

@@ -1,71 +1,45 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <div class="topNav">
-  <div
+  <!-- <div
     class="executiveText"
     style="float: left; padding-left: 10px; padding-top: 10px;"
   >
     <a>Executive</a>
-  </div>
+  </div> -->
   <div
     class="executiveText"
     style="text-align: center; padding-left: 10px; padding-top: 10px;"
   >
-    <b>Dashboard Under Construction !!</b>
+    <b>Dashboard</b>
   </div>
-  <div
+  <!-- <div
     class="executiveText"
     style="float: right; padding-left: 10px; padding-top: 10px;"
   >
     <a>Home > Dashboard > Executive</a>
-  </div>
+  </div> -->
 </div>
-<!-- <div style="width: 200px; height: 200px;">
-  <app-brm-barchart></app-brm-barchart>
+<!-- <div class="centerdiv"></div> -->
+
+<!-- <div class="centerdiv" *ngIf="HasDataFetched">
+  <app-brm-barchart
+    [HCData]="HeadCounts"
+    [BAData]="BADetails"
+  ></app-brm-barchart>
 </div> -->
-<br />
-<div>
-  <app-billable-piechart [billableData]="test"></app-billable-piechart>
+<div class="griddiv" *ngIf="HasDataFetched">
+  <app-billable-piechart
+    [billableData]="billingDetails"
+  ></app-billable-piechart>
 </div>
-<!-- <div>
-  <app-billable-piechart [test]="data"></app-billable-piechart>
-</div> -->
-<!-- <div>{{ BillingDetails | json }}</div> -->
-<br />
-<!-- <div><app-exp-doughnutchart></app-exp-doughnutchart></div> -->
-
-<!--<div class="executiveImage"></div>-->
-
-<!-- <div class="navbar-expand">
-    <div class="topNav">
-      <div class="executiveText" style="float: right; padding-right: 10px; padding-top: 10px;"><a>Executive</a>
-      </div>
-      <div class="executiveText" style="float: left; padding-left: 10px; padding-top: 10px;"><a>Home > Dashboard >
-          Executive</a>
-      </div>
-    </div>
-    <div
-      class="executiveText"
-      style="float: right; padding-left: 10px; padding-top: 10px;"
-    >
-      <a>Home > Dashboard > Executive</a>
-    </div>
-    <div class="item5">
-      <div class="attriationBox">
-        <div class="expansionHeader"><a> <img src="../../../assets/images/group3.PNG"
-              style="float: left; padding-left: 10px; padding-top: 10px;"></a></div>
-        <div class="expansionHeader"><a>Expansions</a></div>
-        <div class="expansionText"><a>New associates added since last quarter (Q3 FY19)</a></div>
-        <div class="expansionText"><a><span class="expansionnumber">{{associatesDetails.ExpansionsTotal}}</span> (Last Month:
-            {{associatesDetails.ExpansionsLastMonth}})</a>
-        </div>
-      </div>
-
-      <div class="attriationBox" style="margin-top: 5px">
-        <div class="expansionHeader"><a> <img src="../../../assets/images/Icon-2.png"
-              style="float: left; padding-left: 10px; padding-top: 10px;"></a></div>
-        <div class="expansionHeader"><a>Attrition</a></div>
-        <div class="expansionText"><a>Associates Initiated seperation since last quarter (Q3 FY19)</a></div>
-        <div class="expansionText"><a><span class="attritationnumber">{{associatesDetails.Attritiontotal}}</span> (Last Month:
-            {{associatesDetails.AttritionlastMonth}})</a></div>
-      </div>
-    </div>
-  </div>  -->
+<div class="griddiv" *ngIf="HasDataFetched">
+  <app-exp-doughnutchart
+    [SeniorJuniorData]="seniorJuniorDetails"
+  ></app-exp-doughnutchart>
+</div>
+<div class="griddiv" *ngIf="HasDataFetched">
+  <app-trainee-barchart [TraineeData]="traineeDetails"></app-trainee-barchart>
+</div>
+<div class="griddiv" *ngIf="HasDataFetched">
+  <app-ba-horizontalbarchart [BAData]="BADetails"></app-ba-horizontalbarchart>
+</div>

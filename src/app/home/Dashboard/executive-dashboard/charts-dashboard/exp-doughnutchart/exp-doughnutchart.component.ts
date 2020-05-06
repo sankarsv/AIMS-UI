@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 
 @Component({
   selector: "app-exp-doughnutchart",
@@ -6,28 +6,38 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./exp-doughnutchart.component.css"],
 })
 export class ExpDoughnutchartComponent implements OnInit {
+  @Input() public SeniorJuniorData: any[] = [];
+  public chartType: string;
+  public chartDatasets: Array<any>;
+  public chartLabels: Array<any>;
+  public chartOptions;
+
+  // chartDatasets: any = [];
   constructor() {}
 
-  ngOnInit() {}
-
-  // Doughnut
-  public doughnutChartLabels: string[] = [
-    "Age 18 to 24",
-    "Age 25 to 35",
-    "Above 35+",
-  ];
-  // public demodoughnutChartData: number[] = [
-  //   [350, 450, 100],
-  //   [250, 350, 150],
-  // ];
-  public doughnutChartType: string = "doughnut";
-
-  // events
-  public chartClicked(e: any): void {
-    console.log(e);
+  ngOnInit() {
+    if (this.SeniorJuniorData[0] != null) {
+      this.loadChart();
+    }
   }
 
-  public chartHovered(e: any): void {
-    console.log(e);
+  loadChart() {
+    this.chartType = "doughnut";
+    this.chartDatasets = [
+      {
+        data: [
+          this.SeniorJuniorData[0].SrCountPerc,
+          this.SeniorJuniorData[0].JrCountPerc,
+        ],
+        backgroundColor: ["#F7464A", "#46BFBD"],
+        hoverBackgroundColor: ["#FF5A5E", "#5AD3D1"],
+      },
+    ];
+    this.chartLabels = ["SeniorCount-Percentage", "JuniorCount-Percentage"];
+    this.chartOptions = {
+      responsive: true,
+    };
   }
+
+  public chartHovered(e: any): void {}
 }

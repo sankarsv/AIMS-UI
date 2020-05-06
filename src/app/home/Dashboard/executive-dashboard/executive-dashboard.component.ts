@@ -30,11 +30,17 @@ import { BillablePiechartComponent } from "./charts-dashboard/billable-piechart/
 export class ExecutiveDashboardComponent implements OnInit {
   dashBoardDetails: any[];
   BillingDetails: Dictionary<any>;
-  public test: any[] = [];
+  public billingDetails: any[] = [];
+  public seniorJuniorDetails: any[] = [];
+  public traineeDetails: any[] = [];
+  public headCountDetails: any[] = [];
+  public BADetails: any[] = [];
   SRJrRatios: Dictionary<any>;
   HeadCounts: Dictionary<any>;
   TraineeDetails: Dictionary<any>;
   BACounts: Dictionary<any>;
+  HasDataFetched: Boolean = false;
+
   // public name = "deepak";
   //public test: any[] = [];
   //data = { BRMName: "AAA", BRMId: "123", BillPerc: 857, BillCount: 45 };
@@ -98,6 +104,7 @@ export class ExecutiveDashboardComponent implements OnInit {
       this.FillHeadCounts(this.dashBoardDetails[2]);
       this.FillTraineeDetails(this.dashBoardDetails[3]);
       this.FillBACount(this.dashBoardDetails[4]);
+      this.HasDataFetched = true;
     } else {
       alert("Session Expired!");
       this.router.navigate(["/"]);
@@ -121,7 +128,7 @@ export class ExecutiveDashboardComponent implements OnInit {
       };
       this.BillingDetails.Add(billingDetailsLocal.BRMName, billingDetailsLocal);
     });
-    this.test.push(this.BillingDetails.Item("Akkaiah"));
+    this.billingDetails.push(this.BillingDetails.Item("Akkaiah"));
   }
 
   FillSeniorJuniorRatio(srjrRatios: any) {
@@ -141,6 +148,7 @@ export class ExecutiveDashboardComponent implements OnInit {
       };
       this.SRJrRatios.Add(srjrRatioLocal.BRMName, srjrRatioLocal);
     });
+    this.seniorJuniorDetails.push(this.SRJrRatios.Item("Akkaiah"));
   }
 
   FillHeadCounts(headCounts: any) {
@@ -156,6 +164,7 @@ export class ExecutiveDashboardComponent implements OnInit {
       };
       this.HeadCounts.Add(headCountLocal.BRMName, headCountLocal);
     });
+    this.headCountDetails.push(this.HeadCounts.Item("Akkaiah"));
   }
 
   FillTraineeDetails(traineeDetails: any) {
@@ -173,6 +182,7 @@ export class ExecutiveDashboardComponent implements OnInit {
       };
       this.TraineeDetails.Add(traineeDetailLocal.BRMName, traineeDetailLocal);
     });
+    this.traineeDetails.push(this.TraineeDetails.Item("Akkaiah"));
   }
   FillBACount(baCounts: any) {
     this.BACounts = new Dictionary<any>();
@@ -185,5 +195,6 @@ export class ExecutiveDashboardComponent implements OnInit {
       };
       this.BACounts.Add(baCountLocal.BRMName, baCountLocal);
     });
+    this.BADetails.push(this.BACounts.Item("Akkaiah"));
   }
 }

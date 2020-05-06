@@ -1,8 +1,20 @@
 [
-    {	
-        "brmName":"Akkaiah",
-	"brnNumber":"1587565",
-	"baCountTot":"",
-	"baCountPerc":""
-    }
+  {
+    "brmName": "Akkaiah",
+    "brnNumber": "1587565",
+    "baCountTot": "10",
+    "baCountPerc": "2"
+  },
+  {
+    "brmName": "Narayanan",
+    "brnNumber": "1587566",
+    "baCountTot": "25",
+    "baCountPerc": "5"
+  },
+  {
+    "brmName": "Anand_S",
+    "brnNumber": "1587567",
+    "baCountTot": "15",
+    "baCountPerc": "2"
+  }
 ]

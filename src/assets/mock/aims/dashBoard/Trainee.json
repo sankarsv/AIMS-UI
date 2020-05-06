@@ -1,12 +1,12 @@
 [
-    {	
-		"brmName":"Akkaiah",
-	"brnNumber":"1587565",
-	"trCountTot":"",
-	"trCountPerc":"",
-	"ontrCountTot":"",
-	"ontrCountPerc":"",
-	"offtrCountTot":"",
-	"offtrCountPerc":""
-    }
+  {
+    "brmName": "Akkaiah",
+    "brnNumber": "1587565",
+    "trCountTot": "100",
+    "trCountPerc": "100",
+    "ontrCountTot": "80",
+    "ontrCountPerc": "80",
+    "offtrCountTot": "20",
+    "offtrCountPerc": "20"
+  }
 ]

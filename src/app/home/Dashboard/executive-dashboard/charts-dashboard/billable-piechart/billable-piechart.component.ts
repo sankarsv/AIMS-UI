@@ -9,86 +9,51 @@ import { ExecutiveDashboardComponent } from "../../executive-dashboard.component
 })
 export class BillablePiechartComponent implements OnInit {
   @Input() public billableData: any[] = [];
-  tempData: any[] = [];
-  //@Input() public test: any;
-  //@Input("billableData") public data1;
-  //@Input() public billableData: any;
-  // private _billableData: any;
-  // @Input()
-  // set billableData(billableData: any) {
-  //   this._billableData = billableData; // uppercase message here
-  // }
+  public chartType: string;
+  public chartDatasets: Array<any>;
+  public chartLabels: Array<any>;
+  public chartOptions;
 
-  // get billableData(): any {
-  //   return this._billableData;
-  // }
-
-  //@Input() public billableData: Array<any> = [];
-  //@Input("test") public name;
-  //public tempdata: any = [];
-  //@Input() billableData;
-  // Load() {
-  //   this.tempdata = this._billableData.length;
-  //   console.log(this._billableData.BRMName);
-  // }
-
-  public chartType: string = "pie";
   // chartDatasets: any = [];
   constructor() {}
 
   ngOnInit() {
     if (this.billableData[0] != null) {
-      this.printData();
+      this.loadPieChart();
     }
   }
 
-  // ngAfterContentInit() {
-  //   console.log(
-  //     this.billableData.forEach((childObj) => {
-  //       console.log(childObj);
-  //     })
-  //   );
-  // }
-
-  printData() {
-    this.tempData = this.billableData;
-    console.log("billableData.");
-    console.log(this.billableData);
-    console.log("data printed");
-
+  loadPieChart() {
+    this.chartType = "pie";
     this.chartDatasets = [
       {
-        data: [this.billableData[0].BillPerc, 20, 30],
-        label: "test",
+        data: [this.billableData[0].BillPerc, this.billableData[0].NBillPerc],
+        backgroundColor: ["#F7464A", "#46BFBD"],
+        hoverBackgroundColor: ["#FF5A5E", "#5AD3D1"],
       },
+      // {
+      //   data: [this.billableData[0].NBillPerc],
+      //   label: "NonBillablePercentage",
+      //   backgroundColor: "#46BFBD",
+      //   hoverBackgroundColor: "#5AD3D1",
+      // },
     ];
-    console.log("charDataSet data: " + this.billableData[0]);
+    this.chartLabels = ["Billable-Percentage", "NonBillable-Percentage"];
+    this.chartOptions = {
+      responsive: true,
+      // toolTipContent: "Working",
+      // tooltips: {
+      //   content: function(e) {
+
+      //   },
+      //   // callbacks: {
+      //   //   label: function (tooltipItem, billableData) {
+      //   //     return this.billableData[0].BillPerc;
+      //   //   },
+      //   // },
+      // },
+    };
   }
 
-  public chartDatasets: Array<any>;
-  // = [
-  //   {
-  //     data: [if(this.billableData[0]!=null) this.billableData[0].BillPerc],
-  //     label: "BillablePercentage",
-  //   },
-  // ];
-
-  public chartLabels: Array<any> = [
-    "Billable-Percentage",
-    "NonBillable-Percentage",
-  ];
-
-  public chartColors: Array<any> = [
-    {
-      backgroundColor: ["#F7464A", "#46BFBD"],
-      hoverBackgroundColor: ["#FF5A5E", "#5AD3D1"],
-      borderWidth: 2,
-    },
-  ];
-
-  public chartOptions: any = {
-    responsive: true,
-  };
-  public chartClicked(e: any): void {}
   public chartHovered(e: any): void {}
 }
