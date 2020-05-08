@@ -28,6 +28,7 @@ import { BillablePiechartComponent } from "./charts-dashboard/billable-piechart/
   styleUrls: ["./executive-dashboard.component.css"],
 })
 export class ExecutiveDashboardComponent implements OnInit {
+  yearsList: number[];
   dashBoardDetails: any[];
   BillingDetails: Dictionary<any>;
   public billingDetails: any[] = [];
@@ -63,27 +64,27 @@ export class ExecutiveDashboardComponent implements OnInit {
 
   fetchYearlyDetails(year: string, month: string) {
     forkJoin([
-      this.httpService.getDashBoardDetails("billing.json", {
+      this.httpService.PostDetails("billing.json", {
         reportType: "billable",
         year: year,
         momth: month,
       }),
-      this.httpService.getDashBoardDetails("SeniorJuniorRatio.json", {
+      this.httpService.PostDetails("SeniorJuniorRatio.json", {
         reportType: "srjrratio",
         year: year,
         momth: month,
       }),
-      this.httpService.getDashBoardDetails("HeadCount.json", {
+      this.httpService.PostDetails("HeadCount.json", {
         reportType: "hcratio",
         year: year,
         momth: month,
       }),
-      this.httpService.getDashBoardDetails("Trainee.json", {
+      this.httpService.PostDetails("Trainee.json", {
         reportType: "trnratio",
         year: year,
         momth: month,
       }),
-      this.httpService.getDashBoardDetails("BACount.json", {
+      this.httpService.PostDetails("BACount.json", {
         reportType: "baratio",
         year: year,
         momth: month,
@@ -93,6 +94,21 @@ export class ExecutiveDashboardComponent implements OnInit {
       this.initializeView();
     });
   }
+
+  // fetchYearlyDetails(year:string,month:string,brmName:string)
+  // {
+  //   forkJoin([
+  //     this.httpService.PostDetails("billing.json",{ reportType:"billable",year:year,momth:month,bramName:brmName}),
+  //     this.httpService.PostDetails("SeniorJuniorRatio.json",{ reportType:"srjrratio",year:year,momth:month,brmName:brmName}),
+  //     this.httpService.PostDetails("HeadCount.json",{ reportType:"hcratio",year:year,momth:month,brmName:brmName}),
+  //     this.httpService.PostDetails("Trainee.json",{ reportType:"trnratio",year:year,momth:month,brmName:brmName}),
+  //     this.httpService.PostDetails("BACount.json",{ reportType:"baratio",year:year,momth:month,brmName:brmName})
+  // ]).subscribe(res=>
+  //   {
+  //     this.dashBoardDetails=res;
+  //     this.initializeView();
+  //   });
+  // }
   initializeView() {
     if (
       this.dashBoardDetails[0] != null &&
@@ -213,7 +229,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   // }
 
   //#region barchart - BRM vs Headcount
-  public brmName: any[] = [];
+  public brmNames: any[] = [];
   public offshoreHC: any[] = [];
   public onshoreHC: any[] = [];
   public mbarChartLabels: string[];
@@ -257,9 +273,9 @@ export class ExecutiveDashboardComponent implements OnInit {
 
   getBrmNames(): string[] {
     this.HeadCounts.Values().forEach((key: any) => {
-      this.brmName.push(key.BRMName);
+      this.brmNames.push(key.BRMName);
     });
-    return this.brmName;
+    return this.brmNames;
   }
   getOffshoreData(): any[] {
     this.HeadCounts.Values().forEach((key: any) => {

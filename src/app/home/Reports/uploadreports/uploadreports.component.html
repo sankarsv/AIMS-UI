@@ -1,0 +1,49 @@
+<div class="topNav">
+    <div class="executiveText" style="float: left; padding-left: 10px; padding-top: 10px;">
+      <a>Batch-Process-Status</a>
+    </div>
+    <div class="executiveText" style="float: right; padding-left: 10px; padding-top: 10px;">
+      <a>Home > Batch-Process-Status</a>
+    </div>
+  </div>
+  <br>
+<div class="row justify-content-center">
+<div class="container">
+  <table class="table table-bordered" >
+      <thead>
+          <tr>
+              <th class="font-weight-bold">#</th>
+              <th class="font-weight-bold">Filetype</th>
+              <th class="font-weight-bold">FileUploadDate</th>
+              <th class="font-weight-bold">FileUploadStatus</th>
+          </tr>
+      </thead>
+      <ng-container *ngFor="let upload of data;index as i">
+      <tbody *ngIf="upload.batchStatus === 'E'">
+          <tr class="table-danger">
+              <td>{{i+1}} </td>
+              <td>{{upload.fileType}}</td>
+               <td>{{upload.loadDate | date:'fullDate'}}</td> 
+              <td>Error</td>
+          </tr>
+      </tbody>
+      <tbody *ngIf="upload.batchStatus === 'A'">
+        <tr class="table-warning">
+            <td>{{i+1}}</td>
+            <td>{{upload.fileType}}</td>
+             <td>{{upload.loadDate | date:'fullDate'}}</td> 
+            <td>Amend</td>
+        </tr>
+    </tbody>
+    <tbody *ngIf="upload.batchStatus === 'U'">
+        <tr class="table-success">  
+            <td>{{i+1}}</td>
+            <td>{{upload.fileType}}</td>
+             <td>{{upload.loadDate | date:'fullDate'}}</td> 
+            <td>Success</td>
+        </tr>
+    </tbody>
+    </ng-container>
+  </table>
+</div>
+</div>

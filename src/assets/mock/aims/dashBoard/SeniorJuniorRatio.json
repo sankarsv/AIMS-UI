@@ -14,21 +14,13 @@
   {
     "brmName": "Ashok",
     "brnNumber": "1587565",
-    "trCountTot": "100",
-    "trCountPerc": "100",
-    "ontrCountTot": "80",
-    "ontrCountPerc": "80",
-    "offtrCountTot": "20",
-    "offtrCountPerc": "20"
-  },
-  {
-    "brmName": "Anand_s",
-    "brnNumber": "1587565",
-    "trCountTot": "100",
-    "trCountPerc": "100",
-    "ontrCountTot": "80",
-    "ontrCountPerc": "80",
-    "offtrCountTot": "20",
-    "offtrCountPerc": "20"
+    "srCountTot": "158",
+    "jrCountTot": "15",
+    "srCountPerc": "12",
+    "jrCountPerc": "1",
+    "onsrCountTot": "5",
+    "onjrCountTot": "6",
+    "offsrCountPerc": "7",
+    "offjrCountPerc": "8"
   }
 ]

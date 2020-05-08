@@ -9,23 +9,32 @@
 <br>
 <div class="row">
   <div class="col-md-6 progressTexts"> Period
-    <select class="inputBox" [(ngModel)]="searchBy" (ngModelChange)="searchByInput(searchBy);onChange($event)">
-      <option *ngFor="let search of searchByFilters" [ngValue]="search">{{search}} </option>
+    <select class="inputBox" [(ngModel)]="searchByYear">
+      <option *ngFor="let yearname of YearsList" [ngValue]="yearname">{{yearname}} </option>
     </select>
   </div>
 
   <div class="col-md-6 progressText"> BRM Search
-    <select class="inputBoxOne" [(ngModel)]="searchBy" (ngModelChange)="searchByInput(searchBy);onChange($event)">
-      <option *ngFor="let search of searchByFilters" [ngValue]="search">{{search}} </option>
+    <select class="inputBoxOne" [(ngModel)]="searchByBRM" (ngModelChange)="searchByInput(searchByBRM,searchByYear);onChange($event)">
+      <option *ngFor="let brmName of BrmNamesList" [ngValue]="brmName">{{brmName}} </option>
     </select>
   </div>
 </div>
 <div *ngIf="showTable">
-  <ng2-smart-table [settings]="settings" [source]="data" (custom)="route($event)"
+  <ng2-smart-table [settings]="settings" [source]="data" (custom)="route($event)" (editConfirm)="onSaveConfirm($event)"
     (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
 </div>
+
 <div>
-  <button class="buttonBox" (click)="submit()">Upload</button>
-  <button class="buttonBox" (click)="reset()">Download</button>
-  <button class="buttonBox" (click)="reset()">Freeze</button>
+  <input type="file" formControlName="upload"  #fileInput multiple (change)="uplodFile()"  accept=".xlsx, .xls"
+						class="d-none" />
+</div>
+
+<div>
+  <button class="buttonBox" (click)="upload()">Upload</button>
+  <button class="buttonBox" (click)="download(searchByBRM,searchByYear)">Download</button>
+  <button class="buttonBox" (click)="reset()">{{btnFreezeText}}</button>
+</div>
+<div>
+  <label [ngClass]= "{'lblSuccess': fileUpload, 'lblFailed': !fileUpload }"  >{{uploadMessage}}</label>
 </div>

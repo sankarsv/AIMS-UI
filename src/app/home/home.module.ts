@@ -26,10 +26,11 @@ import { FileUploaderService } from "./Employee/employee-head/upload/file-upload
 import { DashboardResolver } from "./Dashboard/executive-dashboard/executive.dashboard.resolver";
 import { BrmBarchartComponent } from "./Dashboard/executive-dashboard/charts-dashboard/brm-barchart/brm-barchart.component";
 import { ChartsModule } from "ng2-charts";
-import { BillablePiechartComponent } from './Dashboard/executive-dashboard/charts-dashboard/billable-piechart/billable-piechart.component';
-import { ExpDoughnutchartComponent } from './Dashboard/executive-dashboard/charts-dashboard/exp-doughnutchart/exp-doughnutchart.component';
-import { TraineeBarchartComponent } from './Dashboard/executive-dashboard/charts-dashboard/trainee-barchart/trainee-barchart.component';
-import { BaHorizontalbarchartComponent } from './Dashboard/executive-dashboard/charts-dashboard/ba-horizontalbarchart/ba-horizontalbarchart.component';
+import { BillablePiechartComponent } from "./Dashboard/executive-dashboard/charts-dashboard/billable-piechart/billable-piechart.component";
+import { ExpDoughnutchartComponent } from "./Dashboard/executive-dashboard/charts-dashboard/exp-doughnutchart/exp-doughnutchart.component";
+import { TraineeBarchartComponent } from "./Dashboard/executive-dashboard/charts-dashboard/trainee-barchart/trainee-barchart.component";
+import { BaHorizontalbarchartComponent } from "./Dashboard/executive-dashboard/charts-dashboard/ba-horizontalbarchart/ba-horizontalbarchart.component";
+import { UploadreportsComponent } from "./Reports/uploadreports/uploadreports.component";
 
 @NgModule({
   imports: [
@@ -64,8 +65,11 @@ import { BaHorizontalbarchartComponent } from './Dashboard/executive-dashboard/c
     ExpDoughnutchartComponent,
     TraineeBarchartComponent,
     BaHorizontalbarchartComponent,
+    UploadreportsComponent,
   ],
-  providers: [FileUploaderService, DashboardResolver],
+  //providers: [FileUploaderService, DashboardResolver],
+
+  providers: [FileUploaderService],
   /* DashboardResolver */
 })
 export class HomeModule {}

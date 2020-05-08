@@ -17,6 +17,7 @@ import { DashboardResolver } from "./Dashboard/executive-dashboard/executive.das
 import { SearchComponent } from "./Employee/Employee-head/search/search.component";
 import { HeadcountSearchComponent } from "./Employee/Employee-head/headcount-search.component";
 import { BillablePiechartComponent } from "./Dashboard/executive-dashboard/charts-dashboard/billable-piechart/billable-piechart.component";
+import { UploadreportsComponent } from "./Reports/uploadreports/uploadreports.component";
 
 const routes: Routes = [
   {
@@ -71,18 +72,8 @@ const routes: Routes = [
         component: ExecutiveDashboardComponent,
         pathMatch: "full",
       },
-      {
-        path: "executiveDashboard/piechart",
-        component: BillablePiechartComponent,
-        pathMatch: "full",
-      },
 
-      {
-        path: "executiveDashboard",
-        resolve: { chartData: DashboardResolver },
-        component: ExecutiveDashboardComponent,
-        pathMatch: "full",
-      },
+      //  { path: 'executiveDashboard', resolve: { chartData: DashboardResolver }, component: ExecutiveDashboardComponent, pathMatch: 'full' },
 
       {
         path: "projectMonitoring",
@@ -117,11 +108,23 @@ const routes: Routes = [
       //  { path: 'download', component: DownloadComponent, pathMatch: 'full' },
     ],
   },
+  {
+    path: "reports",
+    component: HomepageComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: "uploadreports",
+        component: UploadreportsComponent,
+        pathMatch: "full",
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [DashboardResolver],
+  providers: [],
 })
 export class HomeRoutingModule {}
