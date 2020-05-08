@@ -1,38 +1,34 @@
 [
-    {	
-    	"brmName":"Akkaiah",
-	"brnNumber":"1587565",
-	"srCountTot":"158",
-	"jrCountTot":"15",
-	"srCountPerc":"12",
-	"jrCountPerc":"1",
-	"onsrCountTot":"5",
-	"onjrCountTot":"6",
-	"offsrCountPerc":"7",
-	"offjrCountPerc":"8"
-	},
-	{	
-		"brmName":"Ashok",
-		"brnNumber":"185754",
-		"srCountTot":"",
-		"jrCountTot":"",
-		"srCountPerc":"",
-		"jrCountPerc":"",
-		"onsrCountTot":"",
-		"onjrCountTot":"",
-		"offsrCountPerc":"",
-		"offjrCountPerc":""
-		},
-		{	
-			"brmName":"Narayanan",
-	"brnNumber":"202947",
-			"srCountTot":"",
-			"jrCountTot":"",
-			"srCountPerc":"",
-			"jrCountPerc":"",
-			"onsrCountTot":"",
-			"onjrCountTot":"",
-			"offsrCountPerc":"",
-			"offjrCountPerc":""
-			}
+  {
+    "brmName": "Akkaiah",
+    "brnNumber": "1587565",
+    "srCountTot": "158",
+    "jrCountTot": "15",
+    "srCountPerc": "12",
+    "jrCountPerc": "1",
+    "onsrCountTot": "5",
+    "onjrCountTot": "6",
+    "offsrCountPerc": "7",
+    "offjrCountPerc": "8"
+  },
+  {
+    "brmName": "Ashok",
+    "brnNumber": "1587565",
+    "trCountTot": "100",
+    "trCountPerc": "100",
+    "ontrCountTot": "80",
+    "ontrCountPerc": "80",
+    "offtrCountTot": "20",
+    "offtrCountPerc": "20"
+  },
+  {
+    "brmName": "Anand_s",
+    "brnNumber": "1587565",
+    "trCountTot": "100",
+    "trCountPerc": "100",
+    "ontrCountTot": "80",
+    "ontrCountPerc": "80",
+    "offtrCountTot": "20",
+    "offtrCountPerc": "20"
+  }
 ]

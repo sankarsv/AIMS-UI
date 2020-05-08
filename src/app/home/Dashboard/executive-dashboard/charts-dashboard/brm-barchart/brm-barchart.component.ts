@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { Dictionary } from "app/utils/Dictionary";
 
 import { ChartsModule } from "ng2-charts";
@@ -11,6 +11,10 @@ import { analyzeAndValidateNgModules } from "@angular/compiler";
 })
 export class BrmBarchartComponent implements OnInit {
   @Input() public HCData: Dictionary<any>;
+  // @Output() selected_brmName = new EventEmitter<string>();
+  @Output() messageToEmit = new EventEmitter<string>();
+
+  public activeElement: string;
   public brmName: any[] = [];
   public offshoreHC: any[] = [];
   public onshoreHC: any[] = [];
@@ -19,7 +23,42 @@ export class BrmBarchartComponent implements OnInit {
   public barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true,
+    onClick: function (evt, array) {
+      if (array.length != 0) {
+        var position = array[0]._index;
+        //var activeElement = this.tooltip._data.datasets[0].data[position];
+        this.activeElement = this.tooltip._data.labels[position];
+        //this.sendMessageToParent(this.activeElement);
+        console.log("hllo " + this.activeElement);
+        if (this.activeElement != null) {
+          console.log("inside");
+          this.messageToEmit.emit(this.activeElement);
+        }
+
+        //this.getSelectedBrmName(this.activeElement);
+        //this.getSelectedName();
+        // this.getSelectedName(this.tooltip._data.labels[position]);
+        // this.selected_brmName.emit(this.tooltip._data.labels[position]);
+      } else {
+        console.log("You selected the background!");
+      }
+    },
   };
+
+  sendMessageToParent(message: string) {
+    //message = "Hello";
+    this.messageToEmit.emit(message);
+  }
+
+  // selectedGetBrmNames(selected: string) {
+  //   console.log(selected);
+  //   this.selected_brmName.emit(selected);
+  // }
+
+  // getSelectedName(selected: string) {
+  //   console.log(selected);
+  //   this.selected_brmName.emit(this.activeElement);
+  // }
 
   constructor() {}
 
@@ -77,8 +116,10 @@ export class BrmBarchartComponent implements OnInit {
   ];
 
   // events
-  public chartClicked(e: any): void {
-    console.log(e);
+  public chartClicked(e: any, arr) {
+    //console.log("printing");
+    //console.log(e);
+    console.log(e[0]._model);
   }
 
   public chartHovered(e: any): void {

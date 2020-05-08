@@ -25,8 +25,21 @@
   <app-brm-barchart
     [HCData]="HeadCounts"
     [BAData]="BADetails"
+    (messageToEmit)="getMessage($event)"
   ></app-brm-barchart>
 </div> -->
+<div style="display: block;" *ngIf="HasSummaryDataFetched">
+  <canvas
+    baseChart
+    [datasets]="barChartData"
+    [labels]="mbarChartLabels"
+    [options]="barChartOptions"
+    [colors]="barChartColors"
+    [legend]="barChartLegend"
+    [chartType]="barChartType"
+    (chartClick)="chartClicked($event)"
+  ></canvas>
+</div>
 <div class="griddiv" *ngIf="HasDataFetched">
   <app-billable-piechart
     [billableData]="billingDetails"

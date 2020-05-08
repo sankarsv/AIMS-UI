@@ -28,8 +28,8 @@ export class BillablePiechartComponent implements OnInit {
     this.chartDatasets = [
       {
         data: [this.billableData[0].BillPerc, this.billableData[0].NBillPerc],
-        backgroundColor: ["#F7464A", "#46BFBD"],
-        hoverBackgroundColor: ["#FF5A5E", "#5AD3D1"],
+        backgroundColor: ["rgba(105,159,177,0.2)", "rgba(77,20,96,0.3)"],
+        hoverBackgroundColor: ["#fafafa", "#fafafa"],
       },
       // {
       //   data: [this.billableData[0].NBillPerc],

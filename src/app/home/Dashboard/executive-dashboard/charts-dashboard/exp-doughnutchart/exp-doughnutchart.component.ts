@@ -29,8 +29,8 @@ export class ExpDoughnutchartComponent implements OnInit {
           this.SeniorJuniorData[0].SrCountPerc,
           this.SeniorJuniorData[0].JrCountPerc,
         ],
-        backgroundColor: ["#F7464A", "#46BFBD"],
-        hoverBackgroundColor: ["#FF5A5E", "#5AD3D1"],
+        backgroundColor: ["rgba(105,159,177,0.2)", "rgba(77,20,96,0.3)"],
+        hoverBackgroundColor: ["#fafafa", "#fafafa"],
       },
     ];
     this.chartLabels = ["SeniorCount-Percentage", "JuniorCount-Percentage"];

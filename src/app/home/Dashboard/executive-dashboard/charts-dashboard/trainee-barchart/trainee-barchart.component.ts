@@ -29,8 +29,8 @@ export class TraineeBarchartComponent implements OnInit {
           this.TraineeData[0].OnShoreTraineePerc,
           this.TraineeData[0].OffShoreTraineePerc,
         ],
-        backgroundColor: ["#F7464A", "#46BFBD"],
-        hoverBackgroundColor: ["#FF5A5E", "#5AD3D1"],
+        backgroundColor: ["rgba(105,159,177,0.2)", "rgba(77,20,96,0.3)"],
+        hoverBackgroundColor: ["#fafafa", "#fafafa"],
       },
     ];
     this.chartLabels = [
