@@ -1,11 +1,42 @@
 [
-    {	
-		"brmName":"Akkaiah",
-	"brnNumber":"1587565",
-	"offTot":"",
-	"totalCnt":"",
-	"onsiteTot":"",
-	"offPerc":"",
-	"onsitePerc":""
-	}
+  {
+    "brmName": "Akkaiah",
+    "brnNumber": "1587565",
+    "offTot": "15",
+    "onsiteTot": "105",
+    "offPerc": "15",
+    "onsitePerc": "85"
+  },
+  {
+    "brmName": "Narayanan",
+    "brnNumber": "1345667",
+    "offTot": "400",
+    "onsiteTot": "100",
+    "offPerc": "80",
+    "onsitePerc": "20"
+  },
+  {
+    "brmName": "Anand_S",
+    "brnNumber": "1524534",
+    "offTot": "335",
+    "onsiteTot": "10",
+    "offPerc": "95",
+    "onsitePerc": "5"
+  },
+  {
+    "brmName": "Ashok",
+    "brnNumber": "1234534",
+    "offTot": "850",
+    "onsiteTot": "324",
+    "offPerc": "123",
+    "onsitePerc": "5"
+  },
+  {
+    "brmName": "Ganesh",
+    "brnNumber": "524534",
+    "offTot": "773",
+    "onsiteTot": "97",
+    "offPerc": "95",
+    "onsitePerc": "5"
+  }
 ]

@@ -1,37 +1,62 @@
 [
-    {	
-    	"brmName":"Akkaiah",
-	"srCountTot":"158",
-	"jrCountTot":"15",
-	"srCountPerc":"12",
-	"jrCountPerc":"1",
-	"onsrCountTot":"5",
-	"onjrCountTot":"6",
-	"offsrCountPerc":"7",
-	"offjrCountPerc":"8"
-	},
-	{	
-		"brmName":"Ashok",
-		"brnNumber":"185754",
-		"srCountTot":"",
-		"jrCountTot":"",
-		"srCountPerc":"",
-		"jrCountPerc":"",
-		"onsrCountTot":"",
-		"onjrCountTot":"",
-		"offsrCountPerc":"",
-		"offjrCountPerc":""
-		},
-		{	
-			"brmName":"Narayanan",
-	"brnNumber":"202947",
-			"srCountTot":"",
-			"jrCountTot":"",
-			"srCountPerc":"",
-			"jrCountPerc":"",
-			"onsrCountTot":"",
-			"onjrCountTot":"",
-			"offsrCountPerc":"",
-			"offjrCountPerc":""
-			}
+  {
+    "brmName": "Akkaiah",
+    "brnNumber": "1587565",
+    "srCountTot": "158",
+    "jrCountTot": "15",
+    "srCountPerc": "12",
+    "jrCountPerc": "1",
+    "onsrCountTot": "5",
+    "onjrCountTot": "6",
+    "offsrCountPerc": "7",
+    "offjrCountPerc": "8"
+  },
+  {
+    "brmName": "Ashok",
+    "brnNumber": "1587565",
+    "srCountTot": "158",
+    "jrCountTot": "15",
+    "srCountPerc": "12",
+    "jrCountPerc": "1",
+    "onsrCountTot": "5",
+    "onjrCountTot": "6",
+    "offsrCountPerc": "7",
+    "offjrCountPerc": "8"
+  },
+  {
+    "brmName": "Anand_S",
+    "brnNumber": "1587565",
+    "srCountTot": "158",
+    "jrCountTot": "15",
+    "srCountPerc": "12",
+    "jrCountPerc": "1",
+    "onsrCountTot": "5",
+    "onjrCountTot": "6",
+    "offsrCountPerc": "7",
+    "offjrCountPerc": "8"
+  },
+  {
+    "brmName": "Ganesh",
+    "brnNumber": "1587565",
+    "srCountTot": "158",
+    "jrCountTot": "15",
+    "srCountPerc": "12",
+    "jrCountPerc": "1",
+    "onsrCountTot": "5",
+    "onjrCountTot": "6",
+    "offsrCountPerc": "7",
+    "offjrCountPerc": "8"
+  },
+  {
+    "brmName": "Narayanan",
+    "brnNumber": "1587565",
+    "srCountTot": "158",
+    "jrCountTot": "15",
+    "srCountPerc": "12",
+    "jrCountPerc": "1",
+    "onsrCountTot": "5",
+    "onjrCountTot": "6",
+    "offsrCountPerc": "7",
+    "offjrCountPerc": "8"
+  }
 ]
