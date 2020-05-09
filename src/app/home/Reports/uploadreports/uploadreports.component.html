@@ -40,6 +40,14 @@
             <td>{{i+1}}</td>
             <td>{{upload.fileType}}</td>
              <td>{{upload.loadDate | date:'fullDate'}}</td> 
+            <td>uploaded</td>
+        </tr>
+    </tbody>
+    <tbody *ngIf="upload.batchStatus === 'S'">
+        <tr class="table-success">  
+            <td>{{i+1}}</td>
+            <td>{{upload.fileType}}</td>
+             <td>{{upload.loadDate | date:'fullDate'}}</td> 
             <td>Success</td>
         </tr>
     </tbody>
