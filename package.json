@@ -35,7 +35,7 @@
     "jwt-decode": "^2.2.0",
     "ng-circle-progress": "^1.4.1",
     "ng-select2": "^1.0.8",
-    "ng2-charts": "^2.3.0",
+    "ng2-charts": "^2.2.3",
     "ngx-smart-table": "^2.0.3",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.5.2",

@@ -1,7 +1,16 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
 <div class="row">
             <div class="col-md-6 offset-md-3">
-                
+				
+				<select class="custom-select" (change)="changeBilling($event)" formControlName="billingName" 
+				class="form-control" [ngClass]="{ 'is-invalid': submitted && f.billingName.errors }"> 
+					<option value="" disabled>Choose your billingtype</option>
+					<option *ngFor="let billing of Billing" [ngValue]="billing">{{billing}}</option>
+				 </select>
+				 <div *ngIf="submitted && f.billingName.errors" class="invalid-feedback">
+					<div  class="alert alert-danger"  *ngIf="f.billingName.errors.required">Please Select Billing type</div>
+				</div>
+				  <br><br>
                     <div class="form-group">
 						<input type="file" formControlName="upload"  #fileInput multiple (change)="addToQueue()"  accept=".xlsx, .xls"
 						class="form-control" [ngClass]="{ 'is-invalid': submitted && f.upload.errors }" />
