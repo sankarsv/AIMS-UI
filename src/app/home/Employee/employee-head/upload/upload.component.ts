@@ -38,6 +38,8 @@ export class UploadComponent implements OnInit {
     this.uploader.onCompleteItem = this.completeItem;
   }
   changeBilling(e) {
+    this.uploader.clearQueue();
+    this.form.controls["upload"].reset();
     this.form.controls["billingName"].setValue(e.target.value, {
       onlySelf: true
     })
@@ -57,7 +59,6 @@ export class UploadComponent implements OnInit {
 
   }
   reset() {
-    let defaultId = 1;
      this.form.controls["upload"].reset();
      this.form.controls["billingName"].setValue("");
   }
