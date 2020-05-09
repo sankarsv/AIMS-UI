@@ -34,7 +34,8 @@ export const APP_CONSTANTS = {
             BRMDetailsList:"/aims/user/getBRMDetails",
             GetFreeze:"/aims/user/updateFreeze",
             UpdateBillingDetails:"/aims/user/updateBillingDetails",
-            UPLOADREPORTS:"assets/mock/aims/getFileStatus.josn"
+            UPLOADREPORTS:"assets/mock/aims/getFileStatus"
+            
         }
     }
 }
