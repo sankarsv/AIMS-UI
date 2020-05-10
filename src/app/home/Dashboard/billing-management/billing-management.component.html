@@ -33,8 +33,8 @@
 <div>
   <button class="buttonBox" (click)="upload()">Upload</button>
   <button class="buttonBox" (click)="download(searchByBRM,searchByYear)">Download</button>
-  <button class="buttonBox" (click)="reset()">{{btnFreezeText}}</button>
+  <button class="buttonBox" (click)="updateFreezeInd(searchByBRM,searchByYear)">{{btnFreezeText}}</button>
 </div>
 <div>
-  <label [ngClass]= "{'lblSuccess': fileUpload, 'lblFailed': !fileUpload }"  >{{uploadMessage}}</label>
+  <label [ngClass]= "{'lblSuccess': fileUpload, 'lblSuccess': !fileUpload }"  >{{uploadMessage}}</label>
 </div>

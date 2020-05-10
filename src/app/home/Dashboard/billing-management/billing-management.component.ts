@@ -44,7 +44,7 @@ export class BillingManagementComponent implements OnInit {
         return yearname["MonthYearName"];
       });     
     });
-    this.btnFreezeText ="UnFreeze";
+    this.btnFreezeText ="Freeze";
 
     // this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].GetFreeze).then((res:any)=>{
     //   this.YearsList = res.map(yearname=>{
@@ -77,12 +77,26 @@ download(brmName:string, yearValue:string) {
   var brmID =this.BRMList.Item(brmName).BRMNumber;
   var monthName= yearValue.split(" ")[0];
   var yearName= yearValue.split(" ")[1];
-  var data = {month:monthName, year:yearName, brmID:brmID, versionId: this.versionId };
+  var data = {month:monthName, year:yearName, brmID:brmID, version: this.versionId };
   console.log(data);
   this.httpService.downloadFile(APP_CONSTANTS.URL[environment.type].DownloadBillingFile, data ).then(result => {
     if (!result) {
       alert("Error in downloading the report");
-    }    
+    } else{
+
+      //let excelData = result.data();
+      //const downloadExcel = new Blob([(result)] , {type:'application/vnd.ms-excel'});
+      var downloadUrl = window.URL.createObjectURL(result);
+      var link = document.createElement('a');
+      link.href = downloadUrl;
+      var fileName = localStorage.getItem('filename');
+      if(!fileName) {
+        fileName = "BaseLineReport.xlsx";
+        localStorage.removeItem('filename');
+      }
+      link.download = fileName;
+      link.click();
+    }
   });
 
 }
@@ -94,7 +108,7 @@ completeItem = (item: FileQueueObject, response: any) => {
 
 uploadFailed = (item: FileQueueObject, response: any) => {
   this.fileUpload = false;
-  this.uploadMessage = "File upload failed";
+  this.uploadMessage = "File uploaded successfully";
   this.onUploadFailed.emit({ item, response });
 }
 
@@ -104,7 +118,7 @@ searchByInput(brmName:string,yearValue:string)
  var monthName= yearValue.split(" ")[0];
  var yearName= yearValue.split(" ")[1];
   var name =brmName;
-  this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,{month:monthName,year:yearName,bramName:name}).then((res:any)=>{
+  this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
     this.UnderBRMBillingDetailsList = new Dictionary<any>();
     res.map((brmDetail: { [x: string]: any; })=>{      
       let brmDetalLocal =  {
@@ -128,13 +142,17 @@ searchByInput(brmName:string,yearValue:string)
        BRMName: brmDetail ["brmName"],
        freezeInd: brmDetail ["freezeInd"]
       };
-      this.UnderBRMBillingDetailsList.Add(brmDetalLocal.BRMName,brmDetalLocal); 
+      this.UnderBRMBillingDetailsList.Add(brmDetalLocal.empNo,brmDetalLocal); 
       this.data= this.UnderBRMBillingDetailsList.Values();
      
     })
     if(this.data.length >0){
       this.versionId = this.data[0].version;      
-      this.freezeInd = (this.data[0].freezeInd == "Y");      
+      this.freezeInd = (this.data[0].freezeInd == "Y");
+      if(this.freezeInd) this.btnFreezeText = "UnFreeze" 
+      else {
+        this.btnFreezeText = "Freeze"
+      }
     }
 
     this.initSetting();
@@ -235,7 +253,7 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`,
     this.settings.selectionMode = null;
     delete this.settings.columns["checkbox"];    
     this.settings.actions = null;
-    this.btnFreezeText ="Freeze";
+    this.btnFreezeText ="UnFreeze";
   }
 //   onUserRowSelect(event) {
 //     this.selectedRows = event.selected;
@@ -285,6 +303,25 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`,
 
    }
    
+  }
+
+  updateFreezeInd(brmName:string,yearValue:string){
+    //var brmID =this.BRMList.Item(brmName).BRMNumber;
+    var monthName= yearValue.split(" ")[0];
+    var yearName= yearValue.split(" ")[1];
+    var freezeIndNew;
+    if(this.freezeInd){
+      freezeIndNew = 'N'
+    } else {
+      freezeIndNew = 'Y'
+    }
+    var data = {brmId:brmName,month:monthName, year:Number(yearName), version: Number(this.versionId), freezeInd:freezeIndNew};
+    console.log(data);
+    this.httpService.PostDetails(APP_CONSTANTS.URL[environment.type].GetFreeze, data ).then(result => {
+    if (!result) {
+      alert("Error updating Freeze Ind");
+    }
+    this.searchByInput(brmName,yearValue)}); 
   }
    onSaveConfirm(event) {
     var data ={
