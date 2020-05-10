@@ -62,7 +62,7 @@ export class httpService {
 
     PostDetails(url:string,body:any):Promise< any >{
         let token = localStorage.getItem("access_token");
-        return this.httpClient.post("assets\\mock\\aims\\dashBoard\\"+url,body,
+        return this.httpClient.post(url,body,
         {
             headers: new HttpHeaders().set('Authorization', 'Bearer ' + token)
         }).toPromise().then((result:any)=>{

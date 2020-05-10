@@ -64,27 +64,27 @@ export class ExecutiveDashboardComponent implements OnInit {
 
   fetchYearlyDetails(year: string, month: string) {
     forkJoin([
-      this.httpService.PostDetails("billing.json", {
+      this.httpService.PostDetails("aims/user/dashboard", {
         reportType: "billable",
         year: year,
         momth: month,
       }),
-      this.httpService.PostDetails("SeniorJuniorRatio.json", {
+      this.httpService.PostDetails("aims/user/dashboard", {
         reportType: "srjrratio",
         year: year,
         momth: month,
       }),
-      this.httpService.PostDetails("HeadCount.json", {
+      this.httpService.PostDetails("aims/user/dashboard", {
         reportType: "hcratio",
         year: year,
         momth: month,
       }),
-      this.httpService.PostDetails("Trainee.json", {
+      this.httpService.PostDetails("aims/user/dashboard", {
         reportType: "trnratio",
         year: year,
         momth: month,
       }),
-      this.httpService.PostDetails("BACount.json", {
+      this.httpService.PostDetails("aims/user/dashboard", {
         reportType: "baratio",
         year: year,
         momth: month,
@@ -184,7 +184,7 @@ export class ExecutiveDashboardComponent implements OnInit {
       };
       this.HeadCounts.Add(headCountLocal.BRMName, headCountLocal);
     });
-    this.headCountDetails.push(this.HeadCounts.Item("Akkaiah"));
+    //this.headCountDetails.push(this.HeadCounts.Item("Akkaiah"));
   }
 
   FillTraineeDetails(traineeDetails: any) {
