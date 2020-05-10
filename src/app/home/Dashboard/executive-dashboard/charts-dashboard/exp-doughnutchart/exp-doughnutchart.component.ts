@@ -29,7 +29,7 @@ export class ExpDoughnutchartComponent implements OnInit {
           this.SeniorJuniorData[0].SrCountPerc,
           this.SeniorJuniorData[0].JrCountPerc,
         ],
-        backgroundColor: ["rgba(105,159,177,0.2)", "rgba(77,20,96,0.3)"],
+        backgroundColor: ["rgba(0,0,255,0.3)", "rgba(0,255,0,0.3)"],
         hoverBackgroundColor: ["#fafafa", "#fafafa"],
       },
     ];

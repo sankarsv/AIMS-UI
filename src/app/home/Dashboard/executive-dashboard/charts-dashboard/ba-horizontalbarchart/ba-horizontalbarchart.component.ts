@@ -26,7 +26,7 @@ export class BaHorizontalbarchartComponent implements OnInit {
     this.chartDatasets = [
       {
         data: [this.BAData[0].BACountPerc],
-        backgroundColor: ["rgba(105,159,177,0.2)"],
+        backgroundColor: ["rgba(0,0,255,0.3)"],
         hoverBackgroundColor: ["#fafafa"],
       },
     ];
