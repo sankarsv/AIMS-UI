@@ -21,8 +21,8 @@
   </div>
 </div>
 <div *ngIf="showTable">
-  <ng2-smart-table [settings]="settings" [source]="data" (custom)="route($event)" (editConfirm)="onSaveConfirm($event)"
-    (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
+  <ng2-smart-table #table [settings]="settings"  allowFiltering='true' allowPaging='true' [source]="data"  (editConfirm)="onSaveConfirm($event)"
+    (deleteConfirm)="onDeleteConfirm($event)"   (change)="change($event)"></ng2-smart-table>
 </div>
 
 <div>
