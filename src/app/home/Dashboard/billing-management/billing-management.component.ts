@@ -303,10 +303,10 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`,
    data.billingDetailsList.push(employee);
    alert(JSON.stringify(data));
    
-    this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].UpdateBillingDetails, data).then(result =>{      
+    this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].UpdateBillingDetails, data).then(result =>{  
+        event.confirm.resolve(event.newData);    
         alert("Saved Successfully");      
     });
-   
     
   }
 

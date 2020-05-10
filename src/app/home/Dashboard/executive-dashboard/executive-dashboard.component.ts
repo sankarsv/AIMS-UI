@@ -249,20 +249,20 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.mbarChartLabels = this.getBrmNames();
     this.barChartColors = [
       {
-        backgroundColor: "rgba(105,159,177,0.2)",
-        borderColor: "rgba(105,159,177,1)",
-        pointBackgroundColor: "rgba(105,159,177,1)",
+        backgroundColor: "rgba(0,0,255,0.3)",
+        borderColor: "rgba(0,0,255,1)",
+        pointBackgroundColor: "rgba(0,0,255,1)",
         pointBorderColor: "#fafafa",
         pointHoverBackgroundColor: "#fafafa",
-        pointHoverBorderColor: "rgba(105,159,177)",
+        pointHoverBorderColor: "rgba(0,0,255)",
       },
       {
-        backgroundColor: "rgba(77,20,96,0.3)",
-        borderColor: "rgba(77,20,96,1)",
-        pointBackgroundColor: "rgba(77,20,96,1)",
+        backgroundColor: "rgba(0,255,0,0.3)",
+        borderColor: "rgba(0,255,0,1)",
+        pointBackgroundColor: "rgba(0,255,0,1)",
         pointBorderColor: "#fff",
         pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgba(77,20,96,1)",
+        pointHoverBorderColor: "rgba(0,255,0,0.3)",
       },
     ];
     this.barChartOptions = {

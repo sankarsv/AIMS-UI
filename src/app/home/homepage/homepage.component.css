@@ -153,7 +153,7 @@ text-align: left;
 }
 .listheader:before {
   color:#3B7CFF;
-  content: "AIIMS ";
+  content: "AIMS ";
   font-family:'Montserrat';
 }
 

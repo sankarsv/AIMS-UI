@@ -23,18 +23,18 @@ export const APP_CONSTANTS = {
             REGISTER: "aims/register",
             UPLOAD: "aims/user/upload",
             UPLOADBR : "aims/user/upload/br",
-            BillingUpload: "assets/mock/aims/uploadBilling.json",
+            BillingUpload: "aims/user/uploadBilling",
             SEARCH: "aims/user/getEmployeeDetails",
             VERSION: "aims/user/versioninfo",
             Download: "download",
-            Dashboard: "assets/mock/aims/getAssociatesDetails.json",
+            Dashboard: "aims/user/dashboard",
             BillingManagment:"/aims/user/getBillingDetails",
             DownloadBillingFile:"/aims/user/downloadBilling",
             YearValues:"assets/mock/aims/YearsList.json",
             BRMDetailsList:"/aims/user/getBRMDetails",
             GetFreeze:"/aims/user/updateFreeze",
             UpdateBillingDetails:"/aims/user/updateBillingDetails",
-            UPLOADREPORTS:"assets/mock/aims/getFileStatus"
+            UPLOADREPORTS:"/aims/user/getFileStatus"
             
         }
     }
