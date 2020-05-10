@@ -23,12 +23,16 @@ export class BillingManagementComponent implements OnInit {
   UnderBRMBillingDetailsList:Dictionary<any>;
   YearsList:[];
   BrmNamesList:string[];
+  selectedRows:number[]=[];
+  pushrow:[];
   fileUpload: boolean;
   uploadMessage: string;
   versionId:string;
   freezeInd:boolean = false;
   btnFreezeText: string;
+  headerTitle: {};
   @ViewChild('fileInput') fileInput;
+  @ViewChild('table') table;
   @Output() onCompleteItem = new EventEmitter();
   @Output() onUploadFailed = new EventEmitter();
 
@@ -137,13 +141,37 @@ searchByInput(brmName:string,yearValue:string)
 });
 
 }
+
+populateTableHeader() {
+
+this.headerTitle= {
+  "Location":"location",
+"Project No":"projectNo",
+"Employee No":"empNo",
+"Employee Name":"empFullName",
+"Billable Hrs":"billablehrs",
+"Billable Days":"billabledays",
+"Effort Hours":"efforthr",
+"Extra Hours":"extrahr",
+"Extra Billing":"extrabiling",
+"Billable Amount":"billableamt:",
+"Remarks":"remarks"
+}
+
+}
+
+getTableColumnName(HeaderName){
+  return this.headerTitle[HeaderName];
+}
+
   initSetting() {
+    this.populateTableHeader();
     this.searchBy = 'All';
     this.searchString = "";
     this.showTable = true;
     this.settings = {
       mode: 'inline',
-      selectionMode:'multi',
+      selectMode:'multi',
       edit: {confirmSave: true},
       actions: {
         add: false,
@@ -154,12 +182,15 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`,
         position: 'right'
       },
       columns: {
-        checkbox:{
-          title:'Select',
-          type:"html",
-          valuePrepareFunction:(value)=>{return this._sanitizer.bypassSecurityTrustHtml(this.input);},
-          filter:false
-        },
+        // checkbox:{
+        //   title:'Select',
+        //   type:"html",
+        //   editor:{
+        //     type:'label',
+        //   },
+        //   valuePrepareFunction:(value)=>{return this._sanitizer.bypassSecurityTrustHtml(this.input);},
+        //   filter:false
+        // },
         location: {
           title: 'Location'
         },
@@ -173,7 +204,7 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`,
           title: 'Employee Name'
         },
         billablehrs: {
-          title: 'Billable Hours'
+          title: 'Billable Hrs',
         },
         billabledays: {
           title: 'Billable Days'
@@ -206,12 +237,56 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`,
     this.settings.actions = null;
     this.btnFreezeText ="Freeze";
   }
+//   onUserRowSelect(event) {
+//     this.selectedRows = event.selected;
+//     console.log(this.selectedRows);
+// }
 
   onDeleteConfirm(event) {
     alert();
 
   }
-  onSaveConfirm(event) {
+  public change(event) {
+    let value = event.srcElement.value
+    console.log(value)
+     let column:number = Number (this.table.grid.dataSet.selectedRow.index)
+     var row =this.table.grid.dataSet.data[this.table.grid.dataSet.selectedRow.index];
+     row[this.getTableColumnName(event.srcElement.placeholder)] = event.srcElement.value
+      this.selectedRows.push(column);
+  }
+  reset(){
+
+    var data ={
+      version: this.versionId,
+      billingDetailsList:[]
+    };
+   for(var i=0; i<this.selectedRows.length; i++)
+   {
+     let selectedIx: any =this.selectedRows[i];
+      if(this.table.grid.dataSet.rows[selectedIx].isSelected) {
+        let selectedData: any = this.table.grid.dataSet.rows[selectedIx];
+        var employee ={
+          empId:selectedData.data.empNo,
+          billableHrs:selectedData.data.billablehrs,
+          billableDays:selectedData.data.billabledays,      
+          effortHrs: selectedData.data.efforthr,
+          extraBilling:selectedData.data.extrabiling,
+          billingAmount: selectedData.data.billableamt,
+          remarks:selectedData.data.remarks
+        }
+        data.billingDetailsList.push(employee);
+      }
+      alert(JSON.stringify(data));
+     
+      this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].UpdateBillingDetails, data).then(result =>{      
+          alert("Saved Successfully");      
+      });
+     
+
+   }
+   
+  }
+   onSaveConfirm(event) {
     var data ={
       version: this.versionId,
       billingDetailsList:[]
