@@ -25,10 +25,10 @@ export class EmployeeService {
   getPayLoad(key, value) {
     if(key === 'empId') {
       return {'empId': value};
-    } else if(key === 'dmId') {
-      return {'dmId': value};
-    } else if(key === 'glId') {
-      return {'glId': value};
+    } else if(key === 'dmName') {
+      return {'dmName': value};
+    } else if(key === 'brmName') {
+      return {'brmName': value};
     }
   }
 }

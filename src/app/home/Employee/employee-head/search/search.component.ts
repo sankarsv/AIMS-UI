@@ -11,7 +11,7 @@ export class SearchComponent implements OnInit {
  // activeTab = 'search';
   searchBy: String;
   searchString: String;
-  searchByFilters = ["Employee_ID", "DM_ID", "GL_ID"];
+  searchByFilters = ["Employee_ID", "BRM_Name", "DM_Name"];
   searchSelectedFilters = ["All","Selected1", "Selected2", "Selected3"];
   settings: any;
   data: EmployeeDetails[];
@@ -23,8 +23,8 @@ export class SearchComponent implements OnInit {
     "Role": "teamRole",
     "Base Branch": "baseBranch",
     "Employee_ID": "empId",
-    "DM_ID": "dmId",
-    "GL_ID": "glId",
+    "BRM_Name": "brmName",
+    "DM_Name": "dmName",
     "All":"",
   }
   searchField:string;
@@ -47,7 +47,7 @@ export class SearchComponent implements OnInit {
         this.empDetailsUpdated = [];
         for (const emp of result) {
           emp.empFullName = `${emp.firstName} ${(emp.lastName) ? emp.lastName : ''}`;
-          emp.dob = emp.dob.substr(0, 10);
+          //emp.dob = emp.dob.substr(0, 10);
           this.empDetailsUpdated.push(emp);
         }
         this.data = this.empDetailsUpdated;
@@ -107,10 +107,10 @@ export class SearchComponent implements OnInit {
         baseBranch: {
           title: 'Base Branch'
         },
-        dmEmpId: {
+        dmName: {
           title: 'Delivery Manager'
         },
-        brmEmpId: {
+        brmName: {
           title: 'BRM'
         }
       },
