@@ -54,7 +54,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.fetchYearlyDetails("2020", "Jan");
+    this.fetchYearlyDetails("2020", "MAY");
   }
 
   getMessage(message: string) {
@@ -67,27 +67,27 @@ export class ExecutiveDashboardComponent implements OnInit {
       this.httpService.PostDetails("aims/user/dashboard", {
         reportType: "billable",
         year: year,
-        momth: month,
+        month: month,
       }),
       this.httpService.PostDetails("aims/user/dashboard", {
         reportType: "srjrratio",
         year: year,
-        momth: month,
+        month: month,
       }),
       this.httpService.PostDetails("aims/user/dashboard", {
         reportType: "hcratio",
         year: year,
-        momth: month,
+        month: month,
       }),
       this.httpService.PostDetails("aims/user/dashboard", {
         reportType: "trnratio",
         year: year,
-        momth: month,
+        month: month,
       }),
       this.httpService.PostDetails("aims/user/dashboard", {
         reportType: "baratio",
         year: year,
-        momth: month,
+        month: month,
       }),
     ]).subscribe((res) => {
       this.dashBoardDetails = res;
