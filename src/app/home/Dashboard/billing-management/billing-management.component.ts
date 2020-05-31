@@ -163,7 +163,7 @@ searchByInput(brmName:string,yearValue:string)
 populateTableHeader() {
 
 this.headerTitle= {
-  "Location":"location",
+"Location":"location",
 "Project No":"projectNo",
 "Employee No":"empNo",
 "Employee Name":"empFullName",
@@ -242,6 +242,9 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`,
         remarks: {
           title: 'Remarks'
         }
+      },
+      attr: {
+        class: 'table table-bordered'
       },
     };
     if(this.freezeInd) {

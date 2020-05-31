@@ -1,10 +1,8 @@
-<div class="topNav">
-  <div class="executiveText" style="float: left; padding-left: 10px; padding-top: 10px;">
-    <a>Billing-Management</a>
-  </div>
-  <div class="executiveText" style="float: right; padding-left: 10px; padding-top: 10px;">
-    <a>Home > Dashboard > Billing-Management</a>
-  </div>
+<div>
+  <button class="tablink" (click)="billingPage()" id="defaultOpen">Billing</button>
+  <button class="tablink" (click)="clarityPage()">ClarityFile</button>
+  <button class="tablink" (click)="billingClarityPage()">BillingClarityCompare</button>
+  <button class="tablink" (click)="searchPage()">Search</button>
 </div>
 <br>
 <div class="row">
@@ -20,7 +18,7 @@
     </select>
   </div>
 </div>
-<div *ngIf="showTable">
+<div class="tableDesign" *ngIf="showTable">
   <ng2-smart-table #table [settings]="settings"  allowFiltering='true' allowPaging='true' [source]="data"  (editConfirm)="onSaveConfirm($event)"
     (deleteConfirm)="onDeleteConfirm($event)"   (change)="change($event)"></ng2-smart-table>
 </div>
@@ -30,7 +28,7 @@
 						class="d-none" />
 </div>
 
-<div>
+<div *ngIf="showTable">
   <button class="buttonBox" (click)="upload()">Upload</button>
   <button class="buttonBox" (click)="download(searchByBRM,searchByYear)">Download</button>
   <button class="buttonBox" (click)="updateFreezeInd(searchByBRM,searchByYear)">{{btnFreezeText}}</button>
