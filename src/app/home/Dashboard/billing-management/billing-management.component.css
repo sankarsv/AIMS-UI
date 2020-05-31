@@ -9,6 +9,7 @@
     font-weight: 600;
     padding-bottom: 3px;
     padding-left: 22px;
+    padding-top: 35px;
 }
 .topNav{
     height: 48px;
@@ -33,6 +34,7 @@
     font-weight: 600;
     padding-bottom: 3px;
     padding-right:87px;
+    padding-top: 35px;
 }
 
 .inputBox {
@@ -94,6 +96,197 @@
     font-weight: bold;
   }
 
+  .tableDesign{
+    padding-top: 30px;
+  }
+
   /* :host/deep/ table tbody tr:nth-child(odd){
     background: rgb(220,220,220)!important;
   } */
+
+  :host /deep/ ng2-smart-table table{
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+    border-width: 2px;
+    
+    display: table;
+    border-spacing: 2px;
+    border-color: grey; /* border of the big table */
+  }
+
+  /* grid lines */
+  :host /deep/ ng2-smart-table table > tbody > tr > td {
+    box-sizing: border-box;
+    border: 1px solid grey;
+  } 
+
+  /* headers grid color*/
+ :host /deep/ ng2-smart-table thead > tr > th  { 
+    border: 1px solid grey;
+    background-color:whitesmoke;
+  }   
+  /*font size*/
+  :host /deep/ ng2-smart-table {
+      font-size:16px;
+  }
+
+
+
+/* :host /deep/ ng2-smart-table table {
+  box-shadow: 0 5px 5px -3px rgba(0,0,0,.2),0 8px 10px 1px rgba(0,0,0,.14),0 3px 14px 2px rgba(0,0,0,.12) !important;
+  height: 350px;
+}
+
+:host /deep/ ng2-smart-table tbody > tr > td:first-child {
+  color: royalblue;
+}
+
+:host /deep/ ng2-smart-table tbody > tr > td {
+  border-bottom: 1px solid grey;
+  font-size: .875em;
+  padding: .375em .75em;
+}
+
+:host /deep/ ng2-smart-row {
+  border-bottom: 1px solid black !important;
+}
+
+:host /deep/ ng2-smart-row > tr {
+  border-bottom: 1px solid black !important;
+}
+
+:host /deep/ ng2-smart-row > td {
+  border-bottom: 1px solid black !important;
+}
+
+:host /deep/ ng2-smart-table_cell {
+  border-bottom: 1px solid red !important;
+}
+
+:host /deep/ ng2-smart-table tbody > tr > td > a {
+  color: grey;
+  text-decoration: none;
+  font-size: small;
+  font-weight: bold;
+}
+
+:host /deep/ ng2-smart-table tbody > tr > th > a {
+  color: grey;
+  text-decoration: none;
+  font-size: small;
+  font-weight: bold;
+} */
+
+/* clickable paging number */
+/* :host /deep/ a.ng2-smart-page-link.page-link {
+  height: 22px;
+  width: 40px;
+  text-align: center;
+  vertical-align: middle;
+  color: royalblue;
+  font-weight: bold;
+  line-height: 6px;
+} */
+/* selected paging number */
+/* :host /deep/ span.ng2-smart-page-link.page-link {
+  height: 22px;
+  width: 40px;
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+  font-weight: bold;
+  line-height: 6px;
+}
+
+:host /deep/ span.ng2-smart-page-item.page-item.disabled {
+  height: 22px;
+  width: 40px;
+  text-align: center;
+  vertical-align: middle;
+  color: grey;
+  font-weight: bold;
+  line-height: 6px;
+} */
+
+/* previous paging button */
+/* :host /deep/ a.ng2-smart-page-link.page-link.page-link-prev {
+  height: 22px;
+  width: 40px;
+  text-align: center;
+  vertical-align: middle;
+  color: royalblue;
+  font-weight: bold;
+  line-height: 6px;
+} */
+
+/* previous paging button disabled */
+/* :host /deep/ span.ng2-smart-page-link.page-link.page-link-prev.disabled {
+  height: 22px;
+  width: 40px;
+  text-align: center;
+  vertical-align: middle;
+  color: grey;
+  font-weight: bold;
+  line-height: 6px;
+} */
+
+/* next paging button */
+/* :host /deep/ a.ng2-smart-page-link.page-link.page-link-next {
+  height: 22px;
+  width: 40px;
+  text-align: center;
+  vertical-align: middle;
+  color: royalblue;
+  font-weight: bold;
+  line-height: 6px;
+} */
+
+/* next paging button */
+/* :host /deep/ span.ng2-smart-page-link.page-link.page-link-next.disabled {
+  height: 22px;
+  width: 40px;
+  text-align: center;
+  vertical-align: middle;
+  color: grey;
+  font-weight: bold;
+  line-height: 6px;
+} */
+
+
+/* Set height of body and the document to 100% to enable "full page tabs" */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: cornflowerblue;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: deepskyblue;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+#Billing {background-color: white;}
+#ClarityFile {background-color: white}
+#BillingClarityCompare {background-color: white}
+#Search {background-color: white;}
