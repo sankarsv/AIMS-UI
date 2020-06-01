@@ -350,11 +350,7 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`,
     });
     
   }
-
- /*  billingPage() {
-    window.open ="http://localhost:4200/Dashboard/billingManagement";
-  } */
-
+  
 }
 
 
