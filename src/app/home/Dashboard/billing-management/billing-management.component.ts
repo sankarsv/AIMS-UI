@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
 import { httpService } from '../../../../services/httpService';
 import { APP_CONSTANTS } from 'app/utils/app-constants';
+import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { Dictionary } from 'app/utils/Dictionary';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -36,7 +37,7 @@ export class BillingManagementComponent implements OnInit {
   @Output() onCompleteItem = new EventEmitter();
   @Output() onUploadFailed = new EventEmitter();
 
-  constructor(public httpService: httpService,private _sanitizer:DomSanitizer, public uploader: FileUploaderService) { }
+  constructor(public httpService: httpService, public router:Router, private _sanitizer:DomSanitizer, public uploader: FileUploaderService) { }
 
   ngOnInit() {
     this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].YearValues).then((res:any)=>{
@@ -349,6 +350,10 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`,
     });
     
   }
+
+ /*  billingPage() {
+    window.open ="http://localhost:4200/Dashboard/billingManagement";
+  } */
 
 }
 
