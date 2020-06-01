@@ -1,10 +1,12 @@
 <div>
-  <button class="tablink" (click)="billingPage()" id="defaultOpen">Billing</button>
-  <button class="tablink" (click)="clarityPage()">ClarityFile</button>
-  <button class="tablink" (click)="billingClarityPage()">BillingClarityCompare</button>
-  <button class="tablink" (click)="searchPage()">Search</button>
+ <a class="tablink" (click)="this.router.navigateByUrl('/Dashboard/billingManagement/billing')">Billing</a>
+ <a class="tablink" (click)="this.router.navigateByUrl('/Dashboard/billingManagement/clarityFile')">ClarityFile</a>
+ <a class="tablink" (click)="this.router.navigateByUrl('/Dashboard/billingManagement/clarityDiscrepancy')">BillingClarityCompare</a>
+ <a class="tablink" (click)="this.router.navigateByUrl('/Dashboard/billingManagement/search')">Search</a>
 </div>
+
 <br>
+
 <div class="row">
   <div class="col-md-6 progressTexts"> Period
     <select class="inputBox" [(ngModel)]="searchByYear">
