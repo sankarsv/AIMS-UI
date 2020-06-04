@@ -33,7 +33,7 @@ export class UploadComponent implements OnInit {
       'upload': new FormControl('', [Validators.required]),
       'billingName': new FormControl('', [Validators.required])
     });
-    this.Billing = ['Headcount', 'Billing']
+    this.Billing = ['Headcount', 'Billing','Clarity']
     this.queue = this.uploader.queue;
     this.uploader.onCompleteItem = this.completeItem;
   }
@@ -54,8 +54,10 @@ export class UploadComponent implements OnInit {
     const fileBrowser = this.fileInput.nativeElement;
     if(this.form.controls["billingName"].value === "1: Headcount")
     this.uploader.addToQueue(fileBrowser.files, APP_CONSTANTS.URL[environment.type].UPLOAD);
-    else
+    else if(this.form.controls["billingName"].value === "2: Billing")
     this.uploader.addToQueue(fileBrowser.files, APP_CONSTANTS.URL[environment.type].UPLOADBR);
+    else if(this.form.controls["billingName"].value === "3: Clarity")
+    this.uploader.addToQueue(fileBrowser.files, APP_CONSTANTS.URL[environment.type].UPLOADCLARITY);
 
   }
   reset() {
