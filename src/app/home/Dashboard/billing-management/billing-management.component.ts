@@ -32,6 +32,7 @@ export class BillingManagementComponent implements OnInit {
   freezeInd:boolean = false;
   btnFreezeText: string;
   headerTitle: {};
+  FiltersValues = ["BRMName","Other","All"];
   @ViewChild('fileInput') fileInput;
   @ViewChild('table') table;
   @Output() onCompleteItem = new EventEmitter();
@@ -47,18 +48,14 @@ export class BillingManagementComponent implements OnInit {
     });
     this.btnFreezeText ="Freeze";
 
-    // this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].GetFreeze).then((res:any)=>{
-    //   this.YearsList = res.map(yearname=>{
-    //     return yearname["MonthYearName"];
-    //   });
-    // });
   this.uploader.onCompleteItem = this.completeItem;
   this.uploader.onUploadFailed = this.uploadFailed;
   this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].BRMDetailsList).then((res:any)=>{
       this.BRMList = new Dictionary<any>();
       res.map((brmDetail: { [x: string]: any; })=>{
         let brmDetalLocal =  {
-         BRMName: brmDetail ["brmName"]
+         BRMName: brmDetail ["brmName"],
+         BRMId:brmDetail["brmId"]
         };
         this.BRMList.Add(brmDetalLocal.BRMName,brmDetalLocal);
         this.BrmNamesList =this.BRMList.Keys();
@@ -113,9 +110,24 @@ uploadFailed = (item: FileQueueObject, response: any) => {
   this.onUploadFailed.emit({ item, response });
 }
 
-searchByInput(brmName:string,yearValue:string)
+searchByInput(Location:string,filterValue:string,brmName:string,yearValue:string)
 {
-  this.initSetting();
+var displayTable =(filterValue=="BRMName"&&brmName!=null&&Location!=null)||filterValue=="Other"||filterValue=="All";
+  
+  if(displayTable)
+  {
+  var brmID:any;
+  if(brmName!=null&&this.BRMList.ContainsKey(brmName))
+  {
+    brmID=this.BRMList.Item(brmName).BRMId;
+  }
+  
+  let requestBody = {
+    month: yearValue.split(" ")[0],
+    year:yearValue.split(" ")[1],
+    brmId:brmID,
+filterby:filterValue
+  };
  var monthName= yearValue.split(" ")[0];
  var yearName= yearValue.split(" ")[1];
   var name =brmName;
@@ -123,7 +135,6 @@ searchByInput(brmName:string,yearValue:string)
     this.UnderBRMBillingDetailsList = new Dictionary<any>();
     res.map((brmDetail: { [x: string]: any; })=>{      
       let brmDetalLocal =  {
-        version: brmDetail ["version"],
         location: brmDetail["locationId"],
         projectNo: brmDetail ["projectId"],
         empNo: brmDetail ["empId"],
@@ -134,12 +145,14 @@ searchByInput(brmName:string,yearValue:string)
        extrahr: brmDetail ["extraHrs"],
        extrabiling: brmDetail ["extraBilling"],
        billableamt: brmDetail ["billingAmount"],
-       remarks: brmDetail ["remarks"],
+       remarks1: brmDetail ["remarks1"],
+       remarks2: brmDetail ["remarks2"],
        DMId: brmDetail ["dmId"],
        DMName: brmDetail ["dmName"],
        WONNumber: brmDetail ["wonNumber"],
        STOName: brmDetail ["stoName"],
        OfficeID: brmDetail ["officeId"],
+       BRMId:brmDetail["brmId"],
        BRMName: brmDetail ["brmName"],
        freezeInd: brmDetail ["freezeInd"]
       };
@@ -155,10 +168,11 @@ searchByInput(brmName:string,yearValue:string)
         this.btnFreezeText = "Freeze"
       }
     }
+    this.showTable = displayTable;
 
-    this.initSetting();
+    this.initSetting(filterValue == "Other");
 });
-
+  }
 }
 
 populateTableHeader() {
@@ -168,13 +182,15 @@ this.headerTitle= {
 "Project No":"projectNo",
 "Employee No":"empNo",
 "Employee Name":"empFullName",
+"BRM":"BRMName",
 "Billable Hrs":"billablehrs",
 "Billable Days":"billabledays",
 "Effort Hours":"efforthr",
 "Extra Hours":"extrahr",
 "Extra Billing":"extrabiling",
 "Billable Amount":"billableamt:",
-"Remarks":"remarks"
+"Remark 1":"remarks1",
+"Remark 2":"remarks2"
 }
 
 }
@@ -183,33 +199,26 @@ getTableColumnName(HeaderName){
   return this.headerTitle[HeaderName];
 }
 
-  initSetting() {
+  initSetting(editEnable:boolean) {
     this.populateTableHeader();
     this.searchBy = 'All';
     this.searchString = "";
-    this.showTable = true;
+    var customString :any;
+    if(editEnable)
+     customString = [{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`, }]
     this.settings = {
       mode: 'inline',
       selectMode:'multi',
-      edit: {confirmSave: true},
+      edit: {confirmSave: editEnable},
       actions: {
         add: false,
-        edit:true,
-        update: true,
+        edit: editEnable,
+        update: false,
         delete: false,
-custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`, }],
+        custom:customString,
         position: 'right'
       },
       columns: {
-        // checkbox:{
-        //   title:'Select',
-        //   type:"html",
-        //   editor:{
-        //     type:'label',
-        //   },
-        //   valuePrepareFunction:(value)=>{return this._sanitizer.bypassSecurityTrustHtml(this.input);},
-        //   filter:false
-        // },
         location: {
           title: 'Location'
         },
@@ -221,6 +230,9 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`,
         },
         empFullName: {
           title: 'Employee Name'
+        },
+        BRMName: {
+          title:'BRM'
         },
         billablehrs: {
           title: 'Billable Hrs',
@@ -240,9 +252,12 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`,
         billableamt: {
           title: 'Billable Amount'
         },
-        remarks: {
-          title: 'Remarks'
-        }
+        remarks1: {
+          title: 'Remark 1'
+        },
+        remarks2: {
+          title: 'Remark 2'
+        },
       },
       attr: {
         class: 'table table-bordered'
@@ -259,10 +274,7 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`,
     this.settings.actions = null;
     this.btnFreezeText ="UnFreeze";
   }
-//   onUserRowSelect(event) {
-//     this.selectedRows = event.selected;
-//     console.log(this.selectedRows);
-// }
+
 
   onDeleteConfirm(event) {
     alert();
@@ -325,7 +337,7 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`,
     if (!result) {
       alert("Error updating Freeze Ind");
     }
-    this.searchByInput(brmName,yearValue)}); 
+    this.searchByInput(" " ,"BRMName",brmName,yearValue)}); 
   }
    onSaveConfirm(event) {
     var data ={

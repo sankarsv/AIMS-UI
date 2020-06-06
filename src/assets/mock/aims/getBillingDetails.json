@@ -17,7 +17,8 @@
 		 "extraHrs":"30",
 		 "extraBilling":"90$",
 		 "billingAmount":"250$",
-		 "remarks":"Good",
+		 "remarks1":"Good",
+		 "remarks2":"Good",
 		 "version":"1",
 		 "freezeInd":"N"
 		 },
