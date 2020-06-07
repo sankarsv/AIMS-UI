@@ -18,8 +18,8 @@
       <option *ngFor="let filterValue of FiltersValues" [ngValue]="filterValue">{{filterValue}} </option>
     </select>
   </div>
-  <div class="col-md-6 progressText" *ngIf = "filterName ==='BRMName'"> BRM Search
-    <select class="inputBoxOne" [(ngModel)]="searchByBRM" (ngModelChange)="searchByInput(searchByLocation,filterName,searchByBRM,searchByYear);onChange($event)">
+  <div class="col-md-6 progressTexts" *ngIf = "filterName ==='BRMName'"> BRM Search
+    <select class="inputBox" [(ngModel)]="searchByBRM" (ngModelChange)="searchByInput(searchByLocation,filterName,searchByBRM,searchByYear);onChange($event)">
       <option *ngFor="let brmName of BrmNamesList" [ngValue]="brmName">{{brmName}} </option>
     </select>
   </div>
