@@ -24,12 +24,12 @@ export class TraineeBarchartComponent implements OnInit {
   }
 
   loadtraineeChart() {
-    this.chartType = "polarArea";
+    this.chartType = "line";
     this.chartDatasets = [
       {
         data: this.TraineeData,
-        backgroundColor: ['#0000FF','#DC143C','#FF69B4','#FFA500','#FF4500','#FF0000','#FFFF00','#87CEEB','#808080','#2F4F4F'],
-        hoverBackgroundColor: ['#0000FF','#DC143C','#FF69B4','#FFA500','#FF4500','#FF0000','#FFFF00','#87CEEB','#808080','#2F4F4F'],
+        backgroundColor: this.executive.ColorValues,
+        hoverBackgroundColor: this.executive.ColorValues,
         label:this.executive.TraineeDetails.Keys()
       },
     ];

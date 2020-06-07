@@ -43,7 +43,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   HasDataLoaded:Boolean=false;
   selectedBrmNameValue: string;
   receivedChildMessage: string;
-  ColorValues:string[]=['#0000FF','#DC143C','#FF69B4','#FFA500','#FF4500','#FF0000','#FFFF00','#87CEEB','#808080','#2F4F4F'];
+  public ColorValues: string[]=['#E6E6FA','#87CEEB','#808080','#E9967A','#E0FFFF','#DC143C','#FF69B4','#FFA500','#FF4500','#FF0000'];
 
   constructor(
     public httpService: httpService,
@@ -226,8 +226,8 @@ export class ExecutiveDashboardComponent implements OnInit {
     
     this.barChartColors = [
       {
-        backgroundColor: ['#0000FF','#DC143C','#FF69B4','#FFA500','#FF4500','#FF0000','#FFFF00','#87CEEB','#808080','#2F4F4F'],
-        borderColor: ['#0000FF','#DC143C','#FF69B4','#FFA500','#FF4500','#FF0000','#FFFF00','#87CEEB','#808080','#2F4F4F'],
+        backgroundColor: this.ColorValues,
+        borderColor: this.ColorValues,
         borderWidth:2
       }
     ];
@@ -238,6 +238,11 @@ export class ExecutiveDashboardComponent implements OnInit {
         text:'Head Count',
         display:true
       },
+      scales:{
+        xAxes:[{
+          barPercentage:0.2
+        }]
+      }
     };
   }
 
