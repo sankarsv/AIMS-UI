@@ -25,13 +25,12 @@ export class BaHorizontalbarchartComponent implements OnInit {
   }
 
   loadChart() {
-    this.chartType = "radar";
+    this.chartType = "horizontalBar";
     this.chartDatasets = [
       {
         data: this.BAData,
-        backgroundColor: ['#0000FF','#DC143C','#FF69B4','#FFA500','#FF4500','#FF0000','#FFFF00','#87CEEB','#808080','#2F4F4F'],
-        hoverBackgroundColor: ['#0000FF','#DC143C','#FF69B4','#FFA500','#FF4500','#FF0000','#FFFF00','#87CEEB','#808080','#2F4F4F'],
-        label:this.executive.BACounts.Keys()
+        backgroundColor: this.executive.ColorValues,
+        hoverBackgroundColor: this.executive.ColorValues,
       },
     ];
     this.chartLabels = this.executive.BACounts.Keys();
