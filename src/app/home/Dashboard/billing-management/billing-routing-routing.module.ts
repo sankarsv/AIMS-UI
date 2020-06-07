@@ -9,11 +9,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-      path: 'billing',
-      component: BillingManagementComponent,
+      path: '',
+      component: BillingManagementMainComponent,
        canActivate: [AuthGuard],
        children: [
-        // { path: 'billing', component: BillingManagementComponent,pathMatch: 'full' },
+        { path: 'billing', component: BillingManagementComponent,pathMatch: 'full' },
         { path: 'clarityfile', component: ClarityfileComponent,pathMatch: 'full' },
       ]
   }

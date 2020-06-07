@@ -17,6 +17,7 @@ export class BillingManagementMainComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.loadbilling  = true;
   }
   billing(activeTab){
     this.activeTab = activeTab;
@@ -32,6 +33,9 @@ export class BillingManagementMainComponent implements OnInit {
  clarityfilecomponent(){
   this.loadclarityfile =true;
   this.loadbilling =  false;
+  console.log(this.activeTab)
  }
-
+ onCompleteItem($event) {
+  console.log($event);
+}
 }
