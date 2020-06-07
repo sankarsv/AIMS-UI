@@ -8,22 +8,22 @@
 <br>
 
 <div class="row">
-  <div class="col-md-6 progressTexts"> Period
+  <div class="col-md-3 progressTexts"> Period
     <select class="inputBox" [(ngModel)]="searchByYear">
       <option *ngFor="let yearname of YearsList" [ngValue]="yearname">{{yearname}} </option>
     </select>
   </div>
-  <div class="col-md-6 progressText" *ngIf = "searchByYear!=null"> Filters
+  <div class="col-md-3 progressText" *ngIf = "searchByYear!=null"> Filters
     <select class="inputBoxOne" [(ngModel)]="filterName" (ngModelChange)="searchByInput(searchByLocation,filterName,searchByBRM,searchByYear);onChange($event)">
       <option *ngFor="let filterValue of FiltersValues" [ngValue]="filterValue">{{filterValue}} </option>
     </select>
   </div>
-  <div class="col-md-6 progressTexts" *ngIf = "filterName ==='BRMName'"> BRM Search
+  <div class="col-md-3 progressTexts" *ngIf = "filterName ==='BRMName'"> BRM Search
     <select class="inputBox" [(ngModel)]="searchByBRM" (ngModelChange)="searchByInput(searchByLocation,filterName,searchByBRM,searchByYear);onChange($event)">
       <option *ngFor="let brmName of BrmNamesList" [ngValue]="brmName">{{brmName}} </option>
     </select>
   </div>
-  <div class="col-md-6 progressText" *ngIf = "filterName ==='BRMName' && searchByBRM!=null"> Location
+  <div class="col-md-3 progressText" *ngIf = "filterName ==='BRMName' && searchByBRM!=null"> Location
     <select class="inputBoxOne" [(ngModel)]="searchByLocation" (ngModelChange)="searchByInput(searchByLocation,filterName,searchByBRM,searchByYear);onChange($event)">
       <option>Onsite</option>
       <option>Offshore</option>
