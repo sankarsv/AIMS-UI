@@ -4,6 +4,7 @@
     "brnNumber": "1587565",
     "offTot": "15",
     "onsiteTot": "105",
+    "totalCnt":"180",
     "offPerc": "15",
     "onsitePerc": "85"
   },
@@ -12,6 +13,7 @@
     "brnNumber": "1345667",
     "offTot": "400",
     "onsiteTot": "100",
+    "totalCnt":"180",
     "offPerc": "80",
     "onsitePerc": "20"
   },
@@ -20,6 +22,7 @@
     "brnNumber": "1524534",
     "offTot": "335",
     "onsiteTot": "10",
+    "totalCnt":"250",
     "offPerc": "95",
     "onsitePerc": "5"
   },
@@ -28,6 +31,7 @@
     "brnNumber": "1234534",
     "offTot": "850",
     "onsiteTot": "324",
+    "totalCnt":"560",
     "offPerc": "123",
     "onsitePerc": "5"
   },
@@ -36,6 +40,7 @@
     "brnNumber": "524534",
     "offTot": "773",
     "onsiteTot": "97",
+    "totalCnt":"190",
     "offPerc": "95",
     "onsitePerc": "5"
   }

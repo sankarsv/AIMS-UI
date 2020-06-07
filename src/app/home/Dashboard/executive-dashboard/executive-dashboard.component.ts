@@ -19,8 +19,6 @@ import { element } from "@angular/core/src/render3/instructions";
 import "rxjs/add/operator/map";
 import { Dictionary } from "app/utils/Dictionary";
 import { ChartsModule } from "ng2-charts";
-import { BrmBarchartComponent } from "./charts-dashboard/brm-barchart/brm-barchart.component";
-import { BillablePiechartComponent } from "./charts-dashboard/billable-piechart/billable-piechart.component";
 
 @Component({
   selector: "app-executive-dashboard",
@@ -42,8 +40,10 @@ export class ExecutiveDashboardComponent implements OnInit {
   BACounts: Dictionary<any>;
   HasSummaryDataFetched: Boolean = false;
   HasDataFetched: Boolean = false;
+  HasDataLoaded:Boolean=false;
   selectedBrmNameValue: string;
   receivedChildMessage: string;
+  public ColorValues: string[]=['#E6E6FA','#87CEEB','#808080','#E9967A','#E0FFFF','#DC143C','#FF69B4','#FFA500','#FF4500','#FF0000'];
 
   constructor(
     public httpService: httpService,
@@ -94,21 +94,6 @@ export class ExecutiveDashboardComponent implements OnInit {
       this.initializeView();
     });
   }
-
-  // fetchYearlyDetails(year:string,month:string,brmName:string)
-  // {
-  //   forkJoin([
-  //     this.httpService.PostDetails("billing.json",{ reportType:"billable",year:year,momth:month,bramName:brmName}),
-  //     this.httpService.PostDetails("SeniorJuniorRatio.json",{ reportType:"srjrratio",year:year,momth:month,brmName:brmName}),
-  //     this.httpService.PostDetails("HeadCount.json",{ reportType:"hcratio",year:year,momth:month,brmName:brmName}),
-  //     this.httpService.PostDetails("Trainee.json",{ reportType:"trnratio",year:year,momth:month,brmName:brmName}),
-  //     this.httpService.PostDetails("BACount.json",{ reportType:"baratio",year:year,momth:month,brmName:brmName})
-  // ]).subscribe(res=>
-  //   {
-  //     this.dashBoardDetails=res;
-  //     this.initializeView();
-  //   });
-  // }
   initializeView() {
     if (
       this.dashBoardDetails[0] != null &&
@@ -137,8 +122,8 @@ export class ExecutiveDashboardComponent implements OnInit {
       let billingDetailsLocal = {
         BRMName: billingDetail["brmName"],
         BRMNumber: billingDetail["brnNumber"],
-        BillCount: billingDetail["billableCountTot"],
-        NBillCOunt: billingDetail["nbCountTot"],
+        BillCount: Number(billingDetail["billableCountTot"]),
+        NBillCOunt:Number(billingDetail["nbCountTot"]),
         BillPerc: billingDetail["billableCountPerc"],
         NBillPerc: billingDetail["nbCountPerc"],
         OnBillCOunt: billingDetail["onbillableCount"],
@@ -157,8 +142,8 @@ export class ExecutiveDashboardComponent implements OnInit {
       let srjrRatioLocal = {
         BRMName: srjrRatio["brmName"],
         BRMNumber: srjrRatio["brnNumber"],
-        SrCount: srjrRatio["srCountTot"],
-        JrCount: srjrRatio["jrCountTot"],
+        SrCount: Number(srjrRatio["srCountTot"]),
+        JrCount: Number(srjrRatio["jrCountTot"]),
         SrCountPerc: srjrRatio["srCountPerc"],
         JrCountPerc: srjrRatio["jrCountPerc"],
         OnSrCountTot: srjrRatio["onsrCountTot"],
@@ -179,6 +164,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         BRMNumber: headCount["brnNumber"],
         OffTotal: headCount["offTot"],
         OnShoreTotal: headCount["onsiteTot"],
+        TotalCount:headCount["totalCnt"],
         OffPerc: headCount["offPerc"],
         OnshorePerc: headCount["onsitePerc"],
       };
@@ -193,16 +179,15 @@ export class ExecutiveDashboardComponent implements OnInit {
       let traineeDetailLocal = {
         BRMName: traineeDetail["brmName"],
         BRMNumber: traineeDetail["brnNumber"],
-        TraineeCountTotal: traineeDetail["trCountTot"],
+        TraineeCountTotal: Number(traineeDetail["trCountTot"]),
         TraineeCountPer: traineeDetail["trCountPerc"],
-        OnTraineeCount: traineeDetail["ontrCountTot"],
+        OnTraineeCount: Number(traineeDetail["ontrCountTot"]),
         OnShoreTraineePerc: traineeDetail["ontrCountPerc"],
-        OffShoreTraineeCount: traineeDetail["offtrCountTot"],
+        OffShoreTraineeCount: Number(traineeDetail["offtrCountTot"]),
         OffShoreTraineePerc: traineeDetail["offtrCountPerc"],
       };
       this.TraineeDetails.Add(traineeDetailLocal.BRMName, traineeDetailLocal);
     });
-    //this.traineeDetails.push(this.TraineeDetails.Item("Akkaiah"));
   }
 
   FillBACount(baCounts: any) {
@@ -216,22 +201,12 @@ export class ExecutiveDashboardComponent implements OnInit {
       };
       this.BACounts.Add(baCountLocal.BRMName, baCountLocal);
     });
-    //this.BADetails.push(this.BACounts.Item("Akkaiah"));
   }
 
-  // selectedGetBrmNames(name: string) {
-  //   console.log("Selected Name:" + name);
-  // }
-
-  // selectedGetBrmNames($event) {
-  //   this.selectedBrmNameValue = $event;
-  //   console.log(this.selectedBrmNameValue);
-  // }
-
+ 
   //#region barchart - BRM vs Headcount
   public brmNames: any[] = [];
-  public offshoreHC: any[] = [];
-  public onshoreHC: any[] = [];
+  public HeadCount: any[] = [];
   public mbarChartLabels: string[];
   public barChartData: any[];
   public barChartOptions: any;
@@ -240,80 +215,45 @@ export class ExecutiveDashboardComponent implements OnInit {
   public barChartColors: Array<any>;
   public activeElement: string;
   loadSummaryBarchart() {
+    this.HasDataLoaded=true;
+    this.getBrmNames();
     this.barChartType = "bar";
     this.barChartData = [
-      { data: this.getOffshoreData(), label: "Offshore-Head count" },
-      { data: this.getOnshoreData(), label: "Onshore-Head count" },
+      { data: this.HeadCount}
     ];
-    this.barChartLegend = true;
-    this.mbarChartLabels = this.getBrmNames();
+   this.barChartLegend = false;
+    this.mbarChartLabels = this.HeadCounts.Keys();
+    
     this.barChartColors = [
       {
-        backgroundColor: "rgba(0,0,255,0.3)",
-        borderColor: "rgba(0,0,255,1)",
-        pointBackgroundColor: "rgba(0,0,255,1)",
-        pointBorderColor: "#fafafa",
-        pointHoverBackgroundColor: "#fafafa",
-        pointHoverBorderColor: "rgba(0,0,255)",
-      },
-      {
-        backgroundColor: "rgba(0,255,0,0.3)",
-        borderColor: "rgba(0,255,0,1)",
-        pointBackgroundColor: "rgba(0,255,0,1)",
-        pointBorderColor: "#fff",
-        pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgba(0,255,0,0.3)",
-      },
+        backgroundColor: this.ColorValues,
+        borderColor: this.ColorValues,
+        borderWidth:2
+      }
     ];
     this.barChartOptions = {
       scaleShowVerticalLines: false,
       responsive: true,
+      title:{
+        text:'Head Count',
+        display:true
+      },
+      scales:{
+        xAxes:[{
+          barPercentage:0.2
+        }]
+      }
     };
   }
 
-  getBrmNames(): string[] {
+  getBrmNames(){
     this.HeadCounts.Values().forEach((key: any) => {
       this.brmNames.push(key.BRMName);
+      this.HeadCount.push(key.TotalCount);
     });
-    return this.brmNames;
   }
-  getOffshoreData(): any[] {
-    this.HeadCounts.Values().forEach((key: any) => {
-      this.offshoreHC.push(key.OffTotal);
-    });
-    return this.offshoreHC;
-  }
-  getOnshoreData(): any[] {
-    this.HeadCounts.Values().forEach((key: any) => {
-      this.onshoreHC.push(key.OnShoreTotal);
-    });
-    return this.onshoreHC;
-  }
-  public chartClicked(evt: any) {
-    //console.log(e.active[0]._model.label);
-    this.activeElement = evt.active[0]._model.label;
-    //alert(this.activeElement);
-    this.loadOtherchartdetails(this.activeElement);
-    if (
-      this.billingDetails != null &&
-      this.seniorJuniorDetails != null &&
-      this.traineeDetails != null &&
-      this.BADetails != null
-    ) {
-      this.HasSummaryDataFetched = false;
-      this.HasDataFetched = true;
-    }
-  }
+  
+  public chartClicked(evt: any) {}
 
   //endregion barchart - BRM vs Headcount
-
-  //#region Load other charts
-  loadOtherchartdetails(selectedBrmName: string) {
-    console.log("print" + selectedBrmName);
-    this.billingDetails.push(this.BillingDetails.Item(selectedBrmName));
-    this.seniorJuniorDetails.push(this.SRJrRatios.Item(selectedBrmName));
-    this.traineeDetails.push(this.TraineeDetails.Item(selectedBrmName));
-    this.BADetails.push(this.BACounts.Item(selectedBrmName));
-  }
-  //endregion Load other charts
 }
