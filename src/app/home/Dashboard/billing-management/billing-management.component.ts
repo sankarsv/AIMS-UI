@@ -113,7 +113,6 @@ uploadFailed = (item: FileQueueObject, response: any) => {
 searchByInput(Location:string,filterValue:string,brmName:string,yearValue:string)
 {
 var displayTable =(filterValue=="BRMName"&&brmName!=null&&Location!=null)||filterValue=="Other"||filterValue=="All";
-  
   if(displayTable)
   {
   var brmID:any;
@@ -154,7 +153,8 @@ filterby:filterValue
        OfficeID: brmDetail ["officeId"],
        BRMId:brmDetail["brmId"],
        BRMName: brmDetail ["brmName"],
-       freezeInd: brmDetail ["freezeInd"]
+       freezeInd: brmDetail ["freezeInd"],
+       billRate:brmDetail["billRate"]
       };
       this.UnderBRMBillingDetailsList.Add(brmDetalLocal.empNo,brmDetalLocal); 
       this.data= this.UnderBRMBillingDetailsList.Values();
@@ -168,11 +168,12 @@ filterby:filterValue
         this.btnFreezeText = "Freeze"
       }
     }
-    this.showTable = displayTable;
-
+    
     this.initSetting(filterValue == "Other");
+    
 });
   }
+  this.showTable = displayTable;
 }
 
 populateTableHeader() {
@@ -189,6 +190,7 @@ this.headerTitle= {
 "Extra Hours":"extrahr",
 "Extra Billing":"extrabiling",
 "Billable Amount":"billableamt:",
+"Bill Rate":"billRate",
 "Remark 1":"remarks1",
 "Remark 2":"remarks2"
 }
@@ -251,6 +253,10 @@ getTableColumnName(HeaderName){
         },
         billableamt: {
           title: 'Billable Amount'
+        },
+        billRate:
+        {
+          title:'Bill Rate'
         },
         remarks1: {
           title: 'Remark 1'
