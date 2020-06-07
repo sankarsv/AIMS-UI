@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { Dictionary } from "app/utils/Dictionary";
+import { Component, OnInit} from "@angular/core";
 import { ExecutiveDashboardComponent } from "../../executive-dashboard.component";
 
 @Component({
@@ -8,17 +7,18 @@ import { ExecutiveDashboardComponent } from "../../executive-dashboard.component
   styleUrls: ["./billable-piechart.component.css"],
 })
 export class BillablePiechartComponent implements OnInit {
-  @Input() public billableData: any[] = [];
+  public billableData: any[]=[];
   public chartType: string;
   public chartDatasets: Array<any>;
   public chartLabels: Array<any>;
   public chartOptions;
-
-  // chartDatasets: any = [];
-  constructor() {}
+  constructor(public executive:ExecutiveDashboardComponent) {}
 
   ngOnInit() {
-    if (this.billableData[0] != null) {
+    if (this.executive.BillingDetails != null) {
+      this.executive.BillingDetails.Values().forEach((key: any) => {
+        this.billableData.push(key.NBillCOunt+key.BillCount);
+      });
       this.loadPieChart();
     }
   }
@@ -27,31 +27,19 @@ export class BillablePiechartComponent implements OnInit {
     this.chartType = "pie";
     this.chartDatasets = [
       {
-        data: [this.billableData[0].BillPerc, this.billableData[0].NBillPerc],
-        backgroundColor: ["rgba(0,0,255,0.3)", "rgba(0,255,0,0.3)"],
-        hoverBackgroundColor: ["#fafafa", "#fafafa"],
+        data: this.billableData,
+        backgroundColor: ['#0000FF','#DC143C','#FF69B4','#FFA500','#FF4500','#FF0000','#FFFF00','#87CEEB','#808080','#2F4F4F'],
+        hoverBackgroundColor: ['#0000FF','#DC143C','#FF69B4','#FFA500','#FF4500','#FF0000','#FFFF00','#87CEEB','#808080','#2F4F4F'],
+        label: this.executive.BillingDetails.Keys()
       },
-      // {
-      //   data: [this.billableData[0].NBillPerc],
-      //   label: "NonBillablePercentage",
-      //   backgroundColor: "#46BFBD",
-      //   hoverBackgroundColor: "#5AD3D1",
-      // },
     ];
-    this.chartLabels = ["Billable-Percentage", "NonBillable-Percentage"];
+    this.chartLabels = this.executive.BillingDetails.Keys();
     this.chartOptions = {
-      responsive: true,
-      // toolTipContent: "Working",
-      // tooltips: {
-      //   content: function(e) {
-
-      //   },
-      //   // callbacks: {
-      //   //   label: function (tooltipItem, billableData) {
-      //   //     return this.billableData[0].BillPerc;
-      //   //   },
-      //   // },
-      // },
+      title:{
+        text:'Billable and NonBillable Details',
+        display:true
+      },
+      responsive: true
     };
   }
 

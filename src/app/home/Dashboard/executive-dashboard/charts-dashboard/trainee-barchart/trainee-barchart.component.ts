@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit} from "@angular/core";
+import { ExecutiveDashboardComponent } from "../../executive-dashboard.component";
 
 @Component({
   selector: "app-trainee-barchart",
@@ -6,17 +7,18 @@ import { Component, OnInit, Input } from "@angular/core";
   styleUrls: ["./trainee-barchart.component.css"],
 })
 export class TraineeBarchartComponent implements OnInit {
-  @Input() public TraineeData: any[] = [];
+  public TraineeData: any[] = [];
   public chartType: string;
   public chartDatasets: Array<any>;
   public chartLabels: Array<any>;
   public chartOptions;
-
-  // chartDatasets: any = [];
-  constructor() {}
+  constructor(public executive:ExecutiveDashboardComponent) {}
 
   ngOnInit() {
-    if (this.TraineeData[0] != null) {
+    if (this.executive.TraineeDetails != null) {
+      this.executive.TraineeDetails.Values().forEach((key: any) => {
+        this.TraineeData.push(key.TraineeCountTotal);
+      });
       this.loadtraineeChart();
     }
   }
@@ -25,19 +27,18 @@ export class TraineeBarchartComponent implements OnInit {
     this.chartType = "polarArea";
     this.chartDatasets = [
       {
-        data: [
-          this.TraineeData[0].OnShoreTraineePerc,
-          this.TraineeData[0].OffShoreTraineePerc,
-        ],
-        backgroundColor: ["rgba(0,0,255,0.3)", "rgba(0,255,0,0.3)"],
-        hoverBackgroundColor: ["#fafafa", "#fafafa"],
+        data: this.TraineeData,
+        backgroundColor: ['#0000FF','#DC143C','#FF69B4','#FFA500','#FF4500','#FF0000','#FFFF00','#87CEEB','#808080','#2F4F4F'],
+        hoverBackgroundColor: ['#0000FF','#DC143C','#FF69B4','#FFA500','#FF4500','#FF0000','#FFFF00','#87CEEB','#808080','#2F4F4F'],
+        label:this.executive.TraineeDetails.Keys()
       },
     ];
-    this.chartLabels = [
-      "OnshoreTrainee-Percentage",
-      "OffshoreTrainee-Percentage",
-    ];
+    this.chartLabels = this.executive.TraineeDetails.Keys();
     this.chartOptions = {
+      title:{
+        text:'Trainee Count',
+        display:true
+      },
       responsive: true,
     };
   }
