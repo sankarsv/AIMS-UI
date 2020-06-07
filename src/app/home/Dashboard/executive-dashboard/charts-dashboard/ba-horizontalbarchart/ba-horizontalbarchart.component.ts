@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, ViewChild } from "@angular/core";
+import { ExecutiveDashboardComponent } from "../../executive-dashboard.component";
 
 @Component({
   selector: "app-ba-horizontalbarchart",
@@ -6,17 +7,19 @@ import { Component, OnInit, Input } from "@angular/core";
   styleUrls: ["./ba-horizontalbarchart.component.css"],
 })
 export class BaHorizontalbarchartComponent implements OnInit {
-  @Input() public BAData: any[] = [];
+  public BAData: any[]=[];
   public chartType: string;
   public chartDatasets: Array<any>;
   public chartLabels: Array<any>;
   public chartOptions;
 
-  // chartDatasets: any = [];
-  constructor() {}
+  constructor(public executive:ExecutiveDashboardComponent) {}
 
   ngOnInit() {
-    if (this.BAData[0] != null) {
+    if (this.executive.BACounts != null) {
+      this.executive.BACounts.Values().forEach((key: any) => {
+        this.BAData.push(key.BACountTotal);
+      });
       this.loadChart();
     }
   }
@@ -25,14 +28,17 @@ export class BaHorizontalbarchartComponent implements OnInit {
     this.chartType = "horizontalBar";
     this.chartDatasets = [
       {
-        data: [this.BAData[0].BACountPerc],
-        backgroundColor: ["rgba(105,159,177,0.2)"],
-        hoverBackgroundColor: ["#fafafa"],
-        label: "Business Analyst-Percentage"
+        data: this.BAData,
+        backgroundColor: this.executive.ColorValues,
+        hoverBackgroundColor: this.executive.ColorValues,
       },
     ];
-    this.chartLabels = ["Business Analyst-Percentage"];
+    this.chartLabels = this.executive.BACounts.Keys();
     this.chartOptions = {
+      title:{
+        text:'BA Count',
+        display:true
+      },
       responsive: true,
     };
   }

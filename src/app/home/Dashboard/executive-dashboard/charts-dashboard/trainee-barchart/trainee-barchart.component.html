@@ -1,10 +1,10 @@
 <div style="display: block;">
-  <canvas
+  <canvas #Chart
     baseChart
     [chartType]="chartType"
     [datasets]="chartDatasets"
     [labels]="chartLabels"
-    [legend]="true"
+    [legend]="false"
     [options]="chartOptions"
     (chartHover)="chartHovered($event)"
   >
