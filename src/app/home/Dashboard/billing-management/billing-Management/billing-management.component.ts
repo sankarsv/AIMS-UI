@@ -1,11 +1,11 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
-import { httpService } from '../../../../services/httpService';
+import { httpService } from '../../../../../services/httpService';
 import { APP_CONSTANTS } from 'app/utils/app-constants';
 import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { Dictionary } from 'app/utils/Dictionary';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FileQueueObject, FileUploaderService } from '../../../home/Employee/employee-head/upload/file-uploader.service';
+import { FileQueueObject, FileUploaderService } from '../../../../home/Employee/employee-head/upload/file-uploader.service';
 
 @Component({
   selector: 'app-billing-management',
@@ -64,6 +64,9 @@ export class BillingManagementComponent implements OnInit {
         this.BrmNamesList =this.BRMList.Keys();
       })
   });
+  
+}
+billingcomponent(){
   
 }
 upload(){
@@ -207,7 +210,7 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`,
         //   editor:{
         //     type:'label',
         //   },
-        //   valuePrepareFunction:(value)=>{return this._sanitizer.bypassSecurityTrustHtml(this.input);},
+        //   valuePrepareFunctioPostDetailsn:(value)=>{return this._sanitizer.bypassSecurityTrustHtml(this.input);},
         //   filter:false
         // },
         location: {
@@ -327,6 +330,7 @@ custom:[{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`,
     }
     this.searchByInput(brmName,yearValue)}); 
   }
+ 
    onSaveConfirm(event) {
     var data ={
       version: this.versionId,
