@@ -5,7 +5,7 @@
   <ul class="nav nav-pills">
       <li class="tablink" >
           <a class="nav-link active" href="#biling" [ngClass]="{ 'active':activeTab==='billing'}"  (click)="billingcomponent()"
-             data-toggle="tab">billing</a>
+             data-toggle="tab">Billing</a>
         </li>
     <li class="tablink">
       <a class="nav-link active" href="#ClarityFile" [ngClass]="{ 'active':activeTab==='clarityfile'}"  (click)="clarityfilecomponent()"
@@ -22,12 +22,12 @@
 
   <div class="tab-content">
       <div class="tab-pane" id="billing"  [ngClass]="{ 'active':activeTab==='billing'}" >
-          <div >
+          <div *ngIf= 'loadbilling' >
               <app-billing-management></app-billing-management>
           </div>
       </div>
     <div class="tab-pane" id="clarityfile"  [ngClass]="{ 'active':activeTab==='clarityfile'}">
-    <div *ngIf= 'loaddownload'>
+    <div *ngIf= 'loadclarityfile'>
         <app-clarityfile></app-clarityfile>
     </div>
   </div>
