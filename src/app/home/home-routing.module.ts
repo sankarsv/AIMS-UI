@@ -1,10 +1,10 @@
+import { BillingManagementMainComponent } from './Dashboard/billing-management/billing-management-main.component';
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AssociateAnalyticsComponent } from "./Dashboard/associate-analytics/associate-analytics.component";
 import { ComplianceMonitoringComponent } from "./Dashboard/compliance-monitoring/compliance-monitoring.component";
 import { AgileCampaignComponent } from "./Dashboard/agile-campaign/agile-campaign.component";
 import { AccessTokenReportsComponent } from "./Dashboard/access-token-reports/access-token-reports.component";
-import { BillingManagementComponent } from "./Dashboard/billing-management/billing-management.component";
 import { RevenueMonitoringComponent } from "./Dashboard/revenue-monitoring/revenue-monitoring.component";
 import { ForYourActionComponent } from "./Dashboard/for-your-action/for-your-action.component";
 import { ExecutiveDashboardComponent } from "./Dashboard/executive-dashboard/executive-dashboard.component";
@@ -51,7 +51,7 @@ const routes: Routes = [
 
       {
         path: "billingManagement",
-        component: BillingManagementComponent,
+        component: BillingManagementMainComponent,
         pathMatch: "full",
       },
 

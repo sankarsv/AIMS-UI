@@ -1,0 +1,35 @@
+
+
+<div id="tabs" #tabs>
+
+  <ul class="nav nav-pills">
+      <li class="tablink" >
+          <a class="nav-link active" href="#biling" [ngClass]="{ 'active':activeTab==='billing'}"  (click)="billingcomponent()"
+             data-toggle="tab">Billing</a>
+        </li>
+    <li class="tablink">
+      <a class="nav-link active" href="#ClarityFile" [ngClass]="{ 'active':activeTab==='clarityfile'}"  (click)="clarityfilecomponent()"
+         data-toggle="tab">ClarityFile</a>
+    </li>
+    <li class="tablink">
+      <a class="nav-link active" href="#BillingClarityCompare" [ngClass]="{ 'active':activeTab==='claritycompare'}" data-toggle="tab">BillingClarityCompare</a>
+    </li>
+    <li class="tablink">
+      <a class="nav-link active" href="#Search" [ngClass]="{ 'active':activeTab==='search'}"  
+         data-toggle="tab">Search</a>
+    </li>
+  </ul>
+    <div class="tab-content">
+      <div class="tab-pane" id="billing"  [ngClass]="{ 'active':activeTab==='billing'}" >
+          <div *ngIf= 'loadbilling' >
+             <app-billing-management></app-billing-management>
+          </div>
+      </div>
+    <div class="tab-pane active" id="clarityfile"  [ngClass]="{ 'active':activeTab==='billing'}">
+    <div  *ngIf= 'loadclarityfile'>
+        <app-clarityfile (onCompleteItem)="onCompleteItem($event)"></app-clarityfile>
+    </div>
+  </div>
+  </div>
+
+</div>
