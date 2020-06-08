@@ -1,0 +1,25 @@
+[
+	{	
+		 "empName":"Ganesh",
+		 "officeId":"ganesh007",
+		 "stoName":"Voitech",
+		 "daysBillable":"95",
+		 "hoursBillable":"50",	
+		 "billRate":"55.55",
+		 "billedAmount":"30",
+ 		 "remarks":"Good"
+		
+		 },
+		 {	
+		
+			"empName":"kanak",
+			"officeId":"kank007",
+			"stoName":"Voitech",
+			"daysBillable":"95",
+			"hoursBillable":"50",	
+			"billRate":"55.55",
+			"billedAmount":"30",
+			 "remarks":"Good"
+			 }
+]
+

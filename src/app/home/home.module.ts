@@ -1,3 +1,4 @@
+import { BillingManagementComponent } from './Dashboard/billing-management/billing-Management/billing-management.component';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -9,7 +10,6 @@ import { AssociateAnalyticsComponent } from "./Dashboard/associate-analytics/ass
 import { ComplianceMonitoringComponent } from "./Dashboard/compliance-monitoring/compliance-monitoring.component";
 import { AgileCampaignComponent } from "./Dashboard/agile-campaign/agile-campaign.component";
 import { AccessTokenReportsComponent } from "./Dashboard/access-token-reports/access-token-reports.component";
-import { BillingManagementComponent } from "./Dashboard/billing-management/billing-management.component";
 import { RevenueMonitoringComponent } from "./Dashboard/revenue-monitoring/revenue-monitoring.component";
 import { ForYourActionComponent } from "./Dashboard/for-your-action/for-your-action.component";
 import { ExecutiveDashboardComponent } from "./Dashboard/executive-dashboard/executive-dashboard.component";
@@ -31,6 +31,8 @@ import { ExpDoughnutchartComponent } from "./Dashboard/executive-dashboard/chart
 import { TraineeBarchartComponent } from "./Dashboard/executive-dashboard/charts-dashboard/trainee-barchart/trainee-barchart.component";
 import { BaHorizontalbarchartComponent } from "./Dashboard/executive-dashboard/charts-dashboard/ba-horizontalbarchart/ba-horizontalbarchart.component";
 import { UploadreportsComponent } from "./Reports/uploadreports/uploadreports.component";
+import { ClarityfileComponent } from './Dashboard/billing-management/clarityfile/clarityfile.component';
+import { BillingManagementMainComponent } from './Dashboard/billing-management/billing-management-main.component';
 
 @NgModule({
   imports: [
@@ -49,6 +51,7 @@ import { UploadreportsComponent } from "./Reports/uploadreports/uploadreports.co
     ComplianceMonitoringComponent,
     AgileCampaignComponent,
     AccessTokenReportsComponent,
+    BillingManagementMainComponent,
     BillingManagementComponent,
     RevenueMonitoringComponent,
     ForYourActionComponent,
@@ -66,6 +69,8 @@ import { UploadreportsComponent } from "./Reports/uploadreports/uploadreports.co
     TraineeBarchartComponent,
     BaHorizontalbarchartComponent,
     UploadreportsComponent,
+    ClarityfileComponent,
+    BillingManagementMainComponent,
   ],
   //providers: [FileUploaderService, DashboardResolver],
 

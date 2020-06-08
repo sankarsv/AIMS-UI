@@ -1,11 +1,11 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild, ElementRef } from '@angular/core';
-import { httpService } from '../../../../services/httpService';
+import { httpService } from '../../../../../services/httpService';
 import { APP_CONSTANTS } from 'app/utils/app-constants';
 import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { Dictionary } from 'app/utils/Dictionary';
 import { DomSanitizer } from '@angular/platform-browser';
-import { FileQueueObject, FileUploaderService } from '../../../home/Employee/employee-head/upload/file-uploader.service';
+import { FileQueueObject, FileUploaderService } from '../../../../home/Employee/employee-head/upload/file-uploader.service';
 
 @Component({
   selector: 'app-billing-management',
@@ -70,6 +70,9 @@ getYearValues(){
 
 }
 
+billingcomponent(){
+  
+}
 upload(){
   this.fileInput.nativeElement.click();
 }
@@ -236,6 +239,15 @@ getTableColumnName(HeaderName){
         position: 'right'
       },
       columns: {
+        // checkbox:{
+        //   title:'Select',
+        //   type:"html",
+        //   editor:{
+        //     type:'label',
+        //   },
+        //   valuePrepareFunctioPostDetailsn:(value)=>{return this._sanitizer.bypassSecurityTrustHtml(this.input);},
+        //   filter:false
+        // },
         location: {
           title: 'Location'
         },
@@ -422,6 +434,7 @@ getTableColumnName(HeaderName){
     }
     this.searchByInput(" " ,"BRMName",brmName,yearValue)}); 
   }
+ 
    onSaveConfirm(event) {
     var data ={
       version: this.versionId,
