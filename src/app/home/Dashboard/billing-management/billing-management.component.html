@@ -33,8 +33,8 @@
 
 
 <div class="tableDesign" *ngIf="showTable">
-  <ng2-smart-table #table [settings]="settings"  allowFiltering='true' allowPaging='true' [source]="data"  (editConfirm)="onSaveConfirm($event)"
-    (deleteConfirm)="onDeleteConfirm($event)"   (change)="change($event)"></ng2-smart-table>
+  <ng2-smart-table #table [settings]="settings"  allowFiltering='true' allowPaging='true' [source]="source"
+  (createConfirm)="onCreateConfirm($event)" (editConfirm)="onSaveConfirm($event)"   (deleteConfirm)="onDeleteConfirm($event)" (change)="change($event)"></ng2-smart-table>
 </div>
 
 <div>
@@ -46,7 +46,7 @@
   <button class="buttonBox" (click)="upload()">Upload</button>
   <button class="buttonBox" (click)="download(searchByBRM,searchByYear)">Download</button>
   <button class="buttonBox" (click)="updateFreezeInd(searchByBRM,searchByYear)">{{btnFreezeText}}</button>
-  <button class="buttonBox" (click)="reset()">Save</button>
+  <button class="buttonBox" (click)="save()">Save</button>
 </div>
 <div>
   <label [ngClass]= "{'lblSuccess': fileUpload, 'lblSuccess': !fileUpload }"  >{{uploadMessage}}</label>

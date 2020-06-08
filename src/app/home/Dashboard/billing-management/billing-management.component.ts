@@ -15,10 +15,12 @@ import { FileQueueObject, FileUploaderService } from '../../../home/Employee/emp
 
 export class BillingManagementComponent implements OnInit {
   searchBy: String;
+  searchByYear: String;
+  searchByBRM: String;
   showTable: boolean = false;
   searchString: String;
   settings: any;
-  data:any;
+  source:any;
   input:string='<input type="checkbox"></input>';
   BRMList:Dictionary<any>;
   UnderBRMBillingDetailsList:Dictionary<any>;
@@ -40,14 +42,9 @@ export class BillingManagementComponent implements OnInit {
 
   constructor(public httpService: httpService, public router:Router, private _sanitizer:DomSanitizer, public uploader: FileUploaderService) { }
 
-  ngOnInit() {
-    this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].YearValues).then((res:any)=>{
-      this.YearsList = res.map(yearname=>{
-        return yearname["MonthYearName"];
-      });     
-    });
-    this.btnFreezeText ="Freeze";
-
+  ngOnInit() {    
+  this.getYearValues();
+  this.btnFreezeText ="Freeze";
   this.uploader.onCompleteItem = this.completeItem;
   this.uploader.onUploadFailed = this.uploadFailed;
   this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].BRMDetailsList).then((res:any)=>{
@@ -63,6 +60,16 @@ export class BillingManagementComponent implements OnInit {
   });
   
 }
+
+getYearValues(){
+  this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].YearValues).then((res:any)=>{
+    this.YearsList = res.map(yearname=>{
+      return yearname["MonthYearName"];
+    });     
+  });
+
+}
+
 upload(){
   this.fileInput.nativeElement.click();
 }
@@ -112,24 +119,31 @@ uploadFailed = (item: FileQueueObject, response: any) => {
 
 searchByInput(Location:string,filterValue:string,brmName:string,yearValue:string)
 {
-var displayTable =(filterValue=="BRMName"&&brmName!=null&&Location!=null)||filterValue=="Other"||filterValue=="All";
+  var displayTable =(filterValue=="BRMName"&&brmName!=null&&Location!=null)||filterValue=="Other"||filterValue=="All";
   if(displayTable)
   {
-  var brmID:any;
-  if(brmName!=null&&this.BRMList.ContainsKey(brmName))
-  {
-    brmID=this.BRMList.Item(brmName).BRMId;
-  }
+    var brmID:any;
+    if(brmName!=null&&this.BRMList.ContainsKey(brmName))
+    {
+      brmID=this.BRMList.Item(brmName).BRMId;
+    }
   
-  let requestBody = {
-    month: yearValue.split(" ")[0],
-    year:yearValue.split(" ")[1],
-    brmId:brmID,
-filterby:filterValue
-  };
- var monthName= yearValue.split(" ")[0];
- var yearName= yearValue.split(" ")[1];
-  var name =brmName;
+    let requestBody = {
+      month: yearValue.split(" ")[0],
+      year:yearValue.split(" ")[1],
+      brmId:brmID,
+      filterby:filterValue
+    };
+  
+    this.getBillingDetails();  
+  }
+  this.showTable = displayTable;
+}
+
+getBillingDetails() {
+  var monthName= this.searchByYear.split(" ")[0];
+  var yearName= this.searchByYear.split(" ")[1];
+  var name =this.searchByBRM;
   this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
     this.UnderBRMBillingDetailsList = new Dictionary<any>();
     res.map((brmDetail: { [x: string]: any; })=>{      
@@ -157,23 +171,22 @@ filterby:filterValue
        billRate:brmDetail["billRate"]
       };
       this.UnderBRMBillingDetailsList.Add(brmDetalLocal.empNo,brmDetalLocal); 
-      this.data= this.UnderBRMBillingDetailsList.Values();
+      this.source= this.UnderBRMBillingDetailsList.Values();
      
     })
-    if(this.data.length >0){
-      this.versionId = this.data[0].version;      
-      this.freezeInd = (this.data[0].freezeInd == "Y");
+    if(this.source.length >0){
+      this.versionId = this.source[0].version;      
+      this.freezeInd = (this.source[0].freezeInd == "Y");
       if(this.freezeInd) this.btnFreezeText = "UnFreeze" 
       else {
         this.btnFreezeText = "Freeze"
       }
     }
+    this.initSetting(true);
+    //this.initSetting(filterValue == "Other");
     
-    this.initSetting(filterValue == "Other");
-    
-});
-  }
-  this.showTable = displayTable;
+  });
+
 }
 
 populateTableHeader() {
@@ -211,12 +224,14 @@ getTableColumnName(HeaderName){
     this.settings = {
       mode: 'inline',
       selectMode:'multi',
-      edit: {confirmSave: editEnable},
+      edit: {confirmSave: true},
+      delete:  {confirmDelete: true},
+      add:  {confirmCreate: true},
       actions: {
-        add: false,
+        add: editEnable,
         edit: editEnable,
         update: false,
-        delete: false,
+        delete:   editEnable,
         custom:customString,
         position: 'right'
       },
@@ -282,55 +297,117 @@ getTableColumnName(HeaderName){
   }
 
 
+
   onDeleteConfirm(event) {
-    alert();
+    console.log("Delete Event In Console")
+    console.log(event);
+    if (window.confirm('Are you sure you want to delete?')) {
+      var data ={
+        version: this.versionId,
+        billingDetailsList:[]
+      };
+      var selectedData =event.data;
+      var employee ={
+        empId:selectedData.empNo,
+        billableHrs:selectedData.billablehrs,
+        billableDays:selectedData.billabledays,      
+        effortHrs: selectedData.efforthr,
+        extraBilling:selectedData.extrabiling,
+        billingAmount: selectedData.billableamt,
+        remarks:selectedData.remarks
+      }
+      data.billingDetailsList.push(employee);
+      this.serviceCall(data, event, 2);      
+    } else {
+      event.confirm.reject();
+    }
 
   }
   public change(event) {
-    let value = event.srcElement.value
-    console.log(value)
-     let column:number = Number (this.table.grid.dataSet.selectedRow.index)
-     var row =this.table.grid.dataSet.data[this.table.grid.dataSet.selectedRow.index];
-     row[this.getTableColumnName(event.srcElement.placeholder)] = event.srcElement.value
-      this.selectedRows.push(column);
+    if(event.srcElement.closest("tr").querySelector("a.ng2-smart-action-add-create")==null){
+      let value = event.srcElement.value
+      console.log(value)
+      var rIx =event.srcElement.closest("tr").rowIndex-2;
+      var row =this.table.grid.dataSet.data[rIx];
+      row[this.getTableColumnName(event.srcElement.placeholder)] = event.srcElement.value
+      this.selectedRows.push(rIx);
+    }
   }
-  reset(){
 
+  save()
+  {
+    let bRowSelected: boolean =false;
+    let gridSelectedRows: Array<Number> = Array.from(new Set(this.selectedRows));    
+    let selectedIx: any;
+    for(var i=0; i<gridSelectedRows.length; i++)
+    {
+      selectedIx = gridSelectedRows[i];
+      if(this.table.grid.dataSet.rows[selectedIx].isSelected) {     
+        bRowSelected =true;
+      }
+    }
+    if(!bRowSelected){
+      alert("Please select a row to update");
+      return;
+    }
+    
     var data ={
       version: this.versionId,
       billingDetailsList:[]
     };
-   for(var i=0; i<this.selectedRows.length; i++)
-   {
-     let selectedIx: any =this.selectedRows[i];
-      if(this.table.grid.dataSet.rows[selectedIx].isSelected) {
-        let selectedData: any = this.table.grid.dataSet.rows[selectedIx];
-        var employee ={
-          empId:selectedData.data.empNo,
-          billableHrs:selectedData.data.billablehrs,
-          billableDays:selectedData.data.billabledays,      
-          effortHrs: selectedData.data.efforthr,
-          extraBilling:selectedData.data.extrabiling,
-          billingAmount: selectedData.data.billableamt,
-          remarks:selectedData.data.remarks
+    
+    for(var i=0; i<gridSelectedRows.length; i++)
+    {
+      let selectedIx: any =gridSelectedRows[i];
+        if(this.table.grid.dataSet.rows[selectedIx].isSelected) {     
+          let selectedData: any = this.table.grid.dataSet.data[selectedIx];
+          var employee ={
+            empId:selectedData.empNo,
+            billableHrs:selectedData.billablehrs,
+            billableDays:selectedData.billabledays,      
+            effortHrs: selectedData.efforthr,
+            extraBilling:selectedData.extrabiling,
+            billingAmount: selectedData.billableamt,
+            remarks:selectedData.remarks
+          }
+          data.billingDetailsList.push(employee);
         }
-        data.billingDetailsList.push(employee);
-      }
-      alert(JSON.stringify(data));
-     
-      this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].UpdateBillingDetails, data).then(result =>{      
-          alert("Saved Successfully");      
-      });
-     
 
-   }
-   
+    }    
+    this.serviceCall(data,null,1);   
   }
 
+
+  serviceCall(data,event, callType){    
+    console.log(JSON.stringify(data))
+    this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].UpdateBillingDetails, data).then(result =>{      
+      alert("Saved Successfully");    
+      this.getBillingDetails(); 
+      //single update      
+      if(callType == 0)  {
+        this.singleUpdate(event);
+      }
+      //Delete
+      if(callType == 2 || callType == 3)  {
+        this.rowUpdate(event);
+      }
+      
+    });     
+  }
+
+  singleUpdate(event)
+  {
+    event.confirm.resolve(event.newData);
+  }
+  
+  rowUpdate(event)
+  {
+    event.confirm.resolve();
+  }
   updateFreezeInd(brmName:string,yearValue:string){
     //var brmID =this.BRMList.Item(brmName).BRMNumber;
-    var monthName= yearValue.split(" ")[0];
-    var yearName= yearValue.split(" ")[1];
+    var monthName= this.searchByYear.split(" ")[0];
+    var yearName= this.searchByYear.split(" ")[1];    
     var freezeIndNew;
     if(this.freezeInd){
       freezeIndNew = 'N'
@@ -360,13 +437,43 @@ getTableColumnName(HeaderName){
       remarks:event.newData["remarks"]
     }
    data.billingDetailsList.push(employee);
-   alert(JSON.stringify(data));
-   
-    this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].UpdateBillingDetails, data).then(result =>{  
-        event.confirm.resolve(event.newData);    
-        alert("Saved Successfully");      
-    });
-    
+    alert(JSON.stringify(data));   
+    this.serviceCall(data,event, 0);
+  }
+
+  onCreateConfirm(event) {
+    console.log("Create Event In Console")
+    console.log(event);
+    var data ={
+      version: this.versionId,
+      billingDetailsList:[]
+    };
+    var selectedData =event.newData;
+    var employee ={
+      empId:selectedData.empNo,
+      billableHrs:selectedData.billablehrs,
+      billableDays:selectedData.billabledays,      
+      effortHrs: selectedData.efforthr,
+      extraBilling:selectedData.extrabiling,
+      billingAmount: selectedData.billableamt,
+      remarks:selectedData.remarks
+    }
+    data.billingDetailsList.push(employee);
+    this.serviceCall(data, event, 3);      
+  }
+
+ 
+
+  resetEditMode(){
+    let gridSelectedRows: Array<Number> = Array.from(new Set(this.selectedRows));   
+    for(var i=0; i<gridSelectedRows.length; i++)
+    {
+      let selectedIx: any =gridSelectedRows[i];
+      if(this.table.grid.dataSet.rows[selectedIx].isSelected) {     
+       this.table.grid.dataSet.data[selectedIx].isInEditing =false;
+      }
+    }
+
   }
   
 }
