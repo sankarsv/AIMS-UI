@@ -92,32 +92,37 @@ initSetting() {
       //   filter:false
       // },
       empname: {
-        title: 'empName'
+        title: 'EmpName'
       },
       officeid: {
-        title: 'officeId'
+        title: 'OfficeId'
       },
       stoname: {
-        title: 'stoName'
+        title: 'STOName'
       },
       daysbillable: {
-        title: 'daysBillable'
+        title: 'DaysBillable'
       },
       hrsbillable: {
-        title: 'hoursBillable',
+        title: 'HoursBillable',
       },
       billrate: {
-        title: 'billRate'
+        title: 'BillRate'
       },
       billamt: {
-        title: 'billedAmount'
+        title: 'BilledAmount'
       },
       remarks: {
-        title: 'remarks'
-      },
-      
-  }
+        title: 'Remarks'
+      }
+  },
+  attr: {
+    class: 'table table-bordered'
+  }  
+
 }
+     
+
 }
 populateTableHeader() {
 
