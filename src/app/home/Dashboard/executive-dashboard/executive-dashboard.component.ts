@@ -64,27 +64,27 @@ export class ExecutiveDashboardComponent implements OnInit {
 
   fetchYearlyDetails(year: string, month: string) {
     forkJoin([
-      this.httpService.PostDetails("billing.json", {
+      this.httpService.PostDetails(APP_CONSTANTS.URL[environment.type].Dashboard, {
         reportType: "billable",
         year: year,
         month: month,
       }),
-      this.httpService.PostDetails("SeniorJuniorRatio.json", {
+      this.httpService.PostDetails(APP_CONSTANTS.URL[environment.type].Dashboard, {
         reportType: "srjrratio",
         year: year,
         month: month,
       }),
-      this.httpService.PostDetails("HeadCount.json", {
+      this.httpService.PostDetails(APP_CONSTANTS.URL[environment.type].Dashboard, {
         reportType: "hcratio",
         year: year,
         month: month,
       }),
-      this.httpService.PostDetails("Trainee.json", {
+      this.httpService.PostDetails(APP_CONSTANTS.URL[environment.type].Dashboard, {
         reportType: "trnratio",
         year: year,
         month: month,
       }),
-      this.httpService.PostDetails("BACount.json", {
+      this.httpService.PostDetails(APP_CONSTANTS.URL[environment.type].Dashboard, {
         reportType: "baratio",
         year: year,
         month: month,
