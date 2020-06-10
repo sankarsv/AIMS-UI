@@ -25,7 +25,7 @@ export const APP_CONSTANTS = {
             REGISTER: "aims/register",
             UPLOAD: "aims/user/upload",
             UPLOADBR : "aims/user/upload/br",
-            UPLOADCLARITY: "assets/mock/aims/uploadClarity.json",
+            UPLOADCLARITY: "aims/user/upload/cr",
             BillingUpload: "aims/user/upload/br",
             SEARCH: "aims/user/getEmployeeDetails",
             VERSION: "aims/user/versioninfo",
