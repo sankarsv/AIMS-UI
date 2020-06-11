@@ -30,7 +30,8 @@ export class BillablePiechartComponent implements OnInit {
         data: this.billableData,
         backgroundColor: this.executive.ColorValues,
         hoverBackgroundColor: this.executive.ColorValues,
-        label: this.executive.BillingDetails.Keys()
+        label: this.executive.BillingDetails.Keys(),
+        totalData:this.executive.BillingDetails
       },
     ];
     this.chartLabels = this.executive.BillingDetails.Keys();
@@ -39,7 +40,24 @@ export class BillablePiechartComponent implements OnInit {
         text:'Billable and NonBillable Details',
         display:true
       },
-      responsive: true
+      responsive: true,
+      tooltips: {
+        callbacks: {
+            label: function(tooltipItem, data) {
+              var label:string = "";
+              let dataValue:string =data.datasets[tooltipItem.datasetIndex]._meta[4].controller.chart.active[0]._model.label;
+              if(data.datasets[tooltipItem.datasetIndex].totalData.ContainsKey(dataValue))
+              {
+                let billlabel="Billable Count: "+data.datasets[tooltipItem.datasetIndex].totalData.Item(dataValue).BillCount;
+                let nonbilllabel=" Non Billable Count: "+data.datasets[tooltipItem.datasetIndex].totalData.Item(dataValue).NBillCOunt;
+                let onbilllabel=" OnShore Billable Count: "+data.datasets[tooltipItem.datasetIndex].totalData.Item(dataValue).OnBillCOunt;
+                let offbilllabel=" Offshore Billable Count: "+data.datasets[tooltipItem.datasetIndex].totalData.Item(dataValue).OffBillCount;
+                return [billlabel,nonbilllabel,onbilllabel,offbilllabel];
+              }
+              return label;
+            }
+            }
+          }
     };
   }
 

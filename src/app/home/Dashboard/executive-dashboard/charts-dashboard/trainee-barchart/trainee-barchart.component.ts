@@ -30,7 +30,8 @@ export class TraineeBarchartComponent implements OnInit {
         data: this.TraineeData,
         backgroundColor: this.executive.ColorValues,
         hoverBackgroundColor: this.executive.ColorValues,
-        label:this.executive.TraineeDetails.Keys()
+        label:this.executive.TraineeDetails.Keys(),
+        totalData:this.executive.TraineeDetails
       },
     ];
     this.chartLabels = this.executive.TraineeDetails.Keys();
@@ -40,6 +41,21 @@ export class TraineeBarchartComponent implements OnInit {
         display:true
       },
       responsive: true,
+      tooltips: {
+        callbacks: {
+            label: function(tooltipItem, data) {
+              var label:string = "";
+              let dataValue:string =tooltipItem.xLabel;
+              if(data.datasets[tooltipItem.datasetIndex].totalData.ContainsKey(dataValue))
+              {
+                let onlabel="Onshore Trainee Count: "+data.datasets[tooltipItem.datasetIndex].totalData.Item(dataValue).OnTraineeCount;
+                let offlabel=" Offshore Trainee Count: "+data.datasets[tooltipItem.datasetIndex].totalData.Item(dataValue).OffShoreTraineeCount;
+                return [onlabel,offlabel];
+              }
+              return label;
+            }
+            }
+          }
     };
   }
 
