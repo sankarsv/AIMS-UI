@@ -266,7 +266,7 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.getBrmNames();
     this.barChartType = "bar";
     this.barChartData = [
-      { data: this.HeadCount}
+      { data: this.HeadCount,totalData:this.HeadCounts}
     ];
    this.barChartLegend = false;
     this.mbarChartLabels = this.HeadCounts.Keys();
@@ -289,10 +289,35 @@ export class ExecutiveDashboardComponent implements OnInit {
         xAxes:[{
           barPercentage:0.2
         }]
-      }
+      },
+      tooltips: {
+        mode: 'label',
+        callbacks: {
+            label: function(tooltipItem, data) {
+              if(data.datasets[tooltipItem.datasetIndex].totalData.ContainsKey(tooltipItem.xLabel))
+              {
+                let offlabel ="OffShore Count: "+data.datasets[tooltipItem.datasetIndex].totalData.Item(tooltipItem.xLabel).OffTotal;
+                let onlabel="OnShore Count: "+data.datasets[tooltipItem.datasetIndex].totalData.Item(tooltipItem.xLabel).OnShoreTotal;
+                return [offlabel,onlabel]
+              }
+              return [""];
+            }
+            }
+          }
+  
     };
   }
 
+  getLabel(xlabel:string):any
+  {
+    let label="";
+    if(this.HeadCounts.ContainsKey(xlabel))
+    {
+      label+="OffShore Count: "+this.HeadCounts.Item(xlabel).OffTotal;
+      label+="OnShore Count: "+this.HeadCounts.Item(xlabel).OnShoreTotal;
+    }
+    return label;
+  }
   getBrmNames(){
     this.HeadCounts.Values().forEach((key: any) => {
       this.brmNames.push(key.BRMName);
@@ -301,6 +326,9 @@ export class ExecutiveDashboardComponent implements OnInit {
   }
   
   public chartClicked(evt: any) {}
+  public chartHovered(e: any): void {
+
+  }
 
   //endregion barchart - BRM vs Headcount
 }
