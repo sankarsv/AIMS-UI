@@ -16,7 +16,7 @@ import { FileQueueObject, FileUploaderService } from '../../../../home/Employee/
 export class BillingManagementComponent implements OnInit {
   searchBy: String;
   searchByYear: String;
-  searchByBRM: String;
+  searchByBRM: string;
   showTable: boolean = false;
   searchString: String;
   settings: any;
@@ -138,16 +138,26 @@ searchByInput(Location:string,filterValue:string,brmName:string,yearValue:string
       filterby:filterValue
     };
   
-    this.getBillingDetails();  
+    this.getBillingDetails(filterValue=="Other",requestBody);  
   }
   this.showTable = displayTable;
 }
 
-getBillingDetails() {
-  var monthName= this.searchByYear.split(" ")[0];
-  var yearName= this.searchByYear.split(" ")[1];
-  var name =this.searchByBRM;
-  this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
+getBillingDetails(editEnable:boolean,requestBody:any) {
+  if(requestBody==null)
+  {
+    var brmID:any;
+    if(this.searchByBRM!=null&&this.BRMList.ContainsKey(this.searchByBRM))
+    {
+      brmID=this.BRMList.Item(this.searchByBRM).BRMId;
+    }
+    requestBody={
+  month:this.searchByYear.split(" ")[0],
+  year:this.searchByYear.split(" ")[1],
+  brmId:brmID
+    }
+  }
+  this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,requestBody).then((res:any)=>{
     this.UnderBRMBillingDetailsList = new Dictionary<any>();
     res.map((brmDetail: { [x: string]: any; })=>{      
       let brmDetalLocal =  {
@@ -185,9 +195,7 @@ getBillingDetails() {
         this.btnFreezeText = "Freeze"
       }
     }
-    this.initSetting(true);
-    //this.initSetting(filterValue == "Other");
-    
+    this.initSetting(editEnable);    
   });
 
 }
@@ -394,7 +402,7 @@ getTableColumnName(HeaderName){
     console.log(JSON.stringify(data))
     this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].UpdateBillingDetails, data).then(result =>{      
       alert("Saved Successfully");    
-      this.getBillingDetails(); 
+      this.getBillingDetails(true,null); 
       //single update      
       if(callType == 0)  {
         this.singleUpdate(event);
