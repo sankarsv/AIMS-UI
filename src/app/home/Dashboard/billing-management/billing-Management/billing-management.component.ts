@@ -130,7 +130,18 @@ searchByInput(Location:string,filterValue:string,brmName:string,yearValue:string
     {
       brmID=this.BRMList.Item(brmName).BRMId;
     }
-  
+  if(filterValue=="BRMName")
+  {
+    filterValue = "brmid";
+  }
+  else if (filterValue="Other")
+  {
+    filterValue = "other";
+  }
+  else if(filterValue="All")
+  {
+    filterValue="all";
+  }
     let requestBody = {
       month: yearValue.split(" ")[0],
       year:yearValue.split(" ")[1],
