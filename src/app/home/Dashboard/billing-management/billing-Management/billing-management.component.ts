@@ -149,7 +149,7 @@ searchByInput(Location:string,filterValue:string,brmName:string,yearValue:string
       filterBy:filterValue
     };
   
-    this.getBillingDetails(filterValue=="Other",requestBody);  
+    this.getBillingDetails(filterValue=="other",requestBody);  
   }
   this.showTable = displayTable;
 }
