@@ -134,8 +134,8 @@ searchByInput(Location:string,filterValue:string,brmName:string,yearValue:string
     let requestBody = {
       month: yearValue.split(" ")[0],
       year:yearValue.split(" ")[1],
-      brmId:brmID,
-      filterby:filterValue
+      brmId:Number(brmID),
+      filterBy:filterValue
     };
   
     this.getBillingDetails(filterValue=="Other",requestBody);  
@@ -154,7 +154,7 @@ getBillingDetails(editEnable:boolean,requestBody:any) {
     requestBody={
   month:this.searchByYear.split(" ")[0],
   year:this.searchByYear.split(" ")[1],
-  brmId:brmID
+  brmId:Number(brmID)
     }
   }
   this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,requestBody).then((res:any)=>{
