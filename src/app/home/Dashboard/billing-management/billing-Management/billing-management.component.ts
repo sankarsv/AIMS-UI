@@ -16,7 +16,7 @@ import { FileQueueObject, FileUploaderService } from '../../../../home/Employee/
 export class BillingManagementComponent implements OnInit {
   searchBy: String;
   searchByYear: String;
-  searchByBRM: String;
+  searchByBRM: string;
   showTable: boolean = false;
   searchString: String;
   settings: any;
@@ -130,24 +130,45 @@ searchByInput(Location:string,filterValue:string,brmName:string,yearValue:string
     {
       brmID=this.BRMList.Item(brmName).BRMId;
     }
-  
+  if(filterValue=="BRMName")
+  {
+    filterValue = "brmid";
+  }
+  else if (filterValue=="Other")
+  {
+    filterValue = "other";
+  }
+  else if(filterValue=="All")
+  {
+    filterValue="all";
+  }
     let requestBody = {
       month: yearValue.split(" ")[0],
       year:yearValue.split(" ")[1],
-      brmId:brmID,
-      filterby:filterValue
+      brmId:Number(brmID),
+      filterBy:filterValue
     };
   
-    this.getBillingDetails();  
+    this.getBillingDetails(filterValue=="other",requestBody);  
   }
   this.showTable = displayTable;
 }
 
-getBillingDetails() {
-  var monthName= this.searchByYear.split(" ")[0];
-  var yearName= this.searchByYear.split(" ")[1];
-  var name =this.searchByBRM;
-  this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
+getBillingDetails(editEnable:boolean,requestBody:any) {
+  if(requestBody==null)
+  {
+    var brmID:any;
+    if(this.searchByBRM!=null&&this.BRMList.ContainsKey(this.searchByBRM))
+    {
+      brmID=this.BRMList.Item(this.searchByBRM).BRMId;
+    }
+    requestBody={
+  month:this.searchByYear.split(" ")[0],
+  year:this.searchByYear.split(" ")[1],
+  brmId:Number(brmID)
+    }
+  }
+  this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,requestBody).then((res:any)=>{
     this.UnderBRMBillingDetailsList = new Dictionary<any>();
     res.map((brmDetail: { [x: string]: any; })=>{      
       let brmDetalLocal =  {
@@ -185,9 +206,35 @@ getBillingDetails() {
         this.btnFreezeText = "Freeze"
       }
     }
-    this.initSetting(true);
-    //this.initSetting(filterValue == "Other");
-    
+    var BRMColumn;
+    if(requestBody.filterBy=="other")
+    {
+      let listValues=[];
+      let count=1;
+      this.BRMList.Keys().forEach(value=>{
+        listValues.push({value:this.BRMList.Item(value).BRMId,title:value});
+      });
+      let configValue={
+        selectText:'Select',
+        list:listValues
+      };
+      let editorValue={
+        type:'list',
+        config:configValue
+      };
+      BRMColumn=
+      {
+        title:"BRM Name",
+        editor: editorValue
+      };
+    }
+    else
+    {
+      BRMColumn={
+        title:"BRM Name"
+      }
+    }
+    this.initSetting(editEnable,BRMColumn);    
   });
 
 }
@@ -217,7 +264,7 @@ getTableColumnName(HeaderName){
   return this.headerTitle[HeaderName];
 }
 
-  initSetting(editEnable:boolean) {
+  initSetting(editEnable:boolean,brmColumn:any) {
     this.populateTableHeader();
     this.searchBy = 'All';
     this.searchString = "";
@@ -239,15 +286,6 @@ getTableColumnName(HeaderName){
         position: 'right'
       },
       columns: {
-        // checkbox:{
-        //   title:'Select',
-        //   type:"html",
-        //   editor:{
-        //     type:'label',
-        //   },
-        //   valuePrepareFunctioPostDetailsn:(value)=>{return this._sanitizer.bypassSecurityTrustHtml(this.input);},
-        //   filter:false
-        // },
         location: {
           title: 'Location'
         },
@@ -260,9 +298,7 @@ getTableColumnName(HeaderName){
         empFullName: {
           title: 'Employee Name'
         },
-        BRMName: {
-          title:'BRM'
-        },
+        BRMName: brmColumn,
         billablehrs: {
           title: 'Billable Hrs',
         },
@@ -394,7 +430,7 @@ getTableColumnName(HeaderName){
     console.log(JSON.stringify(data))
     this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].UpdateBillingDetails, data).then(result =>{      
       alert("Saved Successfully");    
-      this.getBillingDetails(); 
+      this.getBillingDetails(true,null); 
       //single update      
       if(callType == 0)  {
         this.singleUpdate(event);
