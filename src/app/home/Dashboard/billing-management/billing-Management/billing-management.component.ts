@@ -212,7 +212,7 @@ getBillingDetails(editEnable:boolean,requestBody:any) {
       let listValues=[];
       let count=1;
       this.BRMList.Keys().forEach(value=>{
-        listValues.push({value:count++,title:value});
+        listValues.push({value:this.BRMList.Item(value).BRMId,title:value});
       });
       let configValue={
         selectText:'Select',
