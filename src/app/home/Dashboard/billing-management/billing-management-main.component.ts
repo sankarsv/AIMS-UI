@@ -13,11 +13,12 @@ export class BillingManagementMainComponent implements OnInit {
   clarityfileCompontentFlag:boolean = false;
   loadbilling:boolean = false;
   loadclarityfile:boolean =false;
+  blclaritycompare:boolean =false;
   
   constructor() { }
 
   ngOnInit() {
-    this.loadbilling  = true;
+    this.loadbilling = true;
   }
   billing(activeTab){
     this.activeTab = activeTab;
@@ -26,14 +27,23 @@ export class BillingManagementMainComponent implements OnInit {
   clarityfile(activeTab){
     this.activeTab = activeTab;
   }
+  claritycompare(activeTab){
+    this.activeTab = activeTab;
+  }
   billingcomponent(){
     this.loadbilling = true;
-    this.loadclarityfile =  false;
+    this.blclaritycompare =  false;
+    this.loadclarityfile =false;
  }
  clarityfilecomponent(){
   this.loadclarityfile =true;
-  this.loadbilling =  false;
-  console.log(this.activeTab)
+  this.blclaritycompare =  false;
+  this.loadbilling = false;
+ }
+ clarityfilecompare(){
+  this.blclaritycompare =true;
+  this.loadclarityfile =false;
+  this.loadbilling = false;
  }
  onCompleteItem($event) {
   console.log($event);
