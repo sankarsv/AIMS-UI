@@ -134,11 +134,11 @@ searchByInput(Location:string,filterValue:string,brmName:string,yearValue:string
   {
     filterValue = "brmid";
   }
-  else if (filterValue="Other")
+  else if (filterValue=="Other")
   {
     filterValue = "other";
   }
-  else if(filterValue="All")
+  else if(filterValue=="All")
   {
     filterValue="all";
   }
@@ -206,7 +206,35 @@ getBillingDetails(editEnable:boolean,requestBody:any) {
         this.btnFreezeText = "Freeze"
       }
     }
-    this.initSetting(editEnable);    
+    var BRMColumn;
+    if(requestBody.filterBy=="other")
+    {
+      let listValues=[];
+      let count=1;
+      this.BRMList.Keys().forEach(value=>{
+        listValues.push({value:count++,title:value});
+      });
+      let configValue={
+        selectText:'Select',
+        list:listValues
+      };
+      let editorValue={
+        type:'list',
+        config:configValue
+      };
+      BRMColumn=
+      {
+        title:"BRM Name",
+        editor: editorValue
+      };
+    }
+    else
+    {
+      BRMColumn={
+        title:"BRM Name"
+      }
+    }
+    this.initSetting(editEnable,BRMColumn);    
   });
 
 }
@@ -236,7 +264,7 @@ getTableColumnName(HeaderName){
   return this.headerTitle[HeaderName];
 }
 
-  initSetting(editEnable:boolean) {
+  initSetting(editEnable:boolean,brmColumn:any) {
     this.populateTableHeader();
     this.searchBy = 'All';
     this.searchString = "";
@@ -258,15 +286,6 @@ getTableColumnName(HeaderName){
         position: 'right'
       },
       columns: {
-        // checkbox:{
-        //   title:'Select',
-        //   type:"html",
-        //   editor:{
-        //     type:'label',
-        //   },
-        //   valuePrepareFunctioPostDetailsn:(value)=>{return this._sanitizer.bypassSecurityTrustHtml(this.input);},
-        //   filter:false
-        // },
         location: {
           title: 'Location'
         },
@@ -279,9 +298,7 @@ getTableColumnName(HeaderName){
         empFullName: {
           title: 'Employee Name'
         },
-        BRMName: {
-          title:'BRM'
-        },
+        BRMName: brmColumn,
         billablehrs: {
           title: 'Billable Hrs',
         },
