@@ -17,7 +17,7 @@
       </div>
     <div id="orange" class="col-md-9"> 
     <li class="nav-item">
-      <a class="nav-link" href="#BillingClarityCompare" [ngClass]="{ 'active':activeTab==='claritycompare'}" data-toggle="tab">BillingClarityCompare</a>
+      <a class="nav-link" href="#BillingClarityCompare" [ngClass]="{ 'active':activeTab==='claritycompare'}" (click)="clarityfilecompare()" data-toggle="tab">BillingClarityCompare</a>
     </li>
     </div>
     <div id="orange" class="col-md-9">
@@ -38,6 +38,11 @@
     <div class="tab-pane" id="clarityfile"  [ngClass]="{ 'active':activeTab==='billing'}">
     <div  *ngIf= 'loadclarityfile'>
         <app-clarityfile (onCompleteItem)="onCompleteItem($event)"></app-clarityfile>
+    </div>
+  </div>
+  <div class="tab-pane" id="claritycompare"  [ngClass]="{ 'active':activeTab==='billing'}">
+    <div  *ngIf= 'blclaritycompare'>
+        <app-clarity-compare></app-clarity-compare>
     </div>
   </div>
   </div>

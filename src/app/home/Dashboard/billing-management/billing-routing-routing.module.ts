@@ -1,3 +1,4 @@
+import { ClarityCompareComponent } from './clarity-compare/clarity-compare.component';
 import { BillingManagementComponent } from './billing-Management/billing-management.component';
 import { BillingManagementMainComponent } from './billing-management-main.component';
 
@@ -15,6 +16,7 @@ const routes: Routes = [
        children: [
         { path: 'billing', component: BillingManagementComponent,pathMatch: 'full' },
         { path: 'clarityfile', component: ClarityfileComponent,pathMatch: 'full' },
+        { path: 'claritycompare', component: ClarityCompareComponent,pathMatch: 'full' },
       ]
   }
 ];

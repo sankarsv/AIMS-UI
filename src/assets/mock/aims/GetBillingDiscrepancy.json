@@ -1,0 +1,48 @@
+[
+	{	
+		 "empName":"Ganesh",
+		 "officeId":"ganesh007",
+         "stoName":"Voitech",
+         "clarityDaysBilled":"145",
+         "tDaysBilled":"135",
+         "clarityHoursBillable":"145",
+         "tsHoursBillable":"50",
+         "tsBillRate":"26",
+         "clarityBillRate":"52.56",
+         "tsBilledAmt":"55.56",	
+		 "clarityBilledAmt":"55.55",
+ 		 "remarks":"Good"
+		
+		 },
+		 {	
+            "empName":"Kanak",
+            "officeId":"kanak007",
+            "stoName":"Voitech",
+            "clarityDaysBilled":"145",
+            "tDaysBilled":"135",
+            "clarityHoursBillable":"135",
+            "tsHoursBillable":"145",
+            "tsBillRate":"26.56",
+            "clarityBillRate":"52.56",
+            "tsBilledAmt":"55.56",	
+            "clarityBilledAmt":"55.55",
+             "remarks":"Good"
+             },
+             {	
+                "empName":"Nandhini",
+            "officeId":"nanthini007",
+            "stoName":"Voitech",
+            "clarityDaysBilled":"145",
+            "tDaysBilled":"135",
+            "clarityHoursBillable":"125",
+            "tsHoursBillable":"145",
+            "tsBillRate":"26.56",
+            "clarityBillRate":"52.56",
+            "tsBilledAmt":"55.56",	
+            "clarityBilledAmt":"55.55",
+             "remarks":"Good"
+               
+                }
+              
+             
+]
