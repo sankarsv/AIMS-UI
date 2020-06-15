@@ -1,25 +1,72 @@
-[
-	{	
-		 "empName":"Ganesh",
-		 "officeId":"ganesh007",
-		 "stoName":"Voitech",
-		 "daysBillable":"95",
-		 "hoursBillable":"50",	
-		 "billRate":"55.55",
-		 "billedAmount":"30",
- 		 "remarks":"Good"
-		
-		 },
-		 {	
-		
-			"empName":"kanak",
-			"officeId":"kank007",
-			"stoName":"Voitech",
-			"daysBillable":"95",
-			"hoursBillable":"50",	
-			"billRate":"55.55",
-			"billedAmount":"30",
-			 "remarks":"Good"
-			 }
-]
+[{
+	"clarityId": 15244,
+	"version": 107,
+	"transactionClass": "LB_GRON",
+	"cccio": "Scott Collary",
+	"resourceManager": "Nazim, Filomena",
+	"timesheetDepartment": "H5212 - CDN P&BB-RETAIL PYMNTS PCI DSS",
+	"lastNameFirstName": "Khandelwal, Ankit",
+	"resourceId": "akhande_office",
+	"officeId": "akhande",
+	"cin": "900049336",
+	"sumOfHours": "184.0",
+	"averageRate": "$75.71",
+	"rateWithoutTax": "$67.00"
+}, {
+	"clarityId": 15105,
+	"version": 107,
+	"transactionClass": "LB_GRON",
+	"cccio": "Scott Collary",
+	"resourceManager": "Angeles, Danny",
+	"timesheetDepartment": "H1940 - CDN P&BB PRO&SVCS GR",
+	"lastNameFirstName": "Sundaram, Suraj",
+	"resourceId": "ssund09_office",
+	"officeId": "ssund09",
+	"cin": "900059796",
+	"sumOfHours": "168.0",
+	"averageRate": "$73.45",
+	"rateWithoutTax": "$65.00"
+}, {
+	"clarityId": 15106,
+	"version": 107,
+	"transactionClass": "LB_GRON",
+	"cccio": "Scott Collary",
+	"resourceManager": "Angeles, Danny",
+	"timesheetDepartment": "H1940 - CDN P&BB PRO&SVCS GR",
+	"lastNameFirstName": "Sundharrajan, Kirubakar",
+	"resourceId": "ksundha_office",
+	"officeId": "ksundha",
+	"cin": "900042876",
+	"sumOfHours": "168.0",
+	"averageRate": "$73.45",
+	"rateWithoutTax": "$65.00"
+}, {
+	"clarityId": 15101,
+	"version": 107,
+	"transactionClass": "LB_GRON",
+	"cccio": "Scott Collary",
+	"resourceManager": "Angeles, Danny",
+	"timesheetDepartment": "H1940 - CDN P&BB PRO&SVCS GR",
+	"lastNameFirstName": "Nagarajan, Sabariraj",
+	"resourceId": "snagara_office",
+	"officeId": "snagara",
+	"cin": "900060306",
+	"sumOfHours": "168.0",
+	"averageRate": "$76.84",
+	"rateWithoutTax": "$68.00"
+}, {
+	"clarityId": 15099,
+	"version": 107,
+	"transactionClass": "LB_GRON",
+	"cccio": "Scott Collary",
+	"resourceManager": "Angeles, Danny",
+	"timesheetDepartment": "H1940 - CDN P&BB PRO&SVCS GR",
+	"lastNameFirstName": "Khan, Shanavas",
+	"resourceId": "skhan59_office",
+	"officeId": "skhan59",
+	"cin": "900040583",
+	"sumOfHours": "144.0",
+	"averageRate": "$73.45",
+	"rateWithoutTax": "$65.00"
+}]
 

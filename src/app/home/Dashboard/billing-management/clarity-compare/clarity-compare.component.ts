@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Dictionary } from 'app/utils/Dictionary';
 import { httpService } from '../../../../../services/httpService';
 import { APP_CONSTANTS } from 'app/utils/app-constants';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-clarity-compare',
   templateUrl: './clarity-compare.component.html',
@@ -20,6 +21,7 @@ export class ClarityCompareComponent implements OnInit {
   UnderBRMBillingDetailsList:Dictionary<any>;
   data:any;
   headerTitle: {};
+  @ViewChild('smartable') table: ElementRef;
   constructor(public httpService: httpService,public router:Router) { }
 
   ngOnInit() {
@@ -68,6 +70,16 @@ export class ClarityCompareComponent implements OnInit {
 });
 
 }
+// ExportToExcel()
+// {
+//   const ws: XLSX.WorkSheet=XLSX.utils.table_to_sheet(this.table.nativeElement);
+//   const wb: XLSX.WorkBook = XLSX.utils.book_new();
+//   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+//   /* save to file */
+//   XLSX.writeFile(wb, 'SheetJS.xlsx');
+
+// }
 initSetting() {
   //this.populateTableHeader();
   this.searchBy = 'All';
