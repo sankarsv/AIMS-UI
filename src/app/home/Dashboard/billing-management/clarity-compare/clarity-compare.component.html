@@ -14,6 +14,7 @@
   </div>
 </div>
 <div class="tableDesign" *ngIf="showTable">
-  <ng2-smart-table #table [settings]="settings"  allowFiltering='true' allowPaging='true' [source]="data"  
+  <!-- <button type="button" class="btn btn-default">Download</button> -->
+  <ng2-smart-table #table class="smartable" [settings]="settings"  allowFiltering='true' allowPaging='true' [source]="data"  
     ></ng2-smart-table>
 </div>
