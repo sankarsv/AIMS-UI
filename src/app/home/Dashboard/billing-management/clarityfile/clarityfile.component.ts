@@ -1,9 +1,10 @@
 import { Dictionary } from 'app/utils/Dictionary';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { httpService } from '../../../../../services/httpService';
 import { APP_CONSTANTS } from 'app/utils/app-constants';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-clarityfile',
   templateUrl: './clarityfile.component.html',
@@ -20,6 +21,8 @@ export class ClarityfileComponent implements OnInit {
   UnderBRMBillingDetailsList:Dictionary<any>;
   data:any;
   headerTitle: {};
+  
+
   constructor(public httpService: httpService,public router:Router ) { }
 
   ngOnInit() {
@@ -46,20 +49,21 @@ export class ClarityfileComponent implements OnInit {
  var monthName= yearValue.split(" ")[0];
  var yearName= yearValue.split(" ")[1];
   var name =brmName;
-  this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].GetClarityFile,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
+  this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].GetClarityDetails,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
     this.UnderBRMBillingDetailsList = new Dictionary<any>();
     res.map((brmDetail: { [x: string]: any; })=>{      
       let brmDetalLocal =  {
-        empname: brmDetail ["empName"],
-        officeid: brmDetail["officeId"],
-        stoname: brmDetail ["stoName"],
-        daysbillable: brmDetail ["daysBillable"],
-        hrsbillable: brmDetail ["hoursBillable"],
-       billrate: brmDetail ["billRate"],
-       billamt: brmDetail ["billedAmount"],
-       remarks: brmDetail ["remarks"],
+        lastNameFirstName: brmDetail ["lastNameFirstName"],
+        resourceId: brmDetail["resourceId"],
+        officeId: brmDetail ["officeId"],
+        cccio: brmDetail ["cccio"],
+        resourceManager: brmDetail ["resourceManager"],
+        cin: brmDetail ["cin"],
+        sumOfHours: brmDetail ["sumOfHours"],
+        averageRate: brmDetail ["averageRate"],
+        rateWithoutTax: brmDetail ["rateWithoutTax"],
       };
-      this.UnderBRMBillingDetailsList.Add(brmDetalLocal.empname,brmDetalLocal); 
+      this.UnderBRMBillingDetailsList.Add(brmDetalLocal.lastNameFirstName,brmDetalLocal); 
       this.data= this.UnderBRMBillingDetailsList.Values();
      
     })
@@ -91,30 +95,34 @@ initSetting() {
       //   valuePrepareFunctioPostDetailsn:(value)=>{return this._sanitizer.bypassSecurityTrustHtml(this.input);},
       //   filter:false
       // },
-      empname: {
+      lastNameFirstName: {
         title: 'EmpName'
       },
-      officeid: {
+      resourceId: {
+        title: 'ResourceId'
+      },
+      officeId: {
         title: 'OfficeId'
       },
-      stoname: {
-        title: 'STOName'
+      cccio: {
+        title: 'CIO'
       },
-      daysbillable: {
-        title: 'DaysBillable'
+      resourceManager: {
+        title: 'ResourceManager'
       },
-      hrsbillable: {
-        title: 'HoursBillable',
+      cin: {
+        title: 'CIN'
       },
-      billrate: {
-        title: 'BillRate'
+      sumOfHours: {
+        title: 'SumOfHours',
       },
-      billamt: {
-        title: 'BilledAmount'
+      averageRate: {
+        title: 'AverageRate'
       },
-      remarks: {
-        title: 'Remarks'
+      rateWithoutTax: {
+        title: 'RateWithoutTax'
       }
+     
   },
   attr: {
     class: 'table table-bordered'
@@ -127,16 +135,18 @@ initSetting() {
 populateTableHeader() {
 
   this.headerTitle= {
-  "Empname":"empName",
-  "officeID":"officeId",
-  "STOName":"stoName",
-  "Days Billable":"daysBillable",
-  "Hrs Billable":"hoursBillable",
-  "Bill Rate":"billRate",
-  "Billed Amount":"billedAmount",
-  "Remarks":"remarks"  
+  "Empname":"lastNameFirstName",
+  "ResourceId":"resourceId",
+  "officeId":"officeId",
+  "CIO":"cccio",
+  "ResourceManager":"resourceManager",
+  "CIN":"cin",
+  "sumOfHours":"sumOfHours",
+  "AverageRate":"averageRate",
+  "RateWithoutTax":"rateWithoutTax"
   }
   
   }
+  
 
 }
