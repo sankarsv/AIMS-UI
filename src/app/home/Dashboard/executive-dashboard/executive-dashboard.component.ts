@@ -95,53 +95,6 @@ export class ExecutiveDashboardComponent implements OnInit {
       this.initializeView();
     });
   }
-  // fetchYearlyDetails(year: string, month: string) {
-  //   forkJoin([
-  //     this.httpService.PostDetails("aims/user/dashboard", {
-  //       reportType: "billable",
-  //       year: year,
-  //       month: month,
-  //     }),
-  //     this.httpService.PostDetails("aims/user/dashboard", {
-  //       reportType: "srjrratio",
-  //       year: year,
-  //       month: month,
-  //     }),
-  //     this.httpService.PostDetails("aims/user/dashboard", {
-  //       reportType: "hcratio",
-  //       year: year,
-  //       month: month,
-  //     }),
-  //     this.httpService.PostDetails("aims/user/dashboard", {
-  //       reportType: "trnratio",
-  //       year: year,
-  //       month: month,
-  //     }),
-  //     this.httpService.PostDetails("aims/user/dashboard", {
-  //       reportType: "baratio",
-  //       year: year,
-  //       month: month,
-  //     }),
-  //   ]).subscribe((res) => {
-  //     this.dashBoardDetails = res;
-  //     this.initializeView();
-  //   });
-  // }
-
-  // fetchYearlyDetails(year:string,month:string,brmName:string)
-  // {
-  //   forkJoin([
-  //     this.httpService.PostDetails("billing.json",{ reportType:"billable",year:year,momth:month,bramName:brmName}),
-  //     this.httpService.PostDetails("SeniorJuniorRatio.json",{ reportType:"srjrratio",year:year,momth:month,brmName:brmName}),
-  //     this.httpService.PostDetails("HeadCount.json",{ reportType:"hcratio",year:year,momth:month,brmName:brmName}),
-  //     this.httpService.PostDetails("Trainee.json",{ reportType:"trnratio",year:year,momth:month,brmName:brmName}),
-  //     this.httpService.PostDetails("BACount.json",{ reportType:"baratio",year:year,momth:month,brmName:brmName})
-  // ]).subscribe(res=>
-  //   {
-  //     this.dashBoardDetails=res;
-  //     this.initializeView();
-  //   });
-  // }
   initializeView() {
     if (
       this.dashBoardDetails[0] != null &&

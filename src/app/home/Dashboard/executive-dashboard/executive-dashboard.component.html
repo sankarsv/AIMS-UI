@@ -3,17 +3,13 @@
 
   <div
     class="executiveText"
-    style="text-align: center; padding-left: 10px; padding-top: 10px;"
-  >
+    style="text-align: center; padding-left: 10px; padding-top: 10px;">
     <b>Dashboard</b>
   </div>
 
 </div>
 
-<div *ngIf="!isloading" style="text-align: center">
-  <app-loading-spinner></app-loading-spinner>
-</div>
-
+<div class="loader" *ngIf="!HasDataLoaded"></div>
 <div class="barChart">
   <canvas
     baseChart
