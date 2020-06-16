@@ -39,6 +39,7 @@
     "ngx-smart-table": "^2.0.3",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.5.2",
+    "xlsx": "^0.16.2",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

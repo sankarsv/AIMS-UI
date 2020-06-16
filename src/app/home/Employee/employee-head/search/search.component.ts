@@ -84,9 +84,9 @@ export class SearchComponent implements OnInit {
       actions: {
         add: false,
         edit: false,
-        custom: [{ name: 'View', title: `<img src="../../../assets/images/viewnew.png">` },
-        { name: 'Edit', title: `<img src="../../../assets/images/editnew.png">` },
-        { name: 'Delete', title: `<img src="../../../assets/images/delete.png">` }],
+        custom: [{ name: 'View', title: `<img src="../../../assets/images/viewnew.png">` }],
+        // { name: 'Edit', title: `<img src="../../../assets/images/editnew.png">` },
+        // { name: 'Delete', title: `<img src="../../../assets/images/delete.png">` }],
         delete: false,
 
         position: 'right'
@@ -113,6 +113,9 @@ export class SearchComponent implements OnInit {
         brmName: {
           title: 'BRM'
         }
+      },
+      attr: {
+        class: 'table table-bordered'
       },
     };
   }

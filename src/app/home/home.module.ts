@@ -33,6 +33,7 @@ import { BaHorizontalbarchartComponent } from "./Dashboard/executive-dashboard/c
 import { UploadreportsComponent } from "./Reports/uploadreports/uploadreports.component";
 import { ClarityfileComponent } from './Dashboard/billing-management/clarityfile/clarityfile.component';
 import { BillingManagementMainComponent } from './Dashboard/billing-management/billing-management-main.component';
+import { ClarityCompareComponent } from './Dashboard/billing-management/clarity-compare/clarity-compare.component';
 
 @NgModule({
   imports: [
@@ -71,6 +72,7 @@ import { BillingManagementMainComponent } from './Dashboard/billing-management/b
     UploadreportsComponent,
     ClarityfileComponent,
     BillingManagementMainComponent,
+    ClarityCompareComponent,
   ],
   //providers: [FileUploaderService, DashboardResolver],
 

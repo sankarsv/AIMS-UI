@@ -39,6 +39,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   TraineeDetails: Dictionary<any>;
   BACounts: Dictionary<any>;
   HasSummaryDataFetched: Boolean = false;
+  isloading: boolean = false;
   HasDataFetched: Boolean = false;
   HasDataLoaded:Boolean=false;
   selectedBrmNameValue: string;

@@ -82,10 +82,10 @@ uplodFile() {
   this.uploader.uploadAll();
 }
 download(brmName:string, yearValue:string) {  
-  var brmID =this.BRMList.Item(brmName).BRMNumber;
+  var brmID =this.BRMList.Item(brmName).BRMId;
   var monthName= yearValue.split(" ")[0];
   var yearName= yearValue.split(" ")[1];
-  var data = {month:monthName, year:yearName, brmID:brmID, version: this.versionId };
+  var data = {month:monthName, year:yearName, brmId:brmID, version: this.versionId };
   console.log(data);
   this.httpService.downloadFile(APP_CONSTANTS.URL[environment.type].DownloadBillingFile, data ).then(result => {
     if (!result) {
