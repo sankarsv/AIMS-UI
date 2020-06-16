@@ -14,6 +14,7 @@ import { UserService } from 'services/user.service';
 export class HomepageComponent implements OnInit {
   [x: string]: any;
   currentUser: any;
+  sideNavbar:boolean=true;
   constructor(public jwtService:JwtService,public router:Router,public route: ActivatedRoute, public userService:UserService) { 
     
   }
