@@ -44,6 +44,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   HasDataLoaded:Boolean=false;
   selectedBrmNameValue: string;
   receivedChildMessage: string;
+  dashBoardType:any;
   public ColorValues: string[]=['#66CDAA','#87CEEB','#20B2AA','#E9967A','#DB7093','#DC143C','#FF69B4','#FFA500','#FF4500','#FF0000'];
 	
   constructor(
@@ -55,6 +56,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.dashBoardType='RelationshipWise DashBoard';
     this.fetchYearlyDetails("2020", "MAY");
   }
 
