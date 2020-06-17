@@ -15,8 +15,10 @@ import { FileQueueObject, FileUploaderService } from '../../../../home/Employee/
 
 export class BillingManagementComponent implements OnInit {
   searchBy: String;
-  searchByYear: String;
+  searchByYear: string;
   searchByBRM: string;
+  searchByFilter:any;
+  searchByLocation:string;
   showTable: boolean = false;
   searchString: String;
   settings: any;
@@ -34,7 +36,7 @@ export class BillingManagementComponent implements OnInit {
   freezeInd:boolean = false;
   btnFreezeText: string;
   headerTitle: {};
-  FiltersValues = ["BRMName","Other","All"];
+  FiltersValues = [{Id:"brmid",Value:"BRMName"},{Id:"other",Value:"Other"},{Id:"all",Value:"All"}];
   @ViewChild('fileInput') fileInput;
   @ViewChild('table') table;
   @Output() onCompleteItem = new EventEmitter();
@@ -120,54 +122,29 @@ uploadFailed = (item: FileQueueObject, response: any) => {
   this.onUploadFailed.emit({ item, response });
 }
 
-searchByInput(Location:string,filterValue:string,brmName:string,yearValue:string)
+searchByInput()
 {
-  var displayTable =(filterValue=="BRMName"&&brmName!=null&&Location!=null)||filterValue=="Other"||filterValue=="All";
+  var displayTable =(this.searchByFilter == "brmid" && this.searchByBRM != null && this.searchByLocation!=null)||
+  this.searchByFilter =="other"||this.searchByFilter=="all";
   if(displayTable)
   {
-    var brmID:any;
-    if(brmName!=null&&this.BRMList.ContainsKey(brmName))
-    {
-      brmID=this.BRMList.Item(brmName).BRMId;
-    }
-  if(filterValue=="BRMName")
-  {
-    filterValue = "brmid";
-  }
-  else if (filterValue=="Other")
-  {
-    filterValue = "other";
-  }
-  else if(filterValue=="All")
-  {
-    filterValue="all";
-  }
-    let requestBody = {
-      month: yearValue.split(" ")[0],
-      year:yearValue.split(" ")[1],
-      brmId:Number(brmID),
-      filterBy:filterValue
-    };
-  
-    this.getBillingDetails(filterValue=="other",requestBody);  
+      this.getBillingDetails();  
   }
   this.showTable = displayTable;
 }
 
-getBillingDetails(editEnable:boolean,requestBody:any) {
-  if(requestBody==null)
-  {
-    var brmID:any;
+getBillingDetails() {
+  var brmID:any;
     if(this.searchByBRM!=null&&this.BRMList.ContainsKey(this.searchByBRM))
     {
       brmID=this.BRMList.Item(this.searchByBRM).BRMId;
     }
-    requestBody={
-  month:this.searchByYear.split(" ")[0],
-  year:this.searchByYear.split(" ")[1],
-  brmId:Number(brmID)
-    }
-  }
+    let requestBody = {
+      month: this.searchByYear.split(" ")[0],
+      year:this.searchByYear.split(" ")[1],
+      brmId:Number(brmID),
+      filterBy:this.searchByFilter
+    };
   this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,requestBody).then((res:any)=>{
     this.UnderBRMBillingDetailsList = new Dictionary<any>();
     res.map((brmDetail: { [x: string]: any; })=>{      
@@ -206,35 +183,8 @@ getBillingDetails(editEnable:boolean,requestBody:any) {
         this.btnFreezeText = "Freeze"
       }
     }
-    var BRMColumn;
-    if(requestBody.filterBy=="other")
-    {
-      let listValues=[];
-      let count=1;
-      this.BRMList.Keys().forEach(value=>{
-        listValues.push({value:this.BRMList.Item(value).BRMId,title:value});
-      });
-      let configValue={
-        selectText:'Select',
-        list:listValues
-      };
-      let editorValue={
-        type:'list',
-        config:configValue
-      };
-      BRMColumn=
-      {
-        title:"BRM Name",
-        editor: editorValue
-      };
-    }
-    else
-    {
-      BRMColumn={
-        title:"BRM Name"
-      }
-    }
-    this.initSetting(editEnable,BRMColumn);    
+    
+    this.initSetting();    
   });
 
 }
@@ -264,7 +214,35 @@ getTableColumnName(HeaderName){
   return this.headerTitle[HeaderName];
 }
 
-  initSetting(editEnable:boolean,brmColumn:any) {
+  initSetting() {
+    var BRMColumn;
+    var editEnable:boolean = this.searchByFilter=="other";
+    if(editEnable)
+    {
+      let listValues=[];
+      this.BRMList.Keys().forEach(value=>{
+        listValues.push({value:this.BRMList.Item(value).BRMId,title:value});
+      });
+      let configValue={
+        selectText:'Select',
+        list:listValues
+      };
+      let editorValue={
+        type:'list',
+        config:configValue
+      };
+      BRMColumn=
+      {
+        title:"BRM Name",
+        editor: editorValue
+      };
+    }
+    else
+    {
+      BRMColumn={
+        title:"BRM Name"
+      }
+    }
     this.populateTableHeader();
     this.searchBy = 'All';
     this.searchString = "";
@@ -298,7 +276,7 @@ getTableColumnName(HeaderName){
         empFullName: {
           title: 'Employee Name'
         },
-        BRMName: brmColumn,
+        BRMName: BRMColumn,
         billablehrs: {
           title: 'Billable Hrs',
         },
@@ -430,7 +408,7 @@ getTableColumnName(HeaderName){
     console.log(JSON.stringify(data))
     this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].UpdateBillingDetails, data).then(result =>{      
       alert("Saved Successfully");    
-      this.getBillingDetails(true,null); 
+      this.getBillingDetails(); 
       //single update      
       if(callType == 0)  {
         this.singleUpdate(event);
@@ -468,7 +446,7 @@ getTableColumnName(HeaderName){
     if (!result) {
       alert("Error updating Freeze Ind");
     }
-    this.searchByInput(" " ,"BRMName",brmName,yearValue)}); 
+    this.searchByInput()}); 
   }
  
    onSaveConfirm(event) {
@@ -510,8 +488,6 @@ getTableColumnName(HeaderName){
     data.billingDetailsList.push(employee);
     this.serviceCall(data, event, 3);      
   }
-
- 
 
   resetEditMode(){
     let gridSelectedRows: Array<Number> = Array.from(new Set(this.selectedRows));   
