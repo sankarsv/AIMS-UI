@@ -15,8 +15,10 @@ import { FileQueueObject, FileUploaderService } from '../../../../home/Employee/
 
 export class BillingManagementComponent implements OnInit {
   searchBy: String;
-  searchByYear: String;
-  searchByBRM: String;
+  searchByYear: string;
+  searchByBRM: string;
+  searchByFilter:any;
+  searchByLocation:string;
   showTable: boolean = false;
   searchString: String;
   settings: any;
@@ -34,7 +36,7 @@ export class BillingManagementComponent implements OnInit {
   freezeInd:boolean = false;
   btnFreezeText: string;
   headerTitle: {};
-  FiltersValues = ["BRMName","Other","All"];
+  FiltersValues = [{Id:"brmid",Value:"BRMName"},{Id:"other",Value:"Other"},{Id:"all",Value:"All"}];
   @ViewChild('fileInput') fileInput;
   @ViewChild('table') table;
   @Output() onCompleteItem = new EventEmitter();
@@ -84,10 +86,10 @@ uplodFile() {
   this.uploader.uploadAll();
 }
 download(brmName:string, yearValue:string) {  
-  var brmID =this.BRMList.Item(brmName).BRMNumber;
+  var brmID =this.BRMList.Item(brmName).BRMId;
   var monthName= yearValue.split(" ")[0];
   var yearName= yearValue.split(" ")[1];
-  var data = {month:monthName, year:yearName, brmID:brmID, version: this.versionId };
+  var data = {month:monthName, year:yearName, brmId:brmID, version: this.versionId };
   console.log(data);
   this.httpService.downloadFile(APP_CONSTANTS.URL[environment.type].DownloadBillingFile, data ).then(result => {
     if (!result) {
@@ -122,34 +124,30 @@ uploadFailed = (item: FileQueueObject, response: any) => {
   this.onUploadFailed.emit({ item, response });
 }
 
-searchByInput(Location:string,filterValue:string,brmName:string,yearValue:string)
+searchByInput()
 {
-  var displayTable =(filterValue=="BRMName"&&brmName!=null&&Location!=null)||filterValue=="Other"||filterValue=="All";
+  var displayTable =(this.searchByFilter == "brmid" && this.searchByBRM != null && this.searchByLocation!=null)||
+  this.searchByFilter =="other"||this.searchByFilter=="all";
   if(displayTable)
   {
-    var brmID:any;
-    if(brmName!=null&&this.BRMList.ContainsKey(brmName))
-    {
-      brmID=this.BRMList.Item(brmName).BRMId;
-    }
-  
-    let requestBody = {
-      month: yearValue.split(" ")[0],
-      year:yearValue.split(" ")[1],
-      brmId:brmID,
-      filterby:filterValue
-    };
-  
-    this.getBillingDetails();  
+      this.getBillingDetails();  
   }
   this.showTable = displayTable;
 }
 
 getBillingDetails() {
-  var monthName= this.searchByYear.split(" ")[0];
-  var yearName= this.searchByYear.split(" ")[1];
-  var name =this.searchByBRM;
-  this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
+  var brmID:any;
+    if(this.searchByBRM!=null&&this.BRMList.ContainsKey(this.searchByBRM))
+    {
+      brmID=this.BRMList.Item(this.searchByBRM).BRMId;
+    }
+    let requestBody = {
+      month: this.searchByYear.split(" ")[0],
+      year:this.searchByYear.split(" ")[1],
+      brmId:Number(brmID),
+      filterBy:this.searchByFilter
+    };
+  this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,requestBody).then((res:any)=>{
     this.UnderBRMBillingDetailsList = new Dictionary<any>();
     res.map((brmDetail: { [x: string]: any; })=>{      
       let brmDetalLocal =  {       
@@ -187,8 +185,7 @@ getBillingDetails() {
         this.btnFreezeText = "Freeze"
       }
     }
-    this.initSetting(!this.freezeInd);
-    
+    this.initSetting();
     
   });
 
@@ -225,7 +222,35 @@ getTableColumnName(HeaderName){
   return this.headerTitle[HeaderName];
 }
 
-  initSetting(editEnable:boolean) {
+  initSetting() {
+    var BRMColumn;
+    var editEnable:boolean = this.searchByFilter=="other";
+    if(editEnable)
+    {
+      let listValues=[];
+      this.BRMList.Keys().forEach(value=>{
+        listValues.push({value:this.BRMList.Item(value).BRMId,title:value});
+      });
+      let configValue={
+        selectText:'Select',
+        list:listValues
+      };
+      let editorValue={
+        type:'list',
+        config:configValue
+      };
+      BRMColumn=
+      {
+        title:"BRM Name",
+        editor: editorValue
+      };
+    }
+    else
+    {
+      BRMColumn={
+        title:"BRM Name"
+      }
+    }
     this.populateTableHeader();
     this.searchBy = 'All';
     this.searchString = "";
@@ -267,9 +292,7 @@ getTableColumnName(HeaderName){
         empFullName: {
           title: 'Employee Name'
         },
-        BRMName: {
-          title:'BRM'
-        },
+        BRMName: BRMColumn,
         billablehrs: {
           title: 'Billable Hrs',
         },
@@ -466,7 +489,7 @@ getTableColumnName(HeaderName){
     if (!result) {
       alert("Error updating Freeze Ind");
     }
-    this.searchByInput(" " ,"BRMName",brmName,yearValue)}); 
+    this.searchByInput()}); 
   }
  
    onSaveConfirm(event) {
@@ -522,22 +545,6 @@ getTableColumnName(HeaderName){
     data.billingDetailsList.push(employee);
     this.serviceCall(data, event, 3);      
   }
-
-  Validation(row,bAdd){
-    
-      if(bAdd && (!(this.validate(row.empId, true, "Employee Id") && this.validate(row.billableHrs, true, "Billable Hours") &&
-      this.validate(row.billableDays, true, "Billable Days") && this.validate(row.effortHrs, true, "Effort Hours") &&
-      this.validate(row.extraBilling, true, "Extra Billing") && this.validate(row.billingAmount, true, "Billable Amount") &&
-      this.validate(row.STOName, false, "STO Name") && this.validate(row.brmName, false, "BRM Name") &&
-      this.validate(row.billRate, true, "Bill Rate") && this.validate(row.dmName,false, "DM Name")  &&
-      this.validate(row.locationId, false, "Location Id") && this.validate(row.projectId, false, "Project Id")  &&
-      this.validate(row.wonNumber, true, "Won Number") 
-      ))){
-        return false;  
-      }
-      return true;
-  }
-  
   validate(rowData, bNumeric, fieldName){
     
     if(rowData==''){
@@ -555,13 +562,39 @@ getTableColumnName(HeaderName){
     
     return false;
   }
+
+  Validation(row,bAdd){
+    
+    if(bAdd && (!(this.validate(row.empId, true, "Employee Id") && this.validate(row.billableHrs, true, "Billable Hours") &&
+    this.validate(row.billableDays, true, "Billable Days") && this.validate(row.effortHrs, true, "Effort Hours") &&
+    this.validate(row.extraBilling, true, "Extra Billing") && this.validate(row.billingAmount, true, "Billable Amount") &&
+    this.validate(row.STOName, false, "STO Name") && this.validate(row.brmName, false, "BRM Name") &&
+    this.validate(row.billRate, true, "Bill Rate") && this.validate(row.dmName,false, "DM Name")  &&
+    this.validate(row.locationId, false, "Location Id") && this.validate(row.projectId, false, "Project Id")  &&
+    this.validate(row.wonNumber, true, "Won Number") 
+    ))){
+      return false;  
+    }
+    return true;
+}
+
+  resetEditMode(){
+    let gridSelectedRows: Array<Number> = Array.from(new Set(this.selectedRows));   
+    for(var i=0; i<gridSelectedRows.length; i++)
+    {
+      let selectedIx: any =gridSelectedRows[i];
+      if(this.table.grid.dataSet.rows[selectedIx].isSelected) {     
+       this.table.grid.dataSet.data[selectedIx].isInEditing =false;
+      }
+      return true;
+  }
   
-  
+    
 }
 
 
 
-
+}
 
 
 

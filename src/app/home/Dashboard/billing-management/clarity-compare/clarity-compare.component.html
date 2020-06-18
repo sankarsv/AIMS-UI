@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-md-3 progressText"> Period
+    <select class="inputBox" [(ngModel)]="searchByYear">
+      <option *ngFor="let yearname of YearsList" [ngValue]="yearname">{{yearname}} </option>
+    </select>
+  </div>
+
+  <div class="col-md-3 progressText"> BRM Search
+    <select class="inputBox" [(ngModel)]="searchByBRM" (ngModelChange)="searchByInput(searchByBRM,searchByYear);onChange($event)">
+      <option *ngFor="let brmName of BrmNamesList" [ngValue]="brmName">{{brmName}} </option>
+    </select>
+  </div>
+</div>
+<div class="tableDesign" *ngIf="showTable">
+  <!-- <button type="button" class="btn btn-default">Download</button> -->
+  <ng2-smart-table #table class="smartable" [settings]="settings"  allowFiltering='true' allowPaging='true' [source]="data"  
+    ></ng2-smart-table>
+</div>
