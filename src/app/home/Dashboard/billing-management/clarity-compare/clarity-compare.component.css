@@ -1,5 +1,5 @@
 :host /deep/   tr.solved {
-  background: rgba(86, 241, 86, 0.5);
+  background: rgba(179, 236, 179, 0.5);
   }
   :host /deep/ tr.aborted {
   background: rgba(243, 69, 69, 0.5);

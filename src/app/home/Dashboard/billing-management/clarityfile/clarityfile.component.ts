@@ -36,7 +36,9 @@ export class ClarityfileComponent implements OnInit {
       this.BRMList = new Dictionary<any>();
       res.map((brmDetail: { [x: string]: any; })=>{
         let brmDetalLocal =  {
-         BRMName: brmDetail ["brmName"]
+         BRMName: brmDetail ["brmName"],
+         BRMId: brmDetail ["brmId"]
+         
         };
         this.BRMList.Add(brmDetalLocal.BRMName,brmDetalLocal);
         this.BrmNamesList =this.BRMList.Keys();
@@ -45,10 +47,22 @@ export class ClarityfileComponent implements OnInit {
   }
   searchByInput(brmName:string,yearValue:string)
 {
+  var months = {
+      'JANUARY' : '01','FEBRUARY' : '02','MARCH' : '03','APRIL' : '04','MAY' : '05','JUNE' : '06','JULY' : '07','AUGUST' : '08','SEPTEMBER' : '09','OCTOBER' : '10','NOVEMBER' : '11','DECEMBER' : '12'
+  }
   this.initSetting();
+ 
  var monthName= yearValue.split(" ")[0];
  var yearName= yearValue.split(" ")[1];
   var name =brmName;
+  monthName = monthName.toUpperCase();
+  monthName = months[monthName];
+  var brmID =this.BRMList.Item(brmName).BRMId;
+
+ var url = APP_CONSTANTS.URL[environment.type].GetBillingDiscrepancy + monthName + yearName + brmID
+ //To Run local
+ //this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].GetClarityDetails,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
+
   this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].GetClarityDetails,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
     this.UnderBRMBillingDetailsList = new Dictionary<any>();
     res.map((brmDetail: { [x: string]: any; })=>{      
