@@ -1,16 +1,16 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit,Injectable } from '@angular/core';
 import { Dictionary } from 'app/utils/Dictionary';
 import { httpService } from '../../../../../services/httpService';
 import { APP_CONSTANTS } from 'app/utils/app-constants';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
-import * as XLSX from 'xlsx';
+
 @Component({
   selector: 'app-clarity-compare',
   templateUrl: './clarity-compare.component.html',
   styleUrls: ['./clarity-compare.component.css']
 })
-export class ClarityCompareComponent implements OnInit {
+export class ClarityCompareComponent implements OnInit , AfterViewInit  {
   searchBy: String;
   showTable: boolean = false;
   searchString: String;
@@ -21,7 +21,9 @@ export class ClarityCompareComponent implements OnInit {
   UnderBRMBillingDetailsList:Dictionary<any>;
   data:any;
   headerTitle: {};
-  @ViewChild('smartable') table: ElementRef;
+  month: {};
+  @ViewChild('table') table;
+  // @ViewChild('TABLE', { static: false }) TABLE: ElementRef; 
   constructor(public httpService: httpService,public router:Router) { }
 
   ngOnInit() {
@@ -35,32 +37,47 @@ export class ClarityCompareComponent implements OnInit {
       this.BRMList = new Dictionary<any>();
       res.map((brmDetail: { [x: string]: any; })=>{
         let brmDetalLocal =  {
-         BRMName: brmDetail ["brmName"]
+         BRMName: brmDetail ["brmName"],
+         BRMId: brmDetail ["brmId"]
         };
         this.BRMList.Add(brmDetalLocal.BRMName,brmDetalLocal);
         this.BrmNamesList =this.BRMList.Keys();
       })
   });
   }
+
   searchByInput(brmName:string,yearValue:string)
 {
+  var months = {
+    'JANUARY' : '01','FEBRUARY' : '02','MARCH' : '03','APRIL' : '04','MAY' : '05','JUNE' : '06','JULY' : '07','AUGUST' : '08','SEPTEMBER' : '09','OCTOBER' : '10','NOVEMBER' : '11','DECEMBER' : '12'
+};
   this.initSetting();
+ var brmID =this.BRMList.Item(brmName).BRMId;
  var monthName= yearValue.split(" ")[0];
- var yearName= yearValue.split(" ")[1];
-  var name =brmName;
+ var yearName= yearValue.split(" ")[1]; 
+ monthName = monthName.toUpperCase();
+ monthName = months[monthName];
+
+ var url = APP_CONSTANTS.URL[environment.type].GetBillingDiscrepancy + monthName + yearName + brmID
+
+// this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].GetBillingDiscrepancy,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
+
   this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].GetBillingDiscrepancy,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
     this.UnderBRMBillingDetailsList = new Dictionary<any>();
     res.map((brmDetail: { [x: string]: any; })=>{      
       let brmDetalLocal =  {
-        empname: brmDetail ["empName"],
-        officeid: brmDetail["officeId"],
-        stoname: brmDetail ["stoName"],
-        clarityDaysBilled: brmDetail ["clarityDaysBilled"],
-        clarityHoursBillable: brmDetail ["clarityHoursBillable"],
-        tsBillRate: brmDetail ["tsBillRate"],
-        clarityBillRate: brmDetail ["clarityBillRate"],
-        tsBilledAmt: brmDetail ["tsBilledAmt"],
-        clarityBilledAmt: brmDetail ["clarityBilledAmt"],
+        dm: brmDetail ["dm"],
+        location: brmDetail["location"],
+        projectName: brmDetail ["projectName"],
+        employeeId: brmDetail ["employeeId"],
+        empname: brmDetail ["employeeName"],
+        rateWithoutTax: brmDetail ["rateWithoutTax"],
+        accruedHours: brmDetail ["accruedHours"],
+        clarityHours: brmDetail ["clarityHours"],
+        difference: brmDetail ["difference"],
+        currentInvoiceHours: brmDetail ["currentInvoiceHours"],
+        remarks: brmDetail ["remarks"],
+        cleanupComments: brmDetail ["cleanupComments"],
       };
       this.UnderBRMBillingDetailsList.Add(brmDetalLocal.empname,brmDetalLocal); 
       this.data= this.UnderBRMBillingDetailsList.Values();
@@ -72,14 +89,66 @@ export class ClarityCompareComponent implements OnInit {
 }
 // ExportToExcel()
 // {
-//   const ws: XLSX.WorkSheet=XLSX.utils.table_to_sheet(this.table.nativeElement);
-//   const wb: XLSX.WorkBook = XLSX.utils.book_new();
-//   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+//   let excetbl = [];
+//   excetbl = this.table.source.data
+//   const header = ["DM", "Location", "ProjectName", "EmployeeID", "EmpName", "RateWithoutTax","AccruedHours","ClarityHours","Difference","CurInvoiceHours","Remarks","CleanupComments"]
+//   let workbook = new Workbook();
+//   let worksheet = workbook.addWorksheet('Clarity Discrepancy');
 
-//   /* save to file */
-//   XLSX.writeFile(wb, 'SheetJS.xlsx');
+//   let titleRow = worksheet.addRow(['Clarity Discrepancy']);
+//     titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true }
+//     worksheet.addRow([]);
 
-// }
+//     let headerRow = worksheet.addRow(header);
+
+//     // Cell Style : Fill and Border
+//     headerRow.eachCell((cell, number) => {
+//       cell.fill = {
+//         type: 'pattern',
+//         pattern: 'solid',
+//         fgColor: { argb: 'FFFFFF00' },
+//         bgColor: { argb: 'FF0000FF' }
+//       }
+//       cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
+//     })
+//     // Add Data and Conditional Formatting
+//     this.table.source.data.forEach(d => {
+//       let row = worksheet.addRow(d);
+//       let daysbillablebillig = row.getCell(8);
+//       let daysbillableclarity = row.getCell(9)
+//       let color = 'FF99FF99';
+//       if (daysbillablebillig.value !== daysbillableclarity) {
+//         color = 'FF9999'
+//       }
+//       daysbillablebillig.fill = {
+//         type: 'pattern',
+//         pattern: 'solid',
+//         fgColor: { argb: color }
+//       }
+//     }
+//     );
+
+//     worksheet.getColumn(3).width = 30;
+//     worksheet.getColumn(4).width = 30;
+//     worksheet.addRow([]);
+
+
+
+  
+//     workbook.xlsx.writeBuffer().then((data) => {
+//       let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+//       fs.saveAs(blob, 'ClarityDiscrepancy.xlsx');
+//     })
+//       // const table = document.getElementById("tblsmarttable");
+//       // const workBook = XLSX.utils.table_to_book(table);
+//       // workBook.Sheets.Sheet1.A1.s = { font: { bold: true } };
+//       // XLSX.writeFile(workBook, "wonkey.xlsx")
+
+// } 
+ngAfterViewInit() {
+  console.log('Values on ngAfterViewInit():');
+  console.log("title:", this.table.nativeElement);
+}
 initSetting() {
   //this.populateTableHeader();
   this.searchBy = 'All';
@@ -95,32 +164,41 @@ initSetting() {
     delete: false
     },
     columns: {
+      dm: {
+        title: 'DM'
+      },
+      location: {
+        title: 'Location'
+      },
+      ProjectName: {
+        title: 'projectName'
+      },
+      employeeId: {
+        title: 'EmployeeID',
+      },
       empname: {
         title: 'EmpName'
       },
-      officeid: {
-        title: 'OfficeId'
+      rateWithoutTax: {
+        title: 'RateWithoutTax'
       },
-      stoname: {
-        title: 'STOName'
+      accruedHours: {
+        title: 'AccruedHours'
       },
-      clarityDaysBilled: {
-        title: 'Days Billable Billing',
+      clarityHours: {
+        title: 'ClarityHours'
       },
-      clarityHoursBillable: {
-        title: 'Days Billable Clarity',
+      difference: {
+        title: 'Difference'
       },
-      tsBillRate: {
-        title: 'Bill Rate Billing'
+      currentInvoiceHours: {
+        title: 'CurInvoiceHours'
       },
-      clarityBillRate: {
-        title: 'Bill Rate Clarity'
+      remarks: {
+        title: 'Remarks'
       },
-      tsBilledAmt: {
-        title: 'Bill Amount Billling'
-      },
-      clarityBilledAmt: {
-        title: 'Bill Amount Clarity'
+      cleanupComments: {
+        title: 'CleanupComments'
       },
   },
   attr: {
@@ -128,7 +206,7 @@ initSetting() {
   },
   rowClassFunction: (row) => {
     console.log("row.data.userID:: " + row.data.clarityDaysBilled);
-    if (row.data.clarityDaysBilled !== row.data.clarityHoursBillable || row.data.tsBilledAmt !== row.data.clarityBilledAmt) {
+    if (row.data.clarityHours !== row.data.difference) {
       return 'aborted';    
     } else{
       return 'solved';
@@ -142,15 +220,19 @@ initSetting() {
 populateTableHeader() {
 
   this.headerTitle= {
-  "Empname":"empName",
-  "officeID":"officeId",
-  "STOName":"stoName",
-  "Days Billable Billing":"clarityDaysBilled",
-  "Days Billable Clarity":"clarityHoursBillable",
-  "Bill Rate Billing":"tsBillRate",
-  "Bill Rate Clarity":"clarityBillRate",
-  "Bill Amount Billling":"tsBilledAmt",
-  "Bill Amount Clarity": "clarityBilledAmt"  
+  "DM":"dm",
+  "location":"Location",
+  "projectName":"ProjectName",
+  "EmployeeID":"EmployeeID",
+  "EmpName":"employeeName",
+  "RateWithoutTax":"rateWithoutTax",
+  "AccruedHours":"accruedHours",
+  "clarityHours": "ClarityHours",
+  "difference": "Difference",
+  "currentInvoiceHours": "CurInvoiceHours",
+  "remarks": "Remarks",
+  "cleanupComments": "CleanupComments"
+
   }
   
   }
