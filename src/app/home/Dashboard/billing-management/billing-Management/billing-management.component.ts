@@ -62,13 +62,7 @@ export class BillingManagementComponent implements OnInit {
   });
   
 }
-ngAfterViewInit() {
-  this.elementRef.nativeElement.querySelector('span.spAdd')
-                                .addEventListener('click', this.addClick.bind(this));
-}
-addClick(event) {
-  alert();
-}
+
 getYearValues(){
   this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].YearValues).then((res:any)=>{
     this.YearsList = res.map(yearname=>{
@@ -225,6 +219,8 @@ getTableColumnName(HeaderName){
   initSetting() {
     var BRMColumn;
     var editEnable:boolean = this.searchByFilter=="other";
+     editEnable = !this.freezeInd;
+    
     if(editEnable)
     {
       let listValues=[];
@@ -432,8 +428,18 @@ getTableColumnName(HeaderName){
   updateActionType(bdetails, callType){
         //Delete-2,create - 3,update -0, bulk update -1
     for(var i=0; i<bdetails.length;i++){
+      
+      //Update brm
+      if(this.searchByFilter=="brmid"){
+        bdetails[i].brm =this.BRMList.Item(this.searchByBRM).BRMId;
+      }
+      //Update Action Type 
       if(callType == 0 || callType == 1 ){
-        bdetails[i].action = "U"
+        if(this.searchByFilter=="other"){
+          bdetails[i].action = "A"
+        } else{
+          bdetails[i].action = "U"
+        }
       }
       else if(callType == 3){
         bdetails[i].action = "A"
@@ -447,6 +453,12 @@ getTableColumnName(HeaderName){
   serviceCall(data,event, callType){            
     var bdetails = data.billingDetailsList;
     this.updateActionType(bdetails,callType);    
+    var yearValue =this.searchByYear;
+    var brmID =this.BRMList.Item(this.searchByBRM).BRMId;
+    var monthName= yearValue.split(" ")[0];
+    var yearName= yearValue.split(" ")[1];
+    data.month =monthName;
+    data.year =yearName;
     console.log(JSON.stringify(data))
     //Delete-2,create - 3,update -0, bulk update -1
     this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].UpdateBillingDetails, data).then(result =>{      
@@ -473,6 +485,7 @@ getTableColumnName(HeaderName){
   {
     event.confirm.resolve();
   }
+
   updateFreezeInd(brmName:string,yearValue:string){
     //var brmID =this.BRMList.Item(brmName).BRMNumber;
     var monthName= this.searchByYear.split(" ")[0];
@@ -534,8 +547,7 @@ getTableColumnName(HeaderName){
       brmName:selectedData.BRMName,
       dmName:selectedData.DMName,
       wonNumber:selectedData.WONNumber,
-      stoName:selectedData.STOName
-      
+      stoName:selectedData.STOName      
     }
     console.log(employee);
     if(!this.Validation(employee,true)){
@@ -545,6 +557,7 @@ getTableColumnName(HeaderName){
     data.billingDetailsList.push(employee);
     this.serviceCall(data, event, 3);      
   }
+
   validate(rowData, bNumeric, fieldName){
     
     if(rowData==''){
