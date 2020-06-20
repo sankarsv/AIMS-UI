@@ -15,8 +15,10 @@ import { FileQueueObject, FileUploaderService } from '../../../../home/Employee/
 
 export class BillingManagementComponent implements OnInit {
   searchBy: String;
-  searchByYear: String;
+  searchByYear: string;
   searchByBRM: string;
+  searchByFilter:any;
+  searchByLocation:string;
   showTable: boolean = false;
   searchString: String;
   settings: any;
@@ -34,13 +36,13 @@ export class BillingManagementComponent implements OnInit {
   freezeInd:boolean = false;
   btnFreezeText: string;
   headerTitle: {};
-  FiltersValues = ["BRMName","Other","All"];
+  FiltersValues = [{Id:"brmid",Value:"BRMName"},{Id:"other",Value:"Other"},{Id:"all",Value:"All"}];
   @ViewChild('fileInput') fileInput;
   @ViewChild('table') table;
   @Output() onCompleteItem = new EventEmitter();
   @Output() onUploadFailed = new EventEmitter();
 
-  constructor(public httpService: httpService, public router:Router, private _sanitizer:DomSanitizer, public uploader: FileUploaderService) { }
+  constructor(public httpService: httpService, public router:Router, private _sanitizer:DomSanitizer, public uploader: FileUploaderService,private elementRef:ElementRef) { }
 
   ngOnInit() {    
   this.getYearValues();
@@ -60,19 +62,21 @@ export class BillingManagementComponent implements OnInit {
   });
   
 }
-
+ngAfterViewInit() {
+  this.elementRef.nativeElement.querySelector('span.spAdd')
+                                .addEventListener('click', this.addClick.bind(this));
+}
+addClick(event) {
+  alert();
+}
 getYearValues(){
   this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].YearValues).then((res:any)=>{
     this.YearsList = res.map(yearname=>{
       return yearname["MonthYearName"];
     });     
   });
-
 }
 
-billingcomponent(){
-  
-}
 upload(){
   this.fileInput.nativeElement.click();
 }
@@ -120,58 +124,33 @@ uploadFailed = (item: FileQueueObject, response: any) => {
   this.onUploadFailed.emit({ item, response });
 }
 
-searchByInput(Location:string,filterValue:string,brmName:string,yearValue:string)
+searchByInput()
 {
-  var displayTable =(filterValue=="BRMName"&&brmName!=null&&Location!=null)||filterValue=="Other"||filterValue=="All";
+  var displayTable =(this.searchByFilter == "brmid" && this.searchByBRM != null && this.searchByLocation!=null)||
+  this.searchByFilter =="other"||this.searchByFilter=="all";
   if(displayTable)
   {
-    var brmID:any;
-    if(brmName!=null&&this.BRMList.ContainsKey(brmName))
-    {
-      brmID=this.BRMList.Item(brmName).BRMId;
-    }
-  if(filterValue=="BRMName")
-  {
-    filterValue = "brmid";
-  }
-  else if (filterValue=="Other")
-  {
-    filterValue = "other";
-  }
-  else if(filterValue=="All")
-  {
-    filterValue="all";
-  }
-    let requestBody = {
-      month: yearValue.split(" ")[0],
-      year:yearValue.split(" ")[1],
-      brmId:Number(brmID),
-      filterBy:filterValue
-    };
-  
-    this.getBillingDetails(filterValue=="other",requestBody);  
+      this.getBillingDetails();  
   }
   this.showTable = displayTable;
 }
 
-getBillingDetails(editEnable:boolean,requestBody:any) {
-  if(requestBody==null)
-  {
-    var brmID:any;
+getBillingDetails() {
+  var brmID:any;
     if(this.searchByBRM!=null&&this.BRMList.ContainsKey(this.searchByBRM))
     {
       brmID=this.BRMList.Item(this.searchByBRM).BRMId;
     }
-    requestBody={
-  month:this.searchByYear.split(" ")[0],
-  year:this.searchByYear.split(" ")[1],
-  brmId:Number(brmID)
-    }
-  }
+    let requestBody = {
+      month: this.searchByYear.split(" ")[0],
+      year:this.searchByYear.split(" ")[1],
+      brmId:Number(brmID),
+      filterBy:this.searchByFilter
+    };
   this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,requestBody).then((res:any)=>{
     this.UnderBRMBillingDetailsList = new Dictionary<any>();
     res.map((brmDetail: { [x: string]: any; })=>{      
-      let brmDetalLocal =  {
+      let brmDetalLocal =  {       
         location: brmDetail["locationId"],
         projectNo: brmDetail ["projectId"],
         empNo: brmDetail ["empId"],
@@ -198,19 +177,57 @@ getBillingDetails(editEnable:boolean,requestBody:any) {
       this.source= this.UnderBRMBillingDetailsList.Values();
      
     })
-    if(this.source.length >0){
-      this.versionId = this.source[0].version;      
-      this.freezeInd = (this.source[0].freezeInd == "Y");
+    if(res.length >0){
+      this.versionId = res[0].version;      
+      this.freezeInd = (res[0].freezeInd == "Y");
       if(this.freezeInd) this.btnFreezeText = "UnFreeze" 
       else {
         this.btnFreezeText = "Freeze"
       }
     }
+    this.initSetting();
+    
+  });
+
+}
+
+populateTableHeader() {
+
+  this.headerTitle= {    
+    "Project No":"projectNo",
+    "Employee No":"empNo",
+    "Employee Name":"empFullName",
+    "BRM":"BRMName",
+    "Billable Hrs":"billablehrs",
+    "Billable Days":"billabledays",
+    "Effort Hours":"efforthr",
+    "Extra Hours":"extrahr",
+    "Extra Billing":"extrabiling",
+    "Billable Amount":"billableamt:",
+    "Bill Rate":"billRate",
+    "Remark 1":"remarks1",
+    "Remark 2":"remarks2",
+    "DM Name":"DMName",
+    "STO":"stoName",
+    "Won":"wonNumber",
+    "Location":"location",
+    "OfficeID":"officeId"
+  } 
+
+}
+
+
+
+getTableColumnName(HeaderName){
+  return this.headerTitle[HeaderName];
+}
+
+  initSetting() {
     var BRMColumn;
-    if(requestBody.filterBy=="other")
+    var editEnable:boolean = this.searchByFilter=="other";
+    if(editEnable)
     {
       let listValues=[];
-      let count=1;
       this.BRMList.Keys().forEach(value=>{
         listValues.push({value:this.BRMList.Item(value).BRMId,title:value});
       });
@@ -234,49 +251,23 @@ getBillingDetails(editEnable:boolean,requestBody:any) {
         title:"BRM Name"
       }
     }
-    this.initSetting(editEnable,BRMColumn);    
-  });
-
-}
-
-populateTableHeader() {
-
-this.headerTitle= {
-"Location":"location",
-"Project No":"projectNo",
-"Employee No":"empNo",
-"Employee Name":"empFullName",
-"BRM":"BRMName",
-"Billable Hrs":"billablehrs",
-"Billable Days":"billabledays",
-"Effort Hours":"efforthr",
-"Extra Hours":"extrahr",
-"Extra Billing":"extrabiling",
-"Billable Amount":"billableamt:",
-"Bill Rate":"billRate",
-"Remark 1":"remarks1",
-"Remark 2":"remarks2"
-}
-
-}
-
-getTableColumnName(HeaderName){
-  return this.headerTitle[HeaderName];
-}
-
-  initSetting(editEnable:boolean,brmColumn:any) {
     this.populateTableHeader();
     this.searchBy = 'All';
     this.searchString = "";
     var customString :any;
     if(editEnable)
-     customString = [{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`, }]
+    {
+       customString = [{ name: 'Edit', title: `<img src="../../../assets/images/editnew.png">`, }]
+    }
     this.settings = {
       mode: 'inline',
       selectMode:'multi',
       edit: {confirmSave: true},
       delete:  {confirmDelete: true},
-      add:  {confirmCreate: true},
+      add:  {
+        confirmCreate: true,
+        addButtonContent:'<span class="spAdd ng2-smart-action ng2-smart-action-add-add">Add New</span>'        
+      },
       actions: {
         add: editEnable,
         edit: editEnable,
@@ -284,8 +275,11 @@ getTableColumnName(HeaderName){
         delete:   editEnable,
         custom:customString,
         position: 'right'
-      },
-      columns: {
+      },      
+      columns: {        
+        WONNumber:{
+          title: "Won"          
+        },
         location: {
           title: 'Location'
         },
@@ -298,7 +292,7 @@ getTableColumnName(HeaderName){
         empFullName: {
           title: 'Employee Name'
         },
-        BRMName: brmColumn,
+        BRMName: BRMColumn,
         billablehrs: {
           title: 'Billable Hrs',
         },
@@ -327,11 +321,23 @@ getTableColumnName(HeaderName){
         remarks2: {
           title: 'Remark 2'
         },
+        DMName: 
+        {
+          title: 'Delivery Manager'
+        },
+        STOName: 
+        {
+          title: 'STO'
+        },
+        OfficeID:{
+          title: 'Office Id'
+        }
       },
       attr: {
         class: 'table table-bordered'
-      },
+      }
     };
+    console.log(this.settings.actions.add)
     if(this.freezeInd) {
       this.freezeSettings();
     }
@@ -343,8 +349,6 @@ getTableColumnName(HeaderName){
     this.settings.actions = null;
     this.btnFreezeText ="UnFreeze";
   }
-
-
 
   onDeleteConfirm(event) {
     console.log("Delete Event In Console")
@@ -425,17 +429,34 @@ getTableColumnName(HeaderName){
     this.serviceCall(data,null,1);   
   }
 
+  updateActionType(bdetails, callType){
+        //Delete-2,create - 3,update -0, bulk update -1
+    for(var i=0; i<bdetails.length;i++){
+      if(callType == 0 || callType == 1 ){
+        bdetails[i].action = "U"
+      }
+      else if(callType == 3){
+        bdetails[i].action = "A"
+      } else{
+        bdetails[i].action = "D"
+      }
+    }
 
-  serviceCall(data,event, callType){    
+  }
+
+  serviceCall(data,event, callType){            
+    var bdetails = data.billingDetailsList;
+    this.updateActionType(bdetails,callType);    
     console.log(JSON.stringify(data))
+    //Delete-2,create - 3,update -0, bulk update -1
     this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].UpdateBillingDetails, data).then(result =>{      
       alert("Saved Successfully");    
-      this.getBillingDetails(true,null); 
+      this.getBillingDetails(); 
       //single update      
       if(callType == 0)  {
         this.singleUpdate(event);
       }
-      //Delete
+      //Delete-2,create - 3
       if(callType == 2 || callType == 3)  {
         this.rowUpdate(event);
       }
@@ -468,7 +489,7 @@ getTableColumnName(HeaderName){
     if (!result) {
       alert("Error updating Freeze Ind");
     }
-    this.searchByInput(" " ,"BRMName",brmName,yearValue)}); 
+    this.searchByInput()}); 
   }
  
    onSaveConfirm(event) {
@@ -505,13 +526,57 @@ getTableColumnName(HeaderName){
       effortHrs: selectedData.efforthr,
       extraBilling:selectedData.extrabiling,
       billingAmount: selectedData.billableamt,
-      remarks:selectedData.remarks
+      remarks1:selectedData.remarks1,
+      remarks2:selectedData.remarks2,
+      locationId:selectedData.location,
+      projectId:selectedData.projectNo,
+      empName:selectedData.empFullName,
+      brmName:selectedData.BRMName,
+      dmName:selectedData.DMName,
+      wonNumber:selectedData.WONNumber,
+      stoName:selectedData.STOName
+      
     }
+    console.log(employee);
+    if(!this.Validation(employee,true)){
+      return false;
+    }
+
     data.billingDetailsList.push(employee);
     this.serviceCall(data, event, 3);      
   }
+  validate(rowData, bNumeric, fieldName){
+    
+    if(rowData==''){
+      alert("Please enter "+ fieldName);
+      return false;
+    }
 
- 
+      if(bNumeric){
+        if(!Number(rowData)){
+            alert("Invalid "+ fieldName);
+            return false;
+        }   
+      }
+    
+    
+    return false;
+  }
+
+  Validation(row,bAdd){
+    
+    if(bAdd && (!(this.validate(row.empId, true, "Employee Id") && this.validate(row.billableHrs, true, "Billable Hours") &&
+    this.validate(row.billableDays, true, "Billable Days") && this.validate(row.effortHrs, true, "Effort Hours") &&
+    this.validate(row.extraBilling, true, "Extra Billing") && this.validate(row.billingAmount, true, "Billable Amount") &&
+    this.validate(row.STOName, false, "STO Name") && this.validate(row.brmName, false, "BRM Name") &&
+    this.validate(row.billRate, true, "Bill Rate") && this.validate(row.dmName,false, "DM Name")  &&
+    this.validate(row.locationId, false, "Location Id") && this.validate(row.projectId, false, "Project Id")  &&
+    this.validate(row.wonNumber, true, "Won Number") 
+    ))){
+      return false;  
+    }
+    return true;
+}
 
   resetEditMode(){
     let gridSelectedRows: Array<Number> = Array.from(new Set(this.selectedRows));   
@@ -521,14 +586,15 @@ getTableColumnName(HeaderName){
       if(this.table.grid.dataSet.rows[selectedIx].isSelected) {     
        this.table.grid.dataSet.data[selectedIx].isInEditing =false;
       }
-    }
-
+      return true;
   }
   
+    
 }
 
 
 
+}
 
 
 

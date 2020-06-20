@@ -1,15 +1,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<div class="col-md-6 progressTexts"> DashBoardType :
+  <select class="inputBoxOne" [(ngModel)]="dashBoardType" (ngModelChange)="LoadDashBoard()">
+    <option>RelationshipWise DashBoard</option>
+    <option>BRMWise DashBoard</option>
+  </select>
+</div>
+<br>
 <div class="topNav">
 
   <div
     class="executiveText"
-    style="text-align: center; padding-left: 10px; padding-top: 10px;"
-  >
+    style="text-align: center; padding-left: 10px; padding-top: 10px;">
     <b>Dashboard</b>
   </div>
 
 </div>
 
+<div class="loader" *ngIf="!HasDataLoaded"></div>
 <div class="barChart">
   <canvas
     baseChart
