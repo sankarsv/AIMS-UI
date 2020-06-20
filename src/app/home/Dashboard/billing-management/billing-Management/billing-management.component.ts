@@ -547,7 +547,9 @@ getTableColumnName(HeaderName){
       brmName:selectedData.BRMName,
       dmName:selectedData.DMName,
       wonNumber:selectedData.WONNumber,
-      stoName:selectedData.STOName      
+      stoName:selectedData.STOName,
+      billRate: selectedData.billRate
+
     }
     console.log(employee);
     if(!this.Validation(employee,true)){
@@ -573,7 +575,7 @@ getTableColumnName(HeaderName){
       }
     
     
-    return false;
+    return true;
   }
 
   Validation(row,bAdd){
