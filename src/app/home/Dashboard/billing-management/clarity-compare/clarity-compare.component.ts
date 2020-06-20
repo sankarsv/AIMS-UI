@@ -58,11 +58,10 @@ export class ClarityCompareComponent implements OnInit , AfterViewInit  {
  monthName = monthName.toUpperCase();
  monthName = months[monthName];
 
- var url = APP_CONSTANTS.URL[environment.type].GetBillingDiscrepancy + monthName + yearName + brmID
-
+ var url = APP_CONSTANTS.URL[environment.type].GetBillingDiscrepancy +'/'+monthName+'/'+yearName+'/'+brmID
 // this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].GetBillingDiscrepancy,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
 
-  this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].GetBillingDiscrepancy,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
+  this.httpService.httpGet(url).then((res:any)=>{
     this.UnderBRMBillingDetailsList = new Dictionary<any>();
     res.map((brmDetail: { [x: string]: any; })=>{      
       let brmDetalLocal =  {
@@ -206,7 +205,7 @@ initSetting() {
   },
   rowClassFunction: (row) => {
     console.log("row.data.userID:: " + row.data.clarityDaysBilled);
-    if (row.data.clarityHours !== row.data.difference) {
+    if (row.data.clarityHours !== row.data.accruedHours) {
       return 'aborted';    
     } else{
       return 'solved';

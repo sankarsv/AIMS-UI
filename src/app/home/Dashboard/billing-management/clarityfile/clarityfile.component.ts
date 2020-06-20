@@ -59,11 +59,11 @@ export class ClarityfileComponent implements OnInit {
   monthName = months[monthName];
   var brmID =this.BRMList.Item(brmName).BRMId;
 
- var url = APP_CONSTANTS.URL[environment.type].GetBillingDiscrepancy + monthName + yearName + brmID
+ var url = APP_CONSTANTS.URL[environment.type].GetClarityDetails +'/'+monthName +'/'+yearName+'/'+brmID
  //To Run local
  //this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].GetClarityDetails,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
 
-  this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].GetClarityDetails,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
+  this.httpService.httpGet(url).then((res:any)=>{
     this.UnderBRMBillingDetailsList = new Dictionary<any>();
     res.map((brmDetail: { [x: string]: any; })=>{      
       let brmDetalLocal =  {
