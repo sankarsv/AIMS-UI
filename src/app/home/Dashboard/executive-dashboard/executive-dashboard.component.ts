@@ -56,7 +56,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.dashBoardType='RelationshipWise DashBoard';
+    this.dashBoardType='Accountwise DashBoard';
     this.fetchYearlyDetails("2020", "MAY");
   }
 
@@ -224,7 +224,7 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.barChartType = "bar";
     this.barChartData = [
       { data: this.OffshoreHeadCount,totalData:this.HeadCounts,label: 'Offshore Count', stack: 'a'},
-      { data: this.OffshoreHeadCount,totalData:this.HeadCounts,label: 'Onshore Count', stack: 'a'}
+      { data: this.OnshoreHeadCount,totalData:this.HeadCounts,label: 'Onshore Count', stack: 'a'}
     ];
    this.barChartLegend = true;
     this.mbarChartLabels = this.HeadCounts.Keys();
