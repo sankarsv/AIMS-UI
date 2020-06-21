@@ -30,8 +30,7 @@ export class BaHorizontalbarchartComponent implements OnInit {
       {
         data: this.BAData,
         backgroundColor: this.executive.ColorValues,
-        hoverBackgroundColor: this.executive.ColorValues,
-        totalData: this.executive.BACounts
+        hoverBackgroundColor: this.executive.ColorValues
       },
     ];
     this.chartLabels = this.executive.BACounts.Keys();
@@ -40,19 +39,7 @@ export class BaHorizontalbarchartComponent implements OnInit {
         text:'BA Count',
         display:true
       },
-      responsive: true,
-      tooltips: {
-        callbacks: {
-            label: function(tooltipItem, data) {
-              var label:string = ""
-              if(data.datasets[tooltipItem.datasetIndex].totalData.ContainsKey(tooltipItem.yLabel))
-              {
-                label+="BA Percentage: "+data.datasets[tooltipItem.datasetIndex].totalData.Item(tooltipItem.yLabel).BACountPerc;
-              }
-              return label;
-            }
-            }
-          }
+      responsive: true
     };
   }
 

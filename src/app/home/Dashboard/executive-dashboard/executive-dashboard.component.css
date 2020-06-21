@@ -333,8 +333,8 @@ p {
 }
 
 .griddiv {
-  width: 30%;
-  height: 60%;
+  width: 50%;
+  height: 30%;
   float: left;
   position: relative;
   padding-top: 55px;
@@ -383,14 +383,14 @@ p {
   to{ bottom:0; opacity:1 }
 }
 .barChart{
-  width: 60%;
-  height: 40%;
+  width: 50%;
+  height: 30%;
   float: left;
   position: relative;
 }
 .doughChart{
-  width: 40%;
-  height: 40%;
+  width: 50%;
+  height: 30%;
   float: right;
   position: relative;
   padding-top: 20px;
