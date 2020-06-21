@@ -43,6 +43,7 @@ export const APP_CONSTANTS = {
             BillingManagment:"/aims/user/getBillingDetails",
             GetClarityDetails :"/aims/user/getClarityDetails",
             GetBillingDiscrepancy:"/aims/user/getBillingDiscrepancy",
+            DownloadingBillingDiscrepancy:"/aims/user/downloadDiscrepancy",
             DownloadBillingFile:"downloadBilling",
             YearValues:"assets/mock/aims/YearsList.json",
             BRMDetailsList:"/aims/user/getBRMDetails",

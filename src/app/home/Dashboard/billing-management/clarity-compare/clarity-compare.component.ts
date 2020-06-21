@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./clarity-compare.component.css']
 })
 export class ClarityCompareComponent implements OnInit , AfterViewInit  {
+  brmIdSel:String;
+  monthSel:String;
+  yearSel:String;
   searchBy: String;
   showTable: boolean = false;
   searchString: String;
@@ -54,11 +57,13 @@ export class ClarityCompareComponent implements OnInit , AfterViewInit  {
   
   this.initSetting();
  var brmID =this.BRMList.Item(brmName).BRMId;
+ this.brmIdSel = brmID;
  var monthName= yearValue.split(" ")[0];
  var yearName= yearValue.split(" ")[1]; 
  monthName = monthName.toUpperCase();
  monthName = this.months[monthName];
-
+ this.monthSel = monthName;
+ this.yearSel = yearName;
  var url = APP_CONSTANTS.URL[environment.type].GetBillingDiscrepancy +'/'+monthName+'/'+yearName+'/'+brmID
 // this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].GetBillingDiscrepancy,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
 
@@ -87,32 +92,27 @@ export class ClarityCompareComponent implements OnInit , AfterViewInit  {
 });
 
 }
- ExportToExcel(brmName:string,yearValue:string)
+ ExportToExcel()
  {
-  var brmID =this.BRMList.Item(brmName).BRMId;
-  var monthName= yearValue.split(" ")[0];
-  var yearName= yearValue.split(" ")[1]; 
-  monthName = monthName.toUpperCase();
-  monthName = this.months[monthName];
- 
-  var url = APP_CONSTANTS.URL[environment.type].GetBillingDiscrepancy +'/'+monthName+'/'+yearName+'/'+brmID
-  this.httpService.httpGet(url).then((res:any)=> {
+  var url = APP_CONSTANTS.URL[environment.type].DownloadingBillingDiscrepancy +'/'+this.monthSel+'/'+this.yearSel+'/'+this.brmIdSel;
+  console.log(url);
+  this.httpService.downloadFileGet(url).then(res =>{
     if (!res) {
       alert("Error in downloading the report");
     }
     else{
-
-      const blob = new Blob([res.blob()], { type : 'application/vnd.ms.excel' });
-      window['saveAs'](blob, 'ClarityCompare.xlsx');
+      var downloadUrl = window.URL.createObjectURL(res);
+      var link = document.createElement('a');
+      link.href = downloadUrl;
       var fileName = localStorage.getItem('filename');
       if(!fileName) {
-        fileName = "ClarityCompare.xlsx";
+        fileName = "DiscrepancyReport.xlsx";
         localStorage.removeItem('filename');
       }
-     ;
+      link.download = fileName;
+      link.click();
     }
   });
-
  } 
 ngAfterViewInit() {
   console.log('Values on ngAfterViewInit():');
@@ -174,7 +174,6 @@ initSetting() {
     class: 'table table-bordered'
   },
   rowClassFunction: (row) => {
-    console.log("row.data.userID:: " + row.data.clarityDaysBilled);
     if (row.data.clarityHours !== row.data.accruedHours) {
       return 'aborted';    
     } else{

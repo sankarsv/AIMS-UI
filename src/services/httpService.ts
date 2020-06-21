@@ -60,6 +60,19 @@ export class httpService {
 
     }
 
+    downloadFileGet(url: string) {
+        let token = localStorage.getItem("access_token");
+        return this.httpClient.get(url,
+        {
+            headers: new HttpHeaders().set('Authorization', 'Bearer ' + token),
+            responseType: 'blob'
+
+        }).toPromise().then((result: any) => {
+            return result;
+        }).catch(err => { alert(err.message); return null; })
+
+    }
+
     PostDetails(url:string,body:any):Promise< any >{
         let token = localStorage.getItem("access_token");
         return this.httpClient.post(url,body,
