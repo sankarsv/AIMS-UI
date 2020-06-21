@@ -8,6 +8,10 @@ import { ExecutiveDashboardComponent } from "../../executive-dashboard.component
 })
 export class TraineeBarchartComponent implements OnInit {
   public TraineeData: any[] = [];
+  offshorTraineeData:any[]=[];
+  OnshoreTraineeData:any[]=[];
+  OffshoreNonTraineeData:any[]=[];
+  OnshoreNonTraineeData:any[]=[];
   public chartType: string;
   public chartDatasets: Array<any>;
   public chartLabels: Array<any>;
@@ -17,7 +21,10 @@ export class TraineeBarchartComponent implements OnInit {
   ngOnInit() {
     if (this.executive.TraineeDetails != null) {
       this.executive.TraineeDetails.Values().forEach((key: any) => {
-        this.TraineeData.push(key.TraineeCountTotal);
+        this.OnshoreTraineeData.push(key.OnTraineeCount);
+        this.OnshoreNonTraineeData.push(key.TraineeCountTotal);
+        this.offshorTraineeData.push(key.OffShoreTraineeCount);
+        this.OffshoreNonTraineeData.push(key.TraineeCountTotal);
       });
       this.loadtraineeChart();
     }
@@ -27,12 +34,45 @@ export class TraineeBarchartComponent implements OnInit {
     this.chartType = "line";
     this.chartDatasets = [
       {
-        data: this.TraineeData,
-        backgroundColor: this.executive.ColorValues,
-        hoverBackgroundColor: this.executive.ColorValues,
-        label:this.executive.TraineeDetails.Keys(),
-        totalData:this.executive.TraineeDetails
+        data: this.offshorTraineeData,
+        backgroundColor: '#ff99dd',
+        hoverBackgroundColor: this.executive.ColorValues[2],
+        borderColor: this.executive.ColorValues[2],
+        borderWidth:2,
+        label:"Offshore Trainee Data",
+        fillOpacity: .1,
+        fill:false
       },
+      {
+        data: this.OffshoreNonTraineeData,
+        backgroundColor: '#6666ff',
+        hoverBackgroundColor: this.executive.ColorValues[3],
+        borderColor: this.executive.ColorValues[3],
+        borderWidth:2,
+        label:"Offshore Non Trainee Data",
+        fillOpacity: .2,
+        fill:false
+      },
+      {
+        data: this.OnshoreTraineeData,
+        backgroundColor: '#f0c2d1',
+        hoverBackgroundColor: this.executive.ColorValues[4],
+        borderColor: this.executive.ColorValues[4],
+        borderWidth:2,
+        label:"Onshore Trainee Data",
+        fillOpacity: .3,
+        fill:false
+      },
+      {
+        data: this.OnshoreNonTraineeData,
+        backgroundColor: '#f8b9c6',
+        hoverBackgroundColor: this.executive.ColorValues[5],
+        borderColor: this.executive.ColorValues[5],
+        borderWidth:2,
+        label:"Onshore Non Trainee Data",
+        fillOpacity: .4,
+        fill:false
+      }
     ];
     this.chartLabels = this.executive.TraineeDetails.Keys();
     this.chartOptions = {
@@ -40,22 +80,7 @@ export class TraineeBarchartComponent implements OnInit {
         text:'Trainee Count',
         display:true
       },
-      responsive: true,
-      tooltips: {
-        callbacks: {
-            label: function(tooltipItem, data) {
-              var label:string = "";
-              let dataValue:string =tooltipItem.xLabel;
-              if(data.datasets[tooltipItem.datasetIndex].totalData.ContainsKey(dataValue))
-              {
-                let onlabel="Onshore Trainee Count: "+data.datasets[tooltipItem.datasetIndex].totalData.Item(dataValue).OnTraineeCount;
-                let offlabel=" Offshore Trainee Count: "+data.datasets[tooltipItem.datasetIndex].totalData.Item(dataValue).OffShoreTraineeCount;
-                return [onlabel,offlabel];
-              }
-              return label;
-            }
-            }
-          }
+      responsive: true
     };
   }
 
