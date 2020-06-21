@@ -403,7 +403,6 @@ getTableColumnName(HeaderName){
       version: this.versionId,
       billingDetailsList:[]
     };
-    
     for(var i=0; i<gridSelectedRows.length; i++)
     {
       let selectedIx: any =gridSelectedRows[i];
@@ -411,12 +410,16 @@ getTableColumnName(HeaderName){
           let selectedData: any = this.table.grid.dataSet.data[selectedIx];
           var employee ={
             empId:selectedData.empNo,
-            billableHrs:selectedData.billablehrs,
-            billableDays:selectedData.billabledays,      
-            effortHrs: selectedData.efforthr,
-            extraBilling:selectedData.extrabiling,
-            billingAmount: selectedData.billableamt,
-            remarks:selectedData.remarks
+            brm:Number(selectedData.BRMName),
+            billableHrs:Number(selectedData.billablehrs),
+            billableDays:Number(selectedData.billabledays),
+            effortHrs: Number(selectedData.efforthr), 
+            extraHrs:Number(selectedData.extrahr),
+            extraBilling:Number(selectedData.extrabiling),
+            billingAmount: Number(selectedData.billableamt),
+            remarks1:selectedData.remarks1,
+            remarks2:selectedData.remarks2,
+            billRate:Number(selectedData.billRate) 
           }
           data.billingDetailsList.push(employee);
         }
@@ -453,12 +456,8 @@ getTableColumnName(HeaderName){
   serviceCall(data,event, callType){            
     var bdetails = data.billingDetailsList;
     this.updateActionType(bdetails,callType);    
-    var yearValue =this.searchByYear;
-    var brmID =this.BRMList.Item(this.searchByBRM).BRMId;
-    var monthName= yearValue.split(" ")[0];
-    var yearName= yearValue.split(" ")[1];
-    data.month =monthName;
-    data.year =yearName;
+    data.month =this.searchByYear.split(" ")[0];
+    data.year =this.searchByYear.split(" ")[1];
     console.log(JSON.stringify(data))
     //Delete-2,create - 3,update -0, bulk update -1
     this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].UpdateBillingDetails, data).then(result =>{      
@@ -510,14 +509,19 @@ getTableColumnName(HeaderName){
       version: this.versionId,
       billingDetailsList:[]
     };
+    var selectedData = event.newData;
     var employee ={
-      empId:event.newData["empNo"],
-      billableHrs:event.newData["billablehrs"],
-      billableDays:event.newData["billabledays"],      
-      effortHrs: event.newData["efforthr"],
-      extraBilling:event.newData["extrabiling"],
-      billingAmount: event.newData["billableamt"],
-      remarks:event.newData["remarks"]
+            empId:selectedData.empNo,
+            brm:Number(selectedData.BRMName),
+            billableHrs:Number(selectedData.billablehrs),
+            billableDays:Number(selectedData.billabledays),
+            effortHrs: Number(selectedData.efforthr), 
+            extraHrs:Number(selectedData.extrahr),
+            extraBilling:Number(selectedData.extrabiling),
+            billingAmount: Number(selectedData.billableamt),
+            remarks1:selectedData.remarks1,
+            remarks2:selectedData.remarks2,
+            billRate:Number(selectedData.billRate)     
     }
    data.billingDetailsList.push(employee);
     alert(JSON.stringify(data));   
@@ -533,23 +537,17 @@ getTableColumnName(HeaderName){
     };
     var selectedData =event.newData;
     var employee ={
-      empId:selectedData.empNo,
-      billableHrs:selectedData.billablehrs,
-      billableDays:selectedData.billabledays,      
-      effortHrs: selectedData.efforthr,
-      extraBilling:selectedData.extrabiling,
-      billingAmount: selectedData.billableamt,
-      remarks1:selectedData.remarks1,
-      remarks2:selectedData.remarks2,
-      locationId:selectedData.location,
-      projectId:selectedData.projectNo,
-      empName:selectedData.empFullName,
-      brmName:selectedData.BRMName,
-      dmName:selectedData.DMName,
-      wonNumber:selectedData.WONNumber,
-      stoName:selectedData.STOName,
-      billRate: selectedData.billRate
-
+            empId:selectedData.empNo,
+            brm:Number(selectedData.BRMName),
+            billableHrs:Number(selectedData.billablehrs),
+            billableDays:Number(selectedData.billabledays),
+            effortHrs: Number(selectedData.efforthr), 
+            extraHrs:Number(selectedData.extrahr),
+            extraBilling:Number(selectedData.extrabiling),
+            billingAmount: Number(selectedData.billableamt),
+            remarks1:selectedData.remarks1,
+            remarks2:selectedData.remarks2,
+            billRate:Number(selectedData.billRate)
     }
     console.log(employee);
     if(!this.Validation(employee,true)){
