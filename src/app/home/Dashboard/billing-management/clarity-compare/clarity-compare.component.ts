@@ -23,6 +23,9 @@ export class ClarityCompareComponent implements OnInit , AfterViewInit  {
   headerTitle: {};
   month: {};
   @ViewChild('table') table;
+  months = {
+    'JANUARY' : '01','FEBRUARY' : '02','MARCH' : '03','APRIL' : '04','MAY' : '05','JUNE' : '06','JULY' : '07','AUGUST' : '08','SEPTEMBER' : '09','OCTOBER' : '10','NOVEMBER' : '11','DECEMBER' : '12'
+};
   // @ViewChild('TABLE', { static: false }) TABLE: ElementRef; 
   constructor(public httpService: httpService,public router:Router) { }
 
@@ -48,15 +51,13 @@ export class ClarityCompareComponent implements OnInit , AfterViewInit  {
 
   searchByInput(brmName:string,yearValue:string)
 {
-  var months = {
-    'JANUARY' : '01','FEBRUARY' : '02','MARCH' : '03','APRIL' : '04','MAY' : '05','JUNE' : '06','JULY' : '07','AUGUST' : '08','SEPTEMBER' : '09','OCTOBER' : '10','NOVEMBER' : '11','DECEMBER' : '12'
-};
+  
   this.initSetting();
  var brmID =this.BRMList.Item(brmName).BRMId;
  var monthName= yearValue.split(" ")[0];
  var yearName= yearValue.split(" ")[1]; 
  monthName = monthName.toUpperCase();
- monthName = months[monthName];
+ monthName = this.months[monthName];
 
  var url = APP_CONSTANTS.URL[environment.type].GetBillingDiscrepancy +'/'+monthName+'/'+yearName+'/'+brmID
 // this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].GetBillingDiscrepancy,{month:monthName,year:yearName,brmName:name}).then((res:any)=>{
@@ -86,64 +87,33 @@ export class ClarityCompareComponent implements OnInit , AfterViewInit  {
 });
 
 }
-// ExportToExcel()
-// {
-//   let excetbl = [];
-//   excetbl = this.table.source.data
-//   const header = ["DM", "Location", "ProjectName", "EmployeeID", "EmpName", "RateWithoutTax","AccruedHours","ClarityHours","Difference","CurInvoiceHours","Remarks","CleanupComments"]
-//   let workbook = new Workbook();
-//   let worksheet = workbook.addWorksheet('Clarity Discrepancy');
+ ExportToExcel(brmName:string,yearValue:string)
+ {
+  var brmID =this.BRMList.Item(brmName).BRMId;
+  var monthName= yearValue.split(" ")[0];
+  var yearName= yearValue.split(" ")[1]; 
+  monthName = monthName.toUpperCase();
+  monthName = this.months[monthName];
+ 
+  var url = APP_CONSTANTS.URL[environment.type].GetBillingDiscrepancy +'/'+monthName+'/'+yearName+'/'+brmID
+  this.httpService.httpGet(url).then((res:any)=> {
+    if (!res) {
+      alert("Error in downloading the report");
+    }
+    else{
 
-//   let titleRow = worksheet.addRow(['Clarity Discrepancy']);
-//     titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true }
-//     worksheet.addRow([]);
+      const blob = new Blob([res.blob()], { type : 'application/vnd.ms.excel' });
+      window['saveAs'](blob, 'ClarityCompare.xlsx');
+      var fileName = localStorage.getItem('filename');
+      if(!fileName) {
+        fileName = "ClarityCompare.xlsx";
+        localStorage.removeItem('filename');
+      }
+     ;
+    }
+  });
 
-//     let headerRow = worksheet.addRow(header);
-
-//     // Cell Style : Fill and Border
-//     headerRow.eachCell((cell, number) => {
-//       cell.fill = {
-//         type: 'pattern',
-//         pattern: 'solid',
-//         fgColor: { argb: 'FFFFFF00' },
-//         bgColor: { argb: 'FF0000FF' }
-//       }
-//       cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } }
-//     })
-//     // Add Data and Conditional Formatting
-//     this.table.source.data.forEach(d => {
-//       let row = worksheet.addRow(d);
-//       let daysbillablebillig = row.getCell(8);
-//       let daysbillableclarity = row.getCell(9)
-//       let color = 'FF99FF99';
-//       if (daysbillablebillig.value !== daysbillableclarity) {
-//         color = 'FF9999'
-//       }
-//       daysbillablebillig.fill = {
-//         type: 'pattern',
-//         pattern: 'solid',
-//         fgColor: { argb: color }
-//       }
-//     }
-//     );
-
-//     worksheet.getColumn(3).width = 30;
-//     worksheet.getColumn(4).width = 30;
-//     worksheet.addRow([]);
-
-
-
-  
-//     workbook.xlsx.writeBuffer().then((data) => {
-//       let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-//       fs.saveAs(blob, 'ClarityDiscrepancy.xlsx');
-//     })
-//       // const table = document.getElementById("tblsmarttable");
-//       // const workBook = XLSX.utils.table_to_book(table);
-//       // workBook.Sheets.Sheet1.A1.s = { font: { bold: true } };
-//       // XLSX.writeFile(workBook, "wonkey.xlsx")
-
-// } 
+ } 
 ngAfterViewInit() {
   console.log('Values on ngAfterViewInit():');
   console.log("title:", this.table.nativeElement);
