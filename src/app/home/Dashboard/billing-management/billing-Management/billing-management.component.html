@@ -11,7 +11,7 @@
   </div>
   <div class="col-md-3 progressText" *ngIf = "searchByFilter!=null&&searchByFilter ==='brmid'"> BRM Search
     <select class="inputBox" [(ngModel)]="searchByBRM" (ngModelChange)="searchByLocation=null;searchByInput()">
-      <option *ngFor="let brmName of BrmNamesList" [ngValue]="brmName">{{brmName}} </option>
+      <option *ngFor="let brmName of BrmNamesList" [ngValue]="brmName.value">{{brmName.title}} </option>
     </select>
   </div>
   <div class="col-md-3 progressText" *ngIf = "searchByFilter!=null&&searchByFilter ==='brmid' && searchByBRM!=null"> Location

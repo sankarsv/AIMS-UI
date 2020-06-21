@@ -16,7 +16,7 @@ import { FileQueueObject, FileUploaderService } from '../../../../home/Employee/
 export class BillingManagementComponent implements OnInit {
   searchBy: String;
   searchByYear: string;
-  searchByBRM: string;
+  searchByBRM: Number;
   searchByFilter:any;
   searchByLocation:string;
   showTable: boolean = false;
@@ -27,7 +27,7 @@ export class BillingManagementComponent implements OnInit {
   BRMList:Dictionary<any>;
   UnderBRMBillingDetailsList:Dictionary<any>;
   YearsList:[];
-  BrmNamesList:string[];
+  BrmNamesList:any[]=[];
   selectedRows:number[]=[];
   pushrow:[];
   fileUpload: boolean;
@@ -56,11 +56,10 @@ export class BillingManagementComponent implements OnInit {
          BRMName: brmDetail ["brmName"],
          BRMId:brmDetail["brmId"]
         };
-        this.BRMList.Add(brmDetalLocal.BRMName,brmDetalLocal);
-        this.BrmNamesList =this.BRMList.Keys();
+        this.BRMList.Add(brmDetalLocal.BRMId,brmDetalLocal.BRMName);
+        this.BrmNamesList.push({value:Number(brmDetalLocal.BRMId),title:brmDetalLocal.BRMName})
       })
-  });
-  
+  });  
 }
 
 getYearValues(){
@@ -131,14 +130,10 @@ searchByInput()
 
 getBillingDetails() {
   var brmID:any;
-    if(this.searchByBRM!=null&&this.BRMList.ContainsKey(this.searchByBRM))
-    {
-      brmID=this.BRMList.Item(this.searchByBRM).BRMId;
-    }
     let requestBody = {
       month: this.searchByYear.split(" ")[0],
       year:this.searchByYear.split(" ")[1],
-      brmId:Number(brmID),
+      brmId:this.searchByBRM,
       filterBy:this.searchByFilter
     };
   this.httpService.httpPost(APP_CONSTANTS.URL[environment.type].BillingManagment,requestBody).then((res:any)=>{
@@ -218,18 +213,13 @@ getTableColumnName(HeaderName){
 
   initSetting() {
     var BRMColumn;
-    var editEnable:boolean = this.searchByFilter=="other";
-     editEnable = !this.freezeInd;
+    var editEnable:boolean = this.searchByFilter=="other" || !this.freezeInd;
     
     if(editEnable)
     {
-      let listValues=[];
-      this.BRMList.Keys().forEach(value=>{
-        listValues.push({value:this.BRMList.Item(value).BRMId,title:value});
-      });
       let configValue={
         selectText:'Select',
-        list:listValues
+        list:this.BrmNamesList
       };
       let editorValue={
         type:'list',
@@ -431,11 +421,7 @@ getTableColumnName(HeaderName){
   updateActionType(bdetails, callType){
         //Delete-2,create - 3,update -0, bulk update -1
     for(var i=0; i<bdetails.length;i++){
-      
-      //Update brm
-      if(this.searchByFilter=="brmid"){
-        bdetails[i].brm =this.BRMList.Item(this.searchByBRM).BRMId;
-      }
+    
       //Update Action Type 
       if(callType == 0 || callType == 1 ){
         if(this.searchByFilter=="other"){
@@ -486,7 +472,6 @@ getTableColumnName(HeaderName){
   }
 
   updateFreezeInd(brmName:string,yearValue:string){
-    //var brmID =this.BRMList.Item(brmName).BRMNumber;
     var monthName= this.searchByYear.split(" ")[0];
     var yearName= this.searchByYear.split(" ")[1];    
     var freezeIndNew;
@@ -495,7 +480,7 @@ getTableColumnName(HeaderName){
     } else {
       freezeIndNew = 'Y'
     }
-    var data = {brmId:brmName,month:monthName, year:Number(yearName), version: Number(this.versionId), freezeInd:freezeIndNew};
+    var data = {brmId:this.searchByBRM,month:monthName, year:Number(yearName), version: Number(this.versionId), freezeInd:freezeIndNew};
     console.log(data);
     this.httpService.PostDetails(APP_CONSTANTS.URL[environment.type].GetFreeze, data ).then(result => {
     if (!result) {

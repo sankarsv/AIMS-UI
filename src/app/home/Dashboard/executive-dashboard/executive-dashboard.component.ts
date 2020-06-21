@@ -209,7 +209,8 @@ export class ExecutiveDashboardComponent implements OnInit {
  
   //#region barchart - BRM vs Headcount
   public brmNames: any[] = [];
-  public HeadCount: any[] = [];
+  public OffshoreHeadCount: any[] = [];
+  public OnshoreHeadCount: any[] = [];
   public mbarChartLabels: string[];
   public barChartData: any[];
   public barChartOptions: any;
@@ -222,15 +223,21 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.getBrmNames();
     this.barChartType = "bar";
     this.barChartData = [
-      { data: this.HeadCount,totalData:this.HeadCounts}
+      { data: this.OffshoreHeadCount,totalData:this.HeadCounts,label: 'Offshore Count', stack: 'a'},
+      { data: this.OffshoreHeadCount,totalData:this.HeadCounts,label: 'Onshore Count', stack: 'a'}
     ];
-   this.barChartLegend = false;
+   this.barChartLegend = true;
     this.mbarChartLabels = this.HeadCounts.Keys();
     
     this.barChartColors = [
       {
-        backgroundColor: this.ColorValues,
-        borderColor: this.ColorValues,
+        backgroundColor: this.ColorValues[4],
+        borderColor: this.ColorValues[4],
+        borderWidth:2
+      },
+      {
+        backgroundColor: this.ColorValues[5],
+        borderColor: this.ColorValues[5],
         borderWidth:2
       }
     ];
@@ -245,22 +252,7 @@ export class ExecutiveDashboardComponent implements OnInit {
         xAxes:[{
           barPercentage:0.2
         }]
-      },
-      tooltips: {
-        mode: 'label',
-        callbacks: {
-            label: function(tooltipItem, data) {
-              if(data.datasets[tooltipItem.datasetIndex].totalData.ContainsKey(tooltipItem.xLabel))
-              {
-                let offlabel ="OffShore Count: "+data.datasets[tooltipItem.datasetIndex].totalData.Item(tooltipItem.xLabel).OffTotal;
-                let onlabel="OnShore Count: "+data.datasets[tooltipItem.datasetIndex].totalData.Item(tooltipItem.xLabel).OnShoreTotal;
-                return [offlabel,onlabel]
-              }
-              return [""];
-            }
-            }
-          }
-  
+      }  
     };
   }
 
@@ -277,7 +269,8 @@ export class ExecutiveDashboardComponent implements OnInit {
   getBrmNames(){
     this.HeadCounts.Values().forEach((key: any) => {
       this.brmNames.push(key.BRMName);
-      this.HeadCount.push(key.TotalCount);
+      this.OffshoreHeadCount.push(key.OffTotal);
+      this.OnshoreHeadCount.push(key.OnShoreTotal);
     });
   }
   
