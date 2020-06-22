@@ -37,7 +37,7 @@
   <button class="buttonBox" (click)="upload()">Upload</button>
   <button class="buttonBox" *ngIf = "searchByFilter!='other'" (click)="download(searchByBRM,searchByYear)">Download</button>
   <button class="buttonBox" (click)="updateFreezeInd(searchByBRM,searchByYear)">{{btnFreezeText}}</button>
-  <button class="buttonBox" (click)="save()">Save</button>
+  <button class="buttonBox" (click)="OnBulkSave()">Save</button>
 </div>
 <div>
   <label [ngClass]= "{'lblSuccess': fileUpload, 'lblSuccess': !fileUpload }"  >{{uploadMessage}}</label>
