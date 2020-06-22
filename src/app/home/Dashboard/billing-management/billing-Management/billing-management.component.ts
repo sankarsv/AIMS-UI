@@ -522,7 +522,8 @@ export class BillingManagementComponent implements OnInit {
       billRate: Number(selectedData.billRate),
       locationId: selectedData.location,
       wonNumber: selectedData.WONNumber,
-      stoName: selectedData.STOName
+      stoName: selectedData.STOName,
+      officeId:selectedData.OfficeID
     };
     return employee;
   }
