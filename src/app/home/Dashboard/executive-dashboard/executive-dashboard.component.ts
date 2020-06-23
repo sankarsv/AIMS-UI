@@ -295,13 +295,13 @@ export class ExecutiveDashboardComponent implements OnInit {
       this.DisplayBRMData = true;
       this.getBRMDetails();
       this.selectedBRM = this.activeElement;
-      this.loadBRMWiseBarChart(this.activeElement);
       this.loadOtherchartdetails(this.activeElement);
     }
   }
 
   loadOtherchartdetails(selectedBrmName: string) {
     console.log("print" + selectedBrmName);
+    this.loadBRMWiseBarChart(selectedBrmName);
     this.BillableChartComponent.RefreshChartData(this.BillingDetails.Item(selectedBrmName));
     this.SrJrChartComponent.RefreshChartData(this.SrJrRatios.Item(selectedBrmName));
     this.TraineeChartComponent.RefreshChartData(this.TraineeDetails.Item(selectedBrmName));
