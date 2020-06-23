@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from "@angular/core";
-import { ExecutiveDashboardComponent } from "../../executive-dashboard.component";
+import { Dictionary } from "app/utils/Dictionary";
 
 @Component({
   selector: "app-ba-horizontalbarchart",
@@ -8,18 +8,21 @@ import { ExecutiveDashboardComponent } from "../../executive-dashboard.component
 })
 export class BaHorizontalbarchartComponent implements OnInit {
   public BAData: any[]=[];
+  @Input() public BACounts:Dictionary<any>;
+  @Input() public ColorValues:string[];
   public chartType: string;
   public chartDatasets: Array<any>;
   public chartLabels: Array<any>;
   public chartOptions;
 
-  constructor(public executive:ExecutiveDashboardComponent) {}
+  constructor() {}
 
   ngOnInit() {
-    if (this.executive.BACounts != null) {
-      this.executive.BACounts.Values().forEach((key: any) => {
+    if (this.BACounts != null) {
+      this.BACounts.Values().forEach((key: any) => {
         this.BAData.push(key.BACountTotal);
       });
+      this.chartLabels = this.BACounts.Keys();
       this.loadChart();
     }
   }
@@ -29,11 +32,11 @@ export class BaHorizontalbarchartComponent implements OnInit {
     this.chartDatasets = [
       {
         data: this.BAData,
-        backgroundColor: this.executive.ColorValues,
-        hoverBackgroundColor: this.executive.ColorValues
+        backgroundColor: this.ColorValues,
+        hoverBackgroundColor: this.ColorValues
       },
     ];
-    this.chartLabels = this.executive.BACounts.Keys();
+    
     this.chartOptions = {
       title:{
         text:'BA Count',
@@ -44,4 +47,16 @@ export class BaHorizontalbarchartComponent implements OnInit {
   }
 
   public chartHovered(e: any): void {}
+  public RefreshChartData(selectedBRM:any)
+  {
+    this.BAData=[];
+    this.BAData.push(selectedBRM.BACountTotal);
+    this.chartLabels = [selectedBRM.BRMName];
+    this.loadChart();
+  }
+
+  public LoadAccountWiseChart()
+  {
+    this.ngOnInit();
+  }
 }
