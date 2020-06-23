@@ -1,8 +1,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<div class="col-md-6 progressTexts"> DashBoardType :
-  <select class="inputBoxOne" [(ngModel)]="dashBoardType" (ngModelChange)="LoadDashBoard()">
-    <option>Accountwise DashBoard</option>
-    <option>BRMWise DashBoard</option>
+<div class="arrow" *ngIf="DisplayBRMData" (mouseover)="tooltip=true"(mouseleave)="tooltip=false"(click)="tooltip=false;DisplayBRMData = !DisplayBRMData; RefreshAccountWiseData()" style="cursor: pointer;float:left;"> 
+  <a><img src="{{'../../../assets/images/BackWardArrow.png'}}"></a>
+  <span class="checktoolTip" *ngIf="tooltip" style=" background-color: black;color: #fff;text-align: center;position: absolute;z-index: 1;padding: 5px 0;border-radius: 6px;">Account Wise DashBoard</span>
+</div>
+<div class="DropDown" *ngIf="DisplayBRMData" style="padding-left: 500px;"> BRM Name :
+  <select class="selectBo" [(ngModel)]="selectedBRM" (ngModelChange)="loadOtherchartdetails(selectedBRM)">
+    <option *ngFor="let brmName of BrmNamesList" [ngValue]="brmName.title">{{brmName.title}} </option>
   </select>
 </div>
 <br>
@@ -30,14 +33,14 @@
   ></canvas>
 </div>
 <div class="doughChart" *ngIf="HasDataLoaded">
-  <app-exp-doughnutchart></app-exp-doughnutchart>
+  <app-exp-doughnutchart #SrJrChart [SrJrRatios]="SrJrRatios" [ColorValues] = "ColorValues"></app-exp-doughnutchart>
 </div>
 <div class="griddiv" *ngIf="HasDataLoaded">
-  <app-billable-piechart></app-billable-piechart>
+  <app-billable-piechart #BillableChart [BillingDetails]="BillingDetails" [ColorValues] = "ColorValues"></app-billable-piechart>
 </div>
 <div class="griddiv" *ngIf="HasDataLoaded">
-  <app-trainee-barchart></app-trainee-barchart>
+  <app-trainee-barchart #TraineeChart [TraineeDetails]="TraineeDetails" [ColorValues] = "ColorValues"></app-trainee-barchart>
 </div>
 <div class="griddiv" *ngIf="HasDataLoaded">
-  <app-ba-horizontalbarchart></app-ba-horizontalbarchart>
+  <app-ba-horizontalbarchart #BaChart [BACounts]="BACounts" [ColorValues] = "ColorValues"></app-ba-horizontalbarchart>
 </div>
