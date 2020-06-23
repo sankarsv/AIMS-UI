@@ -322,6 +322,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   getBRMDetails() {
     this.httpService.httpGet(APP_CONSTANTS.URL[environment.type].BRMDetailsList).then((res: any) => {
       this.BRMList = new Dictionary<any>();
+      this.BrmNamesList = [];
       res.map((brmDetail: { [x: string]: any; }) => {
         let brmDetalLocal = {
           BRMName: brmDetail["brmName"],
