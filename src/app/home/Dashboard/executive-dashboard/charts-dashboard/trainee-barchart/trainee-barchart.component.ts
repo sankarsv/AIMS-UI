@@ -34,7 +34,7 @@ export class TraineeBarchartComponent implements OnInit {
   }
 
   loadtraineeChart() {
-    this.chartType = "line";
+    this.chartType = "bar";
     this.chartDatasets = [
       {
         data: this.offshorTraineeData,

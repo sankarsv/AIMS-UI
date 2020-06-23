@@ -332,12 +332,29 @@ p {
   padding-top: 10px;
 }
 
-.griddiv {
-  width: 50%;
-  height: 30%;
+.griddiv1 {
+  width: 40%;
+  height: 20%;
   float: left;
   position: relative;
   padding-top: 55px;
+}
+
+.griddiv2 {
+  width: 56%;
+  height: 20%;
+  float: left;
+  position: relative;
+  padding-top: 55px;
+  padding-left: 225px;
+}
+
+.griddiv3 {
+  width: 40%;
+  height: 20%;
+  float: left;
+  position: relative;
+  padding-top: 120px;
 }
 .loader {
   position: absolute;
@@ -383,14 +400,14 @@ p {
   to{ bottom:0; opacity:1 }
 }
 .barChart{
-  width: 50%;
-  height: 30%;
+  width: 45%;
+  height: 25%;
   float: left;
   position: relative;
 }
 .doughChart{
-  width: 50%;
-  height: 30%;
+  width: 40%;
+  height: 25%;
   float: right;
   position: relative;
   padding-top: 20px;

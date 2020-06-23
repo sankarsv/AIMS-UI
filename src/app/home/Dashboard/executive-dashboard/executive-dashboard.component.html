@@ -35,12 +35,12 @@
 <div class="doughChart" *ngIf="HasDataLoaded">
   <app-exp-doughnutchart #SrJrChart [SrJrRatios]="SrJrRatios" [ColorValues] = "ColorValues"></app-exp-doughnutchart>
 </div>
-<div class="griddiv" *ngIf="HasDataLoaded">
+<div class="griddiv1" *ngIf="HasDataLoaded">
   <app-billable-piechart #BillableChart [BillingDetails]="BillingDetails" [ColorValues] = "ColorValues"></app-billable-piechart>
 </div>
-<div class="griddiv" *ngIf="HasDataLoaded">
+<div class="griddiv2" *ngIf="HasDataLoaded">
   <app-trainee-barchart #TraineeChart [TraineeDetails]="TraineeDetails" [ColorValues] = "ColorValues"></app-trainee-barchart>
 </div>
-<div class="griddiv" *ngIf="HasDataLoaded">
+<div class="griddiv3" *ngIf="HasDataLoaded">
   <app-ba-horizontalbarchart #BaChart [BACounts]="BACounts" [ColorValues] = "ColorValues"></app-ba-horizontalbarchart>
 </div>
