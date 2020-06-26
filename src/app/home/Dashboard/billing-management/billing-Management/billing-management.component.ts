@@ -28,8 +28,10 @@ export class BillingManagementComponent implements OnInit {
   UnderBRMBillingDetailsList: Dictionary<any>;
   YearsList: [];
   BrmNamesList: any[] = [];
+  BRMNamesDropDownList:any[]=[];
   selectedRows: number[] = [];
   pushrow: [];
+  selectedBRM: string;
   fileUpload: boolean;
   uploadMessage: string;
   versionId: string;
@@ -57,7 +59,8 @@ export class BillingManagementComponent implements OnInit {
           BRMId: brmDetail["brmId"]
         };
         this.BRMList.Add(brmDetalLocal.BRMId, brmDetalLocal.BRMName);
-        this.BrmNamesList.push({ value: Number(brmDetalLocal.BRMId), title: brmDetalLocal.BRMName })
+        this.BrmNamesList.push({ value: Number(brmDetalLocal.BRMId), title: brmDetalLocal.BRMName });
+        this.BRMNamesDropDownList.push({ value: brmDetalLocal.BRMName, title: brmDetalLocal.BRMName });
       })
     });
   }
@@ -203,29 +206,7 @@ export class BillingManagementComponent implements OnInit {
   }
 
   initSetting() {
-    var BRMColumn;
     var editEnable: boolean = this.searchByFilter == "other" || !this.freezeInd;
-
-    if (editEnable) {
-      let configValue = {
-        selectText: 'Select',
-        list: this.BrmNamesList
-      };
-      let editorValue = {
-        type: 'list',
-        config: configValue
-      };
-      BRMColumn =
-      {
-        title: "BRM Name",
-        editor: editorValue
-      };
-    }
-    else {
-      BRMColumn = {
-        title: "BRM Name"
-      }
-    }
     this.populateTableHeader();
     this.searchBy = 'All';
     this.searchString = "";
@@ -266,7 +247,16 @@ export class BillingManagementComponent implements OnInit {
         empFullName: {
           title: 'Employee Name'
         },
-        BRMName: BRMColumn,
+        BRMName: {
+          title: "BRM Name",
+          editor: {
+            type: 'list',
+            config:
+            {
+              list: this.BRMNamesDropDownList
+            }
+          }
+        },
         billablehrs: {
           title: 'Billable Hrs',
         },
@@ -509,7 +499,7 @@ export class BillingManagementComponent implements OnInit {
   populateServiceData(selectedData: any): any {
     var employee = {
       empId: selectedData.empNo,
-      brm: Number(selectedData.BRMName),
+      brm: this.getBRMIDFromBRMName(selectedData.BRMName),
       billableHrs: Number(selectedData.billablehrs),
       billableDays: Number(selectedData.billabledays),
       effortHrs: Number(selectedData.efforthr),
@@ -522,9 +512,21 @@ export class BillingManagementComponent implements OnInit {
       locationId: selectedData.location,
       wonNumber: selectedData.WONNumber,
       stoName: selectedData.STOName,
-      officeId:selectedData.OfficeID
+      officeId: selectedData.OfficeID
     };
     return employee;
+  }
+
+  getBRMIDFromBRMName(selectedBRMValue:string):Number
+  {
+    var selectedBRMID:Number;
+    this.BrmNamesList.forEach(value=>{
+      if(value.title==selectedBRMValue)
+      {
+        selectedBRMID = value.value;
+      }
+    });
+    return selectedBRMID;
   }
 }
 
