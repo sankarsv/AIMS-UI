@@ -227,7 +227,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   public barChartLegend: boolean;
   public barChartColors: Array<any>;
   public activeElement: string;
-  
+
   loadBarChart() {
     this.barChartType = "bar";
     this.barChartColors = [
@@ -270,8 +270,7 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.loadBarChart();
   }
 
-  RefreshAccountWiseData()
-  {
+  RefreshAccountWiseData() {
     this.loadAccountWiseChart();
     this.BaChartComponent.LoadAccountWiseChart();
     this.BillableChartComponent.LoadAccountWiseChart();
@@ -312,7 +311,7 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.OffshoreHeadCount = [this.HeadCounts.Item(selectedBrmName).OffTotal];
     this.OffshoreHeadCount.push(this.HeadCounts.Item(selectedBrmName).OnShoreTotal);
     this.barChartData = [
-      { data: this.OffshoreHeadCount}
+      { data: this.OffshoreHeadCount }
     ];
     this.barChartLegend = false;
     this.mbarChartLabels = ['Offshore Count', 'Onshore Count'];
