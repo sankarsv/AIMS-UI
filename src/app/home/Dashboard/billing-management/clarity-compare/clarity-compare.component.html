@@ -1,12 +1,12 @@
 <div class="container">
 <div class="row">
-  <div  class="col progressText"> <strong class="h5">Period : </strong>
+  <div  class="col progressText">Period : 
     <select class="inputBox" [(ngModel)]="searchByYear" style="height: 30px;width: 200px">
       <option *ngFor="let yearname of YearsList" [ngValue]="yearname">{{yearname}} </option>
     </select>
   </div>
 
-  <div class="col progressText"> <strong class="h5"> BRM Search : </strong>
+  <div class="col progressText">  BRM Search : 
     <select class="inputBox" style="height: 30px;width: 200px" [(ngModel)]="searchByBRM" (ngModelChange)="searchByInput(searchByBRM,searchByYear);onChange($event)">
       <option *ngFor="let brmName of BrmNamesList" [ngValue]="brmName">{{brmName}} </option>
     </select>
