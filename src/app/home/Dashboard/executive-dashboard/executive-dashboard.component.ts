@@ -2,27 +2,21 @@ import {
   Component,
   OnInit,
   ViewChild,
-  ElementRef,
   Renderer,
 } from "@angular/core";
-import * as Chart from "chart.js";
-import { progressbar } from "../../../Roles/constants";
-import { NgCircleProgressModule } from "ng-circle-progress";
 import { forkJoin } from "rxjs";
 import { httpService } from "../../../../services/httpService";
-import { routerNgProbeToken } from "@angular/router/src/router_module";
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { APP_CONSTANTS } from "app/utils/app-constants";
 import { environment } from "environments/environment";
-import { element } from "@angular/core/src/render3/instructions";
 import "rxjs/add/operator/map";
 import { Dictionary } from "app/utils/Dictionary";
-import { ChartsModule } from "ng2-charts";
 import { ExpDoughnutchartComponent } from "./charts-dashboard/exp-doughnutchart/exp-doughnutchart.component";
 import { BillablePiechartComponent } from "./charts-dashboard/billable-piechart/billable-piechart.component";
 import { TraineeBarchartComponent } from "./charts-dashboard/trainee-barchart/trainee-barchart.component";
 import { BaHorizontalbarchartComponent } from "./charts-dashboard/ba-horizontalbarchart/ba-horizontalbarchart.component";
+import { NgxGaugeModule } from 'ngx-gauge';
 
 @Component({
   selector: "app-executive-dashboard",
@@ -60,10 +54,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   constructor(
     public httpService: httpService,
     public router: Router,
-    public activatedRoute: ActivatedRoute,
-    private renderer: Renderer,
-    private http: HttpClient
-  ) { }
+    public activatedRoute: ActivatedRoute  ) { }
 
   ngOnInit() {
     this.dashBoardType = 'Accountwise DashBoard';
@@ -253,7 +244,10 @@ export class ExecutiveDashboardComponent implements OnInit {
         xAxes: [{
           barPercentage: 0.2
         }]
-      }
+      },
+      scaleShowValues: true, 
+      scaleValuePaddingX: 10,
+      scaleValuePaddingY: 10,
     };
   }
 
@@ -332,5 +326,11 @@ export class ExecutiveDashboardComponent implements OnInit {
       })
     });
   }
-  public chartHovered(e: any): void { }
+  public chartHovered(): void { }
+
+  gaugeType = "semi"; //full, arch  
+   gaugeValue = 28.3;  
+   gaugeLabel = "Speed";  
+   gaugeAppendText = "km/hr";  
+
 }
