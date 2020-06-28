@@ -100,15 +100,6 @@ initSetting() {
     delete: false
     },
     columns: {
-      // checkbox:{
-      //   title:'Select',
-      //   type:"html",
-      //   editor:{
-      //     type:'label',
-      //   },
-      //   valuePrepareFunctioPostDetailsn:(value)=>{return this._sanitizer.bypassSecurityTrustHtml(this.input);},
-      //   filter:false
-      // },
       lastNameFirstName: {
         title: 'EmpName'
       },

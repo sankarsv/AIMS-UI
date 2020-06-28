@@ -14,9 +14,10 @@
 </div>
 </div>
 <div class="tableDesign" *ngIf="showTable">
-  <div class="text-right">
+  <div class="text-right" style="padding-right: 20px">
  <button type="button"class="btn btn-primary center-block" (click)="ExportToExcel()">Export to Excel</button> 
 </div>
+<br>
   <ng2-smart-table #table class="smartable" [settings]="settings" id="tblsmarttable"  allowFiltering='true' allowPaging='true' [source]="data"  
     ></ng2-smart-table>
 </div>

@@ -72,7 +72,7 @@ progress::-webkit-progress-bar {
     text-align: left;
     padding: 14px 16px;
     text-decoration: none;
-    font-family: Montserrat;
+    font-family: 'sans-serif';
     font-size: medium;
     font-weight: bold;
     padding-bottom: 3px;
@@ -133,7 +133,7 @@ progress::-webkit-progress-bar {
     text-align: left;
     padding: 7px 8px;
     text-decoration: none;
-    font-family: "Montserrat";
+    font-family: "sans-serif";
     font-size: 14px;
     font-weight: 600;
     padding-bottom: 3px;
@@ -205,7 +205,7 @@ progress.issuesOutstanding::-webkit-progress-value {
 .accountSpendingText {
     width: 32px;
     height: 18px;
-    font-family: Montserrat;
+    font-family: 'sans-serif';
     text-align: left;
     color: #8998ac;
     size: 14px;

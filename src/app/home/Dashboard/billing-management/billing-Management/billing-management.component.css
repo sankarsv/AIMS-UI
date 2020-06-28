@@ -45,7 +45,7 @@
     margin-right: 31px;
     width: 175px;
     height: 35px;
-    font-family: 'Open Sans';
+    font-family: 'sans-serif';
     padding-left: 8px;
   }
 
@@ -57,7 +57,7 @@
     margin-right: 31px;
     width: 170px;
     height: 35px;
-    font-family: 'Open Sans';
+    font-family: 'sans-serif';
     padding-left: 8px;
   }
 
@@ -124,23 +124,41 @@
   /* headers grid color*/
  :host /deep/ ng2-smart-table thead > tr > th  { 
     border: 1px solid grey;
-    background-color:whitesmoke;
+    background-color:#d0dafd;
+  }   
+
+  :host /deep/ ng2-smart-table thead > tr.ng2-smart-filters > th { 
+    border: 1px solid grey;
+    background-color:lavender;
   }   
   /*font size*/
   :host /deep/ ng2-smart-table {
-      font-size:16px;
+      font: size 15px;
   }
 
   ::ng-deep .remarks1 .ng2-smart-title {
-    width: 200px !important;
+    width: 150px !important;
   }
 
   ::ng-deep .remarks2 .ng2-smart-title {
-    width: 200px !important;
+    width: 150px !important;
   }
 
+  ::ng-deep .empFullName .ng2-smart-title {
+    width: 125px !important;
+  }
+  ::ng-deep .STOName .ng2-smart-title {
+    width: 125px !important;
+  }
+  ::ng-deep .OfficeID .ng2-smart-title {
+    width: 75px !important;
+  }
+  ::ng-deep .DMName .ng2-smart-title {
+    width: 125px !important;
+  }
+    
   ::ng-deep .BRMName .ng2-smart-title {
-    width: 200px !important;
+    width: 100px !important;
   }
   
 /* :host /deep/ ng2-smart-table table {
@@ -268,7 +286,7 @@
 body, html {
   height: 100%;
   margin: 0;
-  font-family: Arial;
+  font-family: 'sans-serif';
 }
 
 /* Style tab links */

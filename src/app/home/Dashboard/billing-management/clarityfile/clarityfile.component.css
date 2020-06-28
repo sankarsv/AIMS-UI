@@ -84,6 +84,16 @@
     vertical-align: top;
   }
 
+  :host /deep/ ng2-smart-table thead > tr > th  { 
+    border: 1px solid grey;
+    background-color:#d0dafd;
+  }   
+
+  :host /deep/ ng2-smart-table thead > tr.ng2-smart-filters > th { 
+    border: 1px solid grey;
+    background-color:lavender;
+  }  
+
   @media only screen and (max-width: 768px) {
     .topNav{
       height: 48px;
