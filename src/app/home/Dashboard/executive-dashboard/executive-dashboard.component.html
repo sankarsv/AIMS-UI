@@ -37,3 +37,5 @@
 <div class="gridDiv5" *ngIf="HasDataLoaded">
     <app-ba-horizontalbarchart #BaChart [BACounts]="BACounts" [ColorValues]="ColorValues"></app-ba-horizontalbarchart>
 </div>
+
+<ngx-gauge [type]="gaugeType" [value]="gaugeValue" [label]="gaugeLabel" [append]="gaugeAppendText"></ngx-gauge>

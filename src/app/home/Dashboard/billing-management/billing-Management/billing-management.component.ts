@@ -28,7 +28,7 @@ export class BillingManagementComponent implements OnInit {
   UnderBRMBillingDetailsList: Dictionary<any>;
   YearsList: [];
   BrmNamesList: any[] = [];
-  BRMNamesDropDownList:any[]=[];
+  BRMNamesDropDownList: any[] = [];
   selectedRows: number[] = [];
   pushrow: [];
   selectedBRM: string;
@@ -164,6 +164,9 @@ export class BillingManagementComponent implements OnInit {
         this.source = this.UnderBRMBillingDetailsList.Values();
 
       })
+      if (this.UnderBRMBillingDetailsList.Keys().length== 0) {
+        this.source = null;
+      }
       if (res.length > 0) {
         this.versionId = res[0].version;
         this.freezeInd = (res[0].freezeInd == "Y");
@@ -517,12 +520,10 @@ export class BillingManagementComponent implements OnInit {
     return employee;
   }
 
-  getBRMIDFromBRMName(selectedBRMValue:string):Number
-  {
-    var selectedBRMID:Number;
-    this.BrmNamesList.forEach(value=>{
-      if(value.title==selectedBRMValue)
-      {
+  getBRMIDFromBRMName(selectedBRMValue: string): Number {
+    var selectedBRMID: Number;
+    this.BrmNamesList.forEach(value => {
+      if (value.title == selectedBRMValue) {
         selectedBRMID = value.value;
       }
     });
