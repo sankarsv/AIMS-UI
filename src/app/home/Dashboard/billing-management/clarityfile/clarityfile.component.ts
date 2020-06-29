@@ -15,6 +15,7 @@ export class ClarityfileComponent implements OnInit {
   showTable: boolean = false;
   searchString: String;
   YearsList:[];
+  blYearsel:boolean =false;
   BRMList:Dictionary<any>;
   settings: any;
   BrmNamesList:string[];
@@ -47,6 +48,7 @@ export class ClarityfileComponent implements OnInit {
   }
   searchByInput(brmName:string,yearValue:string)
 {
+  this.data = {};
   var months = {
       'JANUARY' : '01','FEBRUARY' : '02','MARCH' : '03','APRIL' : '04','MAY' : '05','JUNE' : '06','JULY' : '07','AUGUST' : '08','SEPTEMBER' : '09','OCTOBER' : '10','NOVEMBER' : '11','DECEMBER' : '12'
   }
@@ -85,6 +87,11 @@ export class ClarityfileComponent implements OnInit {
 });
 
 }
+setYearValue(){
+  this.blYearsel =true;
+  console.log('Year Select' +  this.blYearsel);
+}
+
 initSetting() {
   //this.populateTableHeader();
   this.searchBy = 'All';
