@@ -197,12 +197,12 @@ export class BillingManagementComponent implements OnInit {
       "Extra Billing": "extrabiling",
       "Billable Amount": "billableamt:",
       "Bill Rate": "billRate",
-      "Remark 1": "remarks1",
-      "Remark 2": "remarks2",
       "DM Name": "DMName",
       "STO": "stoName",
       "Won": "wonNumber",
       "Location": "location",
+      "Remark 1": "remarks1",
+      "Remark 2": "remarks2",
       "OfficeID": "officeId"
     }
   }
@@ -285,12 +285,6 @@ export class BillingManagementComponent implements OnInit {
         {
           title: 'Bill Rate'
         },
-        remarks1: {
-          title: 'Remark 1'
-        },
-        remarks2: {
-          title: 'Remark 2'
-        },
         DMName:
         {
           title: 'Delivery Manager'
@@ -298,6 +292,12 @@ export class BillingManagementComponent implements OnInit {
         STOName:
         {
           title: 'STO'
+        },
+        remarks1: {
+          title: 'Remark 1'
+        },
+        remarks2: {
+          title: 'Remark 2'
         },
         OfficeID: {
           title: 'Office Id'

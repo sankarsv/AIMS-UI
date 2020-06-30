@@ -15,6 +15,7 @@ export class ClarityCompareComponent implements OnInit , AfterViewInit  {
   monthSel:String;
   yearSel:String;
   searchBy: String;
+  blYearsel:boolean =false;
   showTable: boolean = false;
   searchString: String;
   YearsList:[];
@@ -51,10 +52,13 @@ export class ClarityCompareComponent implements OnInit , AfterViewInit  {
       })
   });
   }
-
+  setYearValue(){
+    this.blYearsel =true;
+    console.log('Year Select' +  this.blYearsel);
+  }
   searchByInput(brmName:string,yearValue:string)
 {
-  
+  this.data = {};
   this.initSetting();
  var brmID =this.BRMList.Item(brmName).BRMId;
  this.brmIdSel = brmID;

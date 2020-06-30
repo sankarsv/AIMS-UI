@@ -1,22 +1,22 @@
-<div class="container">
 <div class="row">
-  <div  class="col progressText"> <strong class="h5">Period : </strong>
-    <select class="inputBox" [(ngModel)]="searchByYear" style="height: 30px;width: 200px">
+  <div class="col-md-8 progressText">Period : 
+    <select class="inputBox" [(ngModel)]="searchByYear" style="height: 30px;width: 200px" (change)="setYearValue()">
       <option *ngFor="let yearname of YearsList" [ngValue]="yearname">{{yearname}} </option>
     </select>
   </div>
 
-  <div class="col progressText"> <strong class="h5"> BRM Search : </strong>
+  <div class="col-md-4 progressText" *ngIf="blYearsel === true" >  BRM Search : 
     <select class="inputBox" style="height: 30px;width: 200px" [(ngModel)]="searchByBRM" (ngModelChange)="searchByInput(searchByBRM,searchByYear);onChange($event)">
       <option *ngFor="let brmName of BrmNamesList" [ngValue]="brmName">{{brmName}} </option>
     </select>
   </div>
 </div>
-</div>
+
 <div class="tableDesign" *ngIf="showTable">
-  <div class="text-right">
+  <div class="text-right" style="padding-right: 20px">
  <button type="button"class="btn btn-primary center-block" (click)="ExportToExcel()">Export to Excel</button> 
 </div>
+<br>
   <ng2-smart-table #table class="smartable" [settings]="settings" id="tblsmarttable"  allowFiltering='true' allowPaging='true' [source]="data"  
     ></ng2-smart-table>
 </div>

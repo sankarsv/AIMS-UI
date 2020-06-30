@@ -1,27 +1,29 @@
-<div id="tabs" #tabs>
+<div class="topNav"></div>
 
-  <ul class="nav nav-tabs nav-fill">
+<div id="tabs" style="border: 1px solid black" #tabs>
+
+  <ul class="nav nav-tabs nav-fill" style="background-color: thistle;" >
     <li class="nav-item">
-      <a class="nav-link active" href="#biling" [ngClass]="{ 'active':activeTab==='billing'}"
+      <a class="nav-link" href="#biling" [ngClass]="{ 'active':activeTab==='billing'}"
         (click)="billingcomponent()" data-toggle="tab">Billing</a>
     </li>
 
     <li class="nav-item">
-      <a class="nav-link active" href="#ClarityFile" [ngClass]="{ 'active':activeTab==='clarityfile'}"
+      <a class="nav-link" href="#ClarityFile" [ngClass]="{ 'active':activeTab==='clarityfile'}"
         (click)="clarityfilecomponent()" data-toggle="tab">Clarity</a>
     </li>
 
 
     <li class="nav-item">
-      <a class="nav-link active" href="#BillingClarityCompare" [ngClass]="{ 'active':activeTab==='claritycompare'}"
+      <a class="nav-link" href="#BillingClarityCompare" [ngClass]="{ 'active':activeTab==='claritycompare'}"
         (click)="clarityfilecompare()" data-toggle="tab">Discrepancy</a>
     </li>
 
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a class="nav-link active" href="#Search" [ngClass]="{ 'active':activeTab==='search'}"
         data-toggle="tab">Search</a>
-    </li>
+    </li> -->
 
   </ul>
 </div>
