@@ -160,11 +160,14 @@ export class BillingManagementComponent implements OnInit {
           freezeInd: brmDetail["freezeInd"],
           billRate: brmDetail["billRate"]
         };
+        if (this.BRMList.ContainsKey(brmDetalLocal.BRMId)) {
+          brmDetalLocal.BRMName = this.BRMList.Item(brmDetalLocal.BRMId);
+        }
         this.UnderBRMBillingDetailsList.Add(brmDetalLocal.empNo, brmDetalLocal);
         this.source = this.UnderBRMBillingDetailsList.Values();
 
       })
-      if (this.UnderBRMBillingDetailsList.Keys().length== 0) {
+      if (this.UnderBRMBillingDetailsList.Keys().length == 0) {
         this.source = null;
       }
       if (res.length > 0) {
@@ -452,12 +455,11 @@ export class BillingManagementComponent implements OnInit {
     }
     var data = { brmId: this.searchByBRM, month: monthName, year: Number(yearName), version: Number(this.versionId), freezeInd: freezeIndNew };
     console.log(data);
-    this.httpService.PostDetails(APP_CONSTANTS.URL[environment.type].GetFreeze, data).then(result => {
-      if (!result) {
-        alert("Error updating Freeze Ind");
-      }
-      this.searchByInput()
-    });
+
+    this.httpService.PostDetails(APP_CONSTANTS.URL[environment.type].GetFreeze, data).then(
+      (result: any) => { this.searchByInput(); },
+      err => { alert("Error updating Freeze Ind"); }
+    );
   }
 
   validate(rowData, bNumeric, fieldName) {
