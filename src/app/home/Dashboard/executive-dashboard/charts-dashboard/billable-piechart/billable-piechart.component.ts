@@ -42,7 +42,10 @@ export class BillablePiechartComponent implements OnInit {
         text:'Billable and NonBillable Details',
         display:true
       },
-      responsive: true
+      responsive: true,
+      legend:{
+        position:'bottom'
+      }
     };
   }
 

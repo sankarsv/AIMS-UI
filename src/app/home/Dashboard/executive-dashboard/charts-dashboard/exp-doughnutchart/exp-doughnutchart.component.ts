@@ -42,7 +42,10 @@ export class ExpDoughnutchartComponent implements OnInit {
         text:'Senior Junior Count',
         display:true
       },
-      responsive: true
+      responsive: true,
+      legend:{
+        position:'bottom'
+      }
     };
   }
 
