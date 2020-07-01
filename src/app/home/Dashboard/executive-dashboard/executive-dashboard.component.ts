@@ -17,6 +17,8 @@ import { BillablePiechartComponent } from "./charts-dashboard/billable-piechart/
 import { TraineeBarchartComponent } from "./charts-dashboard/trainee-barchart/trainee-barchart.component";
 import { BaHorizontalbarchartComponent } from "./charts-dashboard/ba-horizontalbarchart/ba-horizontalbarchart.component";
 import { NgxGaugeModule } from 'ngx-gauge';
+import { DashBoardLocationWiseChartComponent } from "./charts-dashboard/dash-board-location-wise-chart/dash-board-location-wise-chart.component";
+import { DashBoardBillableTyepChartComponent } from "./charts-dashboard/dash-board-billable-tyep-chart/dash-board-billable-tyep-chart.component";
 
 @Component({
   selector: "app-executive-dashboard",
@@ -27,11 +29,8 @@ export class ExecutiveDashboardComponent implements OnInit {
   yearsList: number[];
   dashBoardDetails: any[];
   BillingDetails: Dictionary<any>;
-  public billingDetails: any[] = [];
-  public seniorJuniorDetails: any[] = [];
-  public traineeDetails: any[] = [];
-  public headCountDetails: any[] = [];
-  public BADetails: any[] = [];
+  BillingTypeDetails: Dictionary<any>;
+  LocationWiseDetails: Dictionary<any>;
   BRMList: Dictionary<any>;
   BrmNamesList: any[] = []
   SrJrRatios: Dictionary<any>;
@@ -49,12 +48,14 @@ export class ExecutiveDashboardComponent implements OnInit {
   @ViewChild("BillableChart") BillableChartComponent: BillablePiechartComponent;
   @ViewChild("TraineeChart") TraineeChartComponent: TraineeBarchartComponent;
   @ViewChild("BaChart") BaChartComponent: BaHorizontalbarchartComponent;
+  @ViewChild("LocationWiseChart") LocationWiseChart: DashBoardLocationWiseChartComponent;
+  @ViewChild("BillablTypeChart") BillableTypeChart: DashBoardBillableTyepChartComponent;
   public ColorValues: string[] = ['#66CDAA', '#87CEEB', '#20B2AA', '#E9967A', '#DB7093', '#DC143C', '#FF69B4', '#FFA500', '#FF4500', '#FF0000'];
 
   constructor(
     public httpService: httpService,
     public router: Router,
-    public activatedRoute: ActivatedRoute  ) { }
+    public activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.dashBoardType = 'Accountwise DashBoard';
@@ -93,6 +94,16 @@ export class ExecutiveDashboardComponent implements OnInit {
         year: year,
         month: month,
       }),
+      this.httpService.PostDetails(APP_CONSTANTS.URL[environment.type].LocationWiseCount, {
+        reportType: "locationwisecount",
+        year: year,
+        month: month,
+      }),
+      this.httpService.PostDetails(APP_CONSTANTS.URL[environment.type].BillingTypeCount, {
+        reportType: "billingType",
+        year: year,
+        month: month,
+      })
     ]).subscribe((res) => {
       this.dashBoardDetails = res;
       this.initializeView();
@@ -104,8 +115,12 @@ export class ExecutiveDashboardComponent implements OnInit {
       this.dashBoardDetails[1] != null &&
       this.dashBoardDetails[2] != null &&
       this.dashBoardDetails[3] != null &&
-      this.dashBoardDetails[3] != null
+      this.dashBoardDetails[4] != null &&
+      this.dashBoardDetails[5] != null &&
+      this.dashBoardDetails[6] != null
     ) {
+      this.FillBillingTypeDetails(this.dashBoardDetails[6]);
+      this.FillLocationWiseCount(this.dashBoardDetails[5]);
       this.FillBillingDetails(this.dashBoardDetails[0]);
       this.FillSeniorJuniorRatio(this.dashBoardDetails[1]);
       this.FillHeadCounts(this.dashBoardDetails[2]);
@@ -117,6 +132,49 @@ export class ExecutiveDashboardComponent implements OnInit {
       alert("Session Expired!");
       this.router.navigate(["/"]);
     }
+  }
+  FillBillingTypeDetails(billingTypeDetails: any) {
+    this.BillingTypeDetails = new Dictionary<any>();
+    billingTypeDetails.map(billingType => {
+      let billingTypeLocal = {
+        BRMId: billingType["brmNo"],
+        BRMName: billingType["brmName"],
+        FPTotal: billingType["fpCountTotal"],
+        TMTotal: billingType["tmCountTotal"],
+        OnFPTotal: billingType["onFPCountTotal"],
+        OnTMTotal: billingType["onTMCountTotal"],
+        OffFPTotal: billingType["offFPCountTotal"],
+        OffTMTotal: billingType["offTMCountTotal"],
+        FPTotalPerc: billingType["fpCountPerc"],
+        TMTotalPerc: billingType["tmCountPerc"],
+        OnFPTotalPerc: billingType["onfpCountPerc"],
+        OnTMTotalPerc: billingType["ontmCountPerc"],
+        OffFPTotalPerc: billingType["offfpCountPerc"],
+        OffTMTotalPerc: billingType["offtmCountPerc"]
+      };
+      this.BillingTypeDetails.Add(billingTypeLocal.BRMName, billingTypeLocal);
+    });
+  }
+
+  FillLocationWiseCount(locationWiseDetails: any) {
+    this.LocationWiseDetails = new Dictionary<any>();
+    locationWiseDetails.map(locationWiseDetail => {
+      let LocationWise: any[] = [];
+      locationWiseDetail["locationDetails"].map(locations => {
+        let locationwise = {
+          Geography: locations["geography"],
+          Location: locations["location"],
+          Count: locations["count"]
+        };
+        LocationWise.push(locationwise);
+      })
+      let locationWiseDetailsLocal = {
+        BRMId: locationWiseDetail["brmId"],
+        BRMName: locationWiseDetail["brmName"],
+        LocationWise: LocationWise
+      }
+      this.LocationWiseDetails.Add(locationWiseDetailsLocal.BRMName, locationWiseDetailsLocal);
+    });
   }
 
   FillBillingDetails(billingDetails: any) {
@@ -136,7 +194,6 @@ export class ExecutiveDashboardComponent implements OnInit {
       };
       this.BillingDetails.Add(billingDetailsLocal.BRMName, billingDetailsLocal);
     });
-    //this.billingDetails.push(this.BillingDetails.Item("Akkaiah"));
   }
 
   FillSeniorJuniorRatio(srjrRatios: any) {
@@ -156,7 +213,6 @@ export class ExecutiveDashboardComponent implements OnInit {
       };
       this.SrJrRatios.Add(srjrRatioLocal.BRMName, srjrRatioLocal);
     });
-    //this.seniorJuniorDetails.push(this.SRJrRatios.Item("Akkaiah"));
   }
 
   FillHeadCounts(headCounts: any) {
@@ -173,7 +229,6 @@ export class ExecutiveDashboardComponent implements OnInit {
       };
       this.HeadCounts.Add(headCountLocal.BRMName, headCountLocal);
     });
-    //this.headCountDetails.push(this.HeadCounts.Item("Akkaiah"));
   }
 
   FillTraineeDetails(traineeDetails: any) {
@@ -236,18 +291,14 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.barChartOptions = {
       scaleShowVerticalLines: false,
       responsive: true,
+      scaleShowValues: true,
       title: {
         text: 'Head Count',
         display: true
       },
-      scales: {
-        xAxes: [{
-          barPercentage: 0.2
-        }]
-      },
-      scaleShowValues: true, 
-      scaleValuePaddingX: 10,
-      scaleValuePaddingY: 10,
+      legend:{
+        position:'bottom'
+      }
     };
   }
 
@@ -256,8 +307,8 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.loadHeadCountData();
 
     this.barChartData = [
-      { data: this.OffshoreHeadCount, label: 'Offshore Count', stack: 'a' },
-      { data: this.OnshoreHeadCount, label: 'Onshore Count', stack: 'a' }
+      { data: this.OffshoreHeadCount, label: 'Offshore Count', stack: 'a', barPercentage: 0.4 },
+      { data: this.OnshoreHeadCount, label: 'Onshore Count', stack: 'a', barPercentage: 0.4 }
     ];
     this.barChartLegend = true;
     this.mbarChartLabels = this.HeadCounts.Keys();
@@ -270,6 +321,8 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.BillableChartComponent.LoadAccountWiseChart();
     this.TraineeChartComponent.LoadAccountWiseChart();
     this.SrJrChartComponent.LoadAccountWiseChart();
+    this.BillableTypeChart.LoadAccountWiseChart();
+    this.LocationWiseChart.LoadAccountWiseChart();
   }
 
   loadHeadCountData() {
@@ -299,13 +352,15 @@ export class ExecutiveDashboardComponent implements OnInit {
     this.SrJrChartComponent.RefreshChartData(this.SrJrRatios.Item(selectedBrmName));
     this.TraineeChartComponent.RefreshChartData(this.TraineeDetails.Item(selectedBrmName));
     this.BaChartComponent.RefreshChartData(this.BACounts.Item(selectedBrmName));
+    this.BillableTypeChart.RefreshChartData(this.BillingTypeDetails.Item(selectedBrmName));
+    this.LocationWiseChart.RefreshChartData(this.LocationWiseDetails.Item(selectedBrmName));
   }
 
   loadBRMWiseBarChart(selectedBrmName: string) {
     this.OffshoreHeadCount = [this.HeadCounts.Item(selectedBrmName).OffTotal];
     this.OffshoreHeadCount.push(this.HeadCounts.Item(selectedBrmName).OnShoreTotal);
     this.barChartData = [
-      { data: this.OffshoreHeadCount }
+      { data: this.OffshoreHeadCount, barPercentage: 0.4 }
     ];
     this.barChartLegend = false;
     this.mbarChartLabels = ['Offshore Count', 'Onshore Count'];
@@ -329,8 +384,8 @@ export class ExecutiveDashboardComponent implements OnInit {
   public chartHovered(): void { }
 
   gaugeType = "semi"; //full, arch  
-   gaugeValue = 28.3;  
-   gaugeLabel = "Speed";  
-   gaugeAppendText = "km/hr";  
+  gaugeValue = 28.3;
+  gaugeLabel = "Speed";
+  gaugeAppendText = "km/hr";
 
 }

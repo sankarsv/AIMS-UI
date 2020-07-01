@@ -34,6 +34,8 @@ import { UploadreportsComponent } from "./Reports/uploadreports/uploadreports.co
 import { ClarityfileComponent } from './Dashboard/billing-management/clarityfile/clarityfile.component';
 import { BillingManagementMainComponent } from './Dashboard/billing-management/billing-management-main.component';
 import { ClarityCompareComponent } from './Dashboard/billing-management/clarity-compare/clarity-compare.component';
+import { DashBoardBillableTyepChartComponent } from './Dashboard/executive-dashboard/charts-dashboard/dash-board-billable-tyep-chart/dash-board-billable-tyep-chart.component';
+import { DashBoardLocationWiseChartComponent } from './Dashboard/executive-dashboard/charts-dashboard/dash-board-location-wise-chart/dash-board-location-wise-chart.component';
 
 @NgModule({
   imports: [
@@ -73,6 +75,8 @@ import { ClarityCompareComponent } from './Dashboard/billing-management/clarity-
     ClarityfileComponent,
     BillingManagementMainComponent,
     ClarityCompareComponent,
+    DashBoardBillableTyepChartComponent,
+    DashBoardLocationWiseChartComponent,
   ],
   //providers: [FileUploaderService, DashboardResolver],
 

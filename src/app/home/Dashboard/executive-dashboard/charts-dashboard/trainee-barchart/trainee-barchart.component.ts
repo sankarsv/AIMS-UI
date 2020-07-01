@@ -83,7 +83,17 @@ export class TraineeBarchartComponent implements OnInit {
         text:'Trainee Count',
         display:true
       },
-      responsive: true
+      responsive: true,
+      scales:{
+        yAxes:[{
+          ticks:{
+            min:0
+          }
+        }]
+      },
+      legend:{
+        position:'bottom'
+      }
     };
   }
 

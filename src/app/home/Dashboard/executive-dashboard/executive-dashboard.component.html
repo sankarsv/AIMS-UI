@@ -20,21 +20,29 @@
 
 <div class="loader" *ngIf="!HasDataLoaded"></div>
 <p class="load" *ngIf="!HasDataLoaded">Loading . . .</p>
-<div class="gridDiv1">
+<div class="gridDiv1" *ngIf="HasDataLoaded">
     <canvas baseChart [datasets]="barChartData" [labels]="mbarChartLabels" [options]="barChartOptions" [colors]="barChartColors" [legend]="barChartLegend" [chartType]="barChartType" (chartClick)="chartClicked($event)"></canvas>
 </div>
 <div class="gridDiv2" *ngIf="HasDataLoaded">
-    <app-exp-doughnutchart #SrJrChart [SrJrRatios]="SrJrRatios" [ColorValues]="ColorValues"></app-exp-doughnutchart>
+    <app-dash-board-location-wise-chart #LocationWiseChart [LocationWiseCounts]="LocationWiseDetails" [ColorValues]="ColorValues">
+    </app-dash-board-location-wise-chart>
 </div>
 <div class="gridDiv3" *ngIf="HasDataLoaded">
-    <app-billable-piechart #BillableChart [BillingDetails]="BillingDetails" [ColorValues]="ColorValues">
-    </app-billable-piechart>
+    <app-dash-board-billable-tyep-chart #BillablTypeChart [BillableTypeCounts]="BillingTypeDetails" [ColorValues]="ColorValues"></app-dash-board-billable-tyep-chart>
 </div>
 <div class="gridDiv4" *ngIf="HasDataLoaded">
     <app-trainee-barchart #TraineeChart [TraineeDetails]="TraineeDetails" [ColorValues]="ColorValues">
     </app-trainee-barchart>
 </div>
+
 <div class="gridDiv5" *ngIf="HasDataLoaded">
+    <app-billable-piechart #BillableChart [BillingDetails]="BillingDetails" [ColorValues]="ColorValues">
+    </app-billable-piechart>
+</div>
+<div class="gridDiv6" *ngIf="HasDataLoaded">
+    <app-exp-doughnutchart #SrJrChart [SrJrRatios]="SrJrRatios" [ColorValues]="ColorValues"></app-exp-doughnutchart>
+</div>
+<div class="gridDiv7" *ngIf="HasDataLoaded">
     <app-ba-horizontalbarchart #BaChart [BACounts]="BACounts" [ColorValues]="ColorValues"></app-ba-horizontalbarchart>
 </div>
 
