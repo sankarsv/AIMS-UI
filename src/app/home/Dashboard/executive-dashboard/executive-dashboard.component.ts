@@ -383,7 +383,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   }
   public chartHovered(): void { }
 
-  gaugeType = "semi"; //full, arch  
+  gaugeType = "full"; //full, arch  
   gaugeValue = 28.3;
   gaugeLabel = "Speed";
   gaugeAppendText = "km/hr";

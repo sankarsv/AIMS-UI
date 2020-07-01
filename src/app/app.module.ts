@@ -19,6 +19,7 @@ import { HttpInterceptorService } from "services/http-interceptor.service";
 import { LoadingSpinnerComponent } from "./loading-spinner/loading-spinner/loading-spinner.component";
 import { ChartsModule } from "ng2-charts";
 import { EmployeeService } from "services/employee.service";
+import { NgxGaugeModule } from 'ngx-gauge';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, LoadingSpinnerComponent],
@@ -33,6 +34,7 @@ import { EmployeeService } from "services/employee.service";
     AppRoutingModule,
     ReactiveFormsModule,
     BillingRoutingModule,
+    NgxGaugeModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: function tokenGetter() {
