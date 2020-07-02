@@ -2,7 +2,7 @@ import { Component, OnInit ,ViewChild} from '@angular/core';
 import {Role} from '../../Roles/roles';
 import {User} from '../../Roles/user';
 import { JwtService } from 'services/jwt.service';
-import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { RouterModule } from '@angular/router';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from 'services/user.service';
 

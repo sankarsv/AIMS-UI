@@ -47,6 +47,8 @@
 </div>
 
 <div class="gridDiv6" *ngIf="HasDataLoaded">
-    <ngx-gauge size=80 [type]="gaugeType" [value]="gaugeValue" [label]="gaugeLabel" [append]="gaugeAppendText">
+    <ngx-gauge [type]="gaugeType" [value]="gaugeValue" [label]="gaugeLabel" [append]="gaugeAppendText">
     </ngx-gauge>
 </div>
+<ngx-charts-gauge [view]="view" [scheme]="colorScheme" [results]="single" [min]="0" [max]="100" [angleSpan]="180" [startAngle]="0" [units]="'alerts'" [bigSegments]="10" [smallSegments]="5" (select)="onSelect($event)">
+</ngx-charts-gauge>

@@ -20,6 +20,7 @@ import { LoadingSpinnerComponent } from "./loading-spinner/loading-spinner/loadi
 import { ChartsModule } from "ng2-charts";
 import { EmployeeService } from "services/employee.service";
 import { NgxGaugeModule } from 'ngx-gauge';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, LoadingSpinnerComponent],
@@ -35,6 +36,7 @@ import { NgxGaugeModule } from 'ngx-gauge';
     ReactiveFormsModule,
     BillingRoutingModule,
     NgxGaugeModule,
+    NgxChartsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: function tokenGetter() {
