@@ -2,7 +2,7 @@ import {
   Component,
   OnInit,
   ViewChild,
-  Renderer,
+  Renderer2,
 } from "@angular/core";
 import { forkJoin } from "rxjs";
 import { httpService } from "../../../../services/httpService";
@@ -51,7 +51,33 @@ export class ExecutiveDashboardComponent implements OnInit {
   @ViewChild("LocationWiseChart") LocationWiseChart: DashBoardLocationWiseChartComponent;
   @ViewChild("BillablTypeChart") BillableTypeChart: DashBoardBillableTyepChartComponent;
   public ColorValues: string[] = ['#66CDAA', '#87CEEB', '#20B2AA', '#E9967A', '#DB7093', '#DC143C', '#FF69B4', '#FFA500', '#FF4500', '#FF0000'];
-
+  public gaugeType = "full"; //full, arch  
+  public gaugeValue = 30;
+  public gaugeLabel = "Speed";
+  public gaugeAppendText = "km/hr";
+  public thresholdConfig = {
+    '0': { color: 'green' },
+    '40': { color: 'orange' },
+    '75.5': { color: 'red' }
+  };
+  view: any[] = [700, 400];
+  single = [
+    {
+      name: "Germany",
+      value: 8940000
+    },
+    {
+      name: "USA",
+      value: 5000000
+    },
+    {
+      name: "France",
+      value: 7200000
+    }
+  ];
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C']
+  };
   constructor(
     public httpService: httpService,
     public router: Router,
@@ -296,8 +322,8 @@ export class ExecutiveDashboardComponent implements OnInit {
         text: 'Head Count',
         display: true
       },
-      legend:{
-        position:'bottom'
+      legend: {
+        position: 'bottom'
       }
     };
   }
@@ -383,9 +409,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   }
   public chartHovered(): void { }
 
-  gaugeType = "semi"; //full, arch  
-  gaugeValue = 28.3;
-  gaugeLabel = "Speed";
-  gaugeAppendText = "km/hr";
-
+  onSelect(event) {
+    console.log(event);
+  }
 }

@@ -17,7 +17,7 @@ import { ProjectMonitoringComponent } from "./Dashboard/project-monitoring/proje
 import { NgCircleProgressModule } from "ng-circle-progress";
 //import { DashboardResolver } from './Dashboard/executive-dashboard/executive.dashboard.resolver';
 
-import { Ng2SmartTableModule } from "ngx-smart-table";
+import { Ng2SmartTableModule } from "ng2-smart-table";
 import { SearchComponent } from "./Employee/Employee-head/search/search.component";
 import { UploadComponent } from "./Employee/employee-head/upload/upload.component";
 import { DownloadComponent } from "./Employee/employee-head/download/download.component";
@@ -36,6 +36,8 @@ import { BillingManagementMainComponent } from './Dashboard/billing-management/b
 import { ClarityCompareComponent } from './Dashboard/billing-management/clarity-compare/clarity-compare.component';
 import { DashBoardBillableTyepChartComponent } from './Dashboard/executive-dashboard/charts-dashboard/dash-board-billable-tyep-chart/dash-board-billable-tyep-chart.component';
 import { DashBoardLocationWiseChartComponent } from './Dashboard/executive-dashboard/charts-dashboard/dash-board-location-wise-chart/dash-board-location-wise-chart.component';
+import { NgxGaugeModule } from 'ngx-gauge';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 @NgModule({
   imports: [
@@ -45,6 +47,8 @@ import { DashBoardLocationWiseChartComponent } from './Dashboard/executive-dashb
     Ng2SmartTableModule,
     ReactiveFormsModule,
     ChartsModule,
+    NgxGaugeModule,
+    NgxChartsModule,
     NgCircleProgressModule.forRoot({}),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
