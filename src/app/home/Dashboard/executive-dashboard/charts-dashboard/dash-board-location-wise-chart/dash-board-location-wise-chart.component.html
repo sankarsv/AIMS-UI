@@ -1,5 +1,5 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<div style="display: block;">
-    <canvas #Chart baseChart [chartType]="chartType" [datasets]="chartDatasets" [labels]="chartLabels" [legend]="true" [options]="chartOptions" (chartHover)="chartHovered($event)">
+<div>
+    <canvas height="40vh" width="80vh" #Chart baseChart [chartType]="chartType" [datasets]="chartDatasets" [labels]="chartLabels" [legend]="true" [options]="chartOptions" (chartHover)="chartHovered($event)">
   </canvas>
 </div>

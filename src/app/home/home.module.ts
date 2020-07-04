@@ -80,7 +80,7 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
     BillingManagementMainComponent,
     ClarityCompareComponent,
     DashBoardBillableTyepChartComponent,
-    DashBoardLocationWiseChartComponent,
+    DashBoardLocationWiseChartComponent
   ],
   //providers: [FileUploaderService, DashboardResolver],
 
