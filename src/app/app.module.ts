@@ -21,6 +21,8 @@ import { ChartsModule } from "ng2-charts";
 import { EmployeeService } from "services/employee.service";
 import { NgxGaugeModule } from 'ngx-gauge';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import {DashBoardServiceInvoker} from './home/Dashboard/executive-dashboard/DashBoardServiceInvoker';
+import {DashBoardDataMapper} from './home/Dashboard/executive-dashboard/DashBoardDataMapper';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, LoadingSpinnerComponent],
@@ -51,6 +53,8 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
     UserService,
     AuthGuardService,
     httpService,
+    DashBoardDataMapper,
+    DashBoardServiceInvoker,
     EmployeeService,
     {
       provide: HTTP_INTERCEPTORS,

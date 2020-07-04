@@ -349,17 +349,12 @@ p {
 }
 
 .gridDiv1 {
-    width: 48%;
-    height: 25%;
     float: left;
     position: relative;
-    border: blue;
-    border-radius: 6px;
 }
 
 .gridDiv2 {
-    width: 48%;
-    height: 25%;
+    width: 100%;
     float: right;
     position: relative;
     border: blue;
@@ -367,7 +362,7 @@ p {
 }
 
 .gridDiv3 {
-    width: 48%;
+    width: 50%;
     height: 25%;
     float: left;
     position: relative;
@@ -376,7 +371,7 @@ p {
 }
 
 .gridDiv4 {
-    width: 48%;
+    width: 50%;
     height: 25%;
     float: right;
     border: blue;
@@ -384,7 +379,7 @@ p {
 }
 
 .gridDiv5 {
-    width: 48%;
+    width: 50%;
     height: 25%;
     float: left;
     position: relative;
@@ -393,16 +388,12 @@ p {
 }
 
 .gridDiv6 {
-    width: 48%;
-    height: 25%;
     float: right;
     border: blue;
     border-radius: 6px;
 }
 
 .gridDiv7 {
-    width: 48%;
-    height: 25%;
     float: left;
     position: relative;
     border: blue;
