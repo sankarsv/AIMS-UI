@@ -12,70 +12,85 @@
 </div>
 <div class="loader" *ngIf="!HasDataLoaded"></div>
 <p class="load" *ngIf="!HasDataLoaded">Loading . . .</p>
-
-<div class="gridDiv1" *ngIf="HasDataLoaded&&!DisplayBRMData">
-    <ngx-charts-bar-vertical-stacked [showDataLabel]="true" [view]="[700,400]" [scheme]="colorScheme" [results]="dashBoardMapper.HeadCountMappingData" [gradient]="true" [xAxis]="true" [yAxis]="true" [showYAxisLabel]="true" [yAxisLabel]="'Head Count Data'"
-        [barPadding]="100" (select)="onSelect($event)">
-    </ngx-charts-bar-vertical-stacked>
-</div>
-<div class="gridDiv1" *ngIf="HasDataLoaded&&DisplayBRMData">
-    <ngx-charts-bar-vertical [view]="[700,400]" [scheme]="colorScheme" [results]="dashBoardMapper.HeadCountMappingData" [gradient]="true" [xAxis]="true" [yAxis]="true" [showGridLines]="true" [showYAxisLabel]="true" [yAxisLabel]="'Head Count Data'" [showDataLabel]="true"
-        [barPadding]="300" (select)="onSelect($event)">
-    </ngx-charts-bar-vertical>
-</div>
-<div class="gridDiv2" *ngIf="HasDataLoaded">
-    <canvas baseChart height="80px" [chartType]="'bar'" [datasets]="dashBoardMapper.LocationWiseData.Values()" [labels]="locationChartLabels" [legend]="true" [options]="locationChartOptions" (chartHover)="chartHovered($event)">
-    </canvas>
-</div>
-
-<div class="gridDiv3" *ngIf="HasDataLoaded&&!DisplayBRMData">
-    <ngx-charts-bar-vertical-2d style="height:225px;" [groupPadding]="10" [showDataLabel]="true" [scheme]="colorScheme" [results]="dashBoardMapper.TraineeData" [gradient]="false" [xAxis]="true" [yAxis]="true" [showYAxisLabel]="true" [yAxisLabel]="'Trainee Details'"
-        (select)="onSelect($event)">
-    </ngx-charts-bar-vertical-2d>
-</div>
-<div class="gridDiv3" *ngIf="HasDataLoaded&&DisplayBRMData">
-    <ngx-charts-advanced-pie-chart [view]="[500,200]" [scheme]="colorScheme" [results]="dashBoardMapper.TraineeData" [gradient]="true">
-    </ngx-charts-advanced-pie-chart>
-</div>
-<div class="gridDiv4" *ngIf="HasDataLoaded&&!DisplayBRMData">
-    <ngx-charts-bar-vertical-2d style="height:225px;" [groupPadding]="10" [showDataLabel]="true" [scheme]="colorScheme" [results]="dashBoardMapper.BillableTypeData" [gradient]="false" [xAxis]="true" [yAxis]="true" [showYAxisLabel]="true" [yAxisLabel]="'Billable Type Data'"
-        (select)="onSelect($event)">
-    </ngx-charts-bar-vertical-2d>
-</div>
-<div class="gridDiv4" *ngIf="HasDataLoaded&&DisplayBRMData">
-    <ngx-charts-bar-vertical style="height:225px;" [scheme]="colorScheme" [results]="dashBoardMapper.BillableTypeData" [gradient]="true" [xAxis]="true" [yAxis]="true" [legend]="false" [showXAxisLabel]="true" [showGridLines]="true" [showYAxisLabel]="true"
-        [yAxisLabel]="'Head Count Data'" [showDataLabel]="true" [yScaleMax]="100" [barPadding]="100" (select)="onSelect($event)">
-    </ngx-charts-bar-vertical>
-</div>
-<div class="gridDiv5" *ngIf="HasDataLoaded&&!DisplayBRMData">
-    <div style="float: left; padding-left: 30px;">
-        <ngx-charts-pie-chart style="height:300px;" [scheme]="colorScheme" [results]="dashBoardMapper.BillableData" [legend]="true" [legendTitle]="'Billable Count'" [doughnut]="true" [legendPosition]="'bottom'">
-        </ngx-charts-pie-chart>
+<div class="bounds" *ngIf="HasDataLoaded" fxLayoutGap="10px">
+    <div class="content" fxLayout="row" fxLayout.xs="column" fxFlexFill fxLayoutGap="10px" fxLayoutGap.xs="0">
+        <div fxFlex="50" class="sec1" fxFlex.xs="200">
+            <div *ngIf=" HasDataLoaded&&!DisplayBRMData ">
+                <ngx-charts-bar-vertical-stacked [showDataLabel]="true " [scheme]="colorScheme " [results]="dashBoardMapper.HeadCountMappingData " [gradient]="true " [xAxis]="true " [yAxis]="true " [showYAxisLabel]="true " [yAxisLabel]="
+        'Head Count Data' " [barPadding]="100 " [yScaleMax]="100" (select)="onSelect($event) ">
+                </ngx-charts-bar-vertical-stacked>
+            </div>
+            <div *ngIf="HasDataLoaded&&DisplayBRMData ">
+                <ngx-charts-bar-vertical [scheme]="colorScheme " [results]="dashBoardMapper.HeadCountMappingData " [gradient]="true " [xAxis]="true " [yAxis]="true " [showGridLines]="true " [showYAxisLabel]="true " [yAxisLabel]="
+        'Head Count Data' " [showDataLabel]="true " [yScaleMax]="100" [barPadding]="300 " (select)="onSelect($event) ">
+                </ngx-charts-bar-vertical>
+            </div>
+        </div>
+        <div fxFlex="50" class="sec2" *ngIf="HasDataLoaded">
+            <canvas baseChart height="200px " [chartType]=" 'bar' " [datasets]="dashBoardMapper.LocationWiseData.Values() " [labels]="locationChartLabels " [legend]="true " [options]="locationChartOptions " (chartHover)="chartHovered($event) ">
+            </canvas>
+        </div>
     </div>
-    <div style="float: right;">
-        <ngx-charts-pie-chart style="height:300px;" [scheme]="colorScheme" [results]="dashBoardMapper.NonBillableData" [legend]="true" [legendTitle]="'Non Billable Count'" [doughnut]="true" [legendPosition]="'bottom'">
-        </ngx-charts-pie-chart>
+    <div class="content2" fxLayout="row" fxLayout.xs="column" fxFlexFill fxLayoutGap="10px" fxLayoutGap.xs="0">
+        <div fxFlex="50" class="sec1" fxFlex.xs="200">
+            <div *ngIf=" HasDataLoaded&&!DisplayBRMData ">
+                <ngx-charts-bar-vertical-2d [groupPadding]="10 " [showDataLabel]="true " [scheme]="colorScheme " [results]="dashBoardMapper.TraineeData " [gradient]="false " [xAxis]="true " [yAxis]="true " [showYAxisLabel]="true
+                " [yAxisLabel]=" 'Trainee Details' " (select)="onSelect($event) ">
+                </ngx-charts-bar-vertical-2d>
+            </div>
+            <div *ngIf="HasDataLoaded&&DisplayBRMData ">
+                <ngx-charts-bar-vertical [scheme]="colorScheme " [results]="dashBoardMapper.TraineeData " [gradient]="true " [xAxis]="true " [yAxis]="true " [legend]="false " [showXAxisLabel]="true " [showGridLines]="true" [showYAxisLabel]="true " [yAxisLabel]=" 'Head Count Data' "
+                    [showDataLabel]="true " [yScaleMax]="100 " [barPadding]="100 ">
+                </ngx-charts-bar-vertical>
+            </div>
+        </div>
+        <div fxFlex="50" class="sec2">
+            <div *ngIf=" HasDataLoaded&&!DisplayBRMData ">
+                <ngx-charts-bar-vertical-2d [groupPadding]="10 " [showDataLabel]="true " [scheme]="colorScheme " [results]="dashBoardMapper.BillableTypeData " [gradient]="false " [xAxis]="true " [yAxis]="true " [showYAxisLabel]="true" [yAxisLabel]=" 'Billable Type Data' "
+                    (select)="onSelect($event) ">
+                </ngx-charts-bar-vertical-2d>
+            </div>
+            <div *ngIf="HasDataLoaded&&DisplayBRMData ">
+                <ngx-charts-bar-vertical [scheme]="colorScheme " [results]="dashBoardMapper.BillableTypeData " [gradient]="true " [xAxis]="true " [yAxis]="true " [legend]="false " [showXAxisLabel]="true " [showGridLines]="true" [showYAxisLabel]="true " [yAxisLabel]=" 'Head Count Data' "
+                    [showDataLabel]="true " [yScaleMax]="100 " [barPadding]="100 " (select)="onSelect($event) ">
+                </ngx-charts-bar-vertical>
+            </div>
+        </div>
     </div>
-</div>
-<div class="gridDiv5" *ngIf="HasDataLoaded&&DisplayBRMData">
-    <div style="float: left; padding-top: 5px;">
-        <ngx-charts-pie-chart style="height:55px;" [scheme]="colorScheme" [results]="dashBoardMapper.BillableData" [legend]="true" [legendTitle]="'Billable Details'" [doughnut]="true" [legendPosition]="'right'">
-        </ngx-charts-pie-chart>
+    <div class="content3" fxLayout="row" fxLayout.xs="column" fxFlexFill fxLayoutGap="10px" fxLayoutGap.xs="0">
+        <div fxFlex="50" class="sec1" fxFlex.xs="200">
+            <div *ngIf="HasDataLoaded&&!DisplayBRMData ">
+                <ngx-charts-bar-vertical-2d [groupPadding]="10 " [showDataLabel]="true " [scheme]="colorScheme " [results]="dashBoardMapper.BillableData" [gradient]="false " [xAxis]="true " [yAxis]="true " [showYAxisLabel]="true" [yAxisLabel]=" 'Billable Data' " (select)="onSelect($event) ">
+                </ngx-charts-bar-vertical-2d>
+            </div>
+            <div *ngIf="HasDataLoaded&&DisplayBRMData ">
+                <ngx-charts-pie-chart [scheme]="colorScheme " [results]="dashBoardMapper.BillableData " [legend]="true " [legendTitle]=" 'Billable Details' " [legendPosition]=" 'right' ">
+                </ngx-charts-pie-chart>
+            </div>
+        </div>
+        <div fxFlex="50" class="sec2" fxFlex.xs="200">
+            <div *ngIf="HasDataLoaded&&!DisplayBRMData ">
+                <ngx-charts-bar-horizontal-2d [scheme]="colorScheme " [xAxis]="true " [yAxis]="true " [results]="dashBoardMapper.SeniorJuniorData " [gradient]="true " [showYAxisLabel]="true " [yAxisLabel]=" 'Senior Junior Ratio'
+            " (select)="onSelect($event) ">
+                </ngx-charts-bar-horizontal-2d>
+            </div>
+            <div *ngIf="HasDataLoaded&&DisplayBRMData ">
+                <ngx-charts-bar-horizontal [scheme]="colorScheme " [xAxis]="true " [yAxis]="true " [results]="dashBoardMapper.SeniorJuniorData " [gradient]="true " [showYAxisLabel]="true " [yAxisLabel]=" 'Senior Junior Ratio' " (select)="onSelect($event) ">
+                </ngx-charts-bar-horizontal>
+            </div>
+        </div>
     </div>
-</div>
-<div class="gridDiv6" *ngIf="HasDataLoaded&&!DisplayBRMData">
-    <ngx-charts-bar-horizontal-2d style="height:225px;" [scheme]="colorScheme" [xAxis]="true" [yAxis]="true" [results]="dashBoardMapper.SeniorJuniorData" [gradient]="true" [showYAxisLabel]="true" [yAxisLabel]="'Senior Junior Ratio'" (select)="onSelect($event)">
-    </ngx-charts-bar-horizontal-2d>
-</div>
-<div class="gridDiv6" *ngIf="HasDataLoaded&&DisplayBRMData">
-    <ngx-charts-bar-horizontal style="height:225px;" [scheme]="colorScheme" [xAxis]="true" [yAxis]="true" [results]="dashBoardMapper.SeniorJuniorData" [gradient]="true" [showYAxisLabel]="true" [yAxisLabel]="'Senior Junior Ratio'" (select)="onSelect($event)">
-    </ngx-charts-bar-horizontal>
-</div>
-<div class="gridDiv7" *ngIf="HasDataLoaded&&!DisplayBRMData">
-    <ngx-charts-bar-horizontal style="height:225px;" [showDataLabel]="true" [scheme]="colorScheme" [results]="dashBoardMapper.BADData" [gradient]="true" [xAxis]="true" [yAxis]="true" [showYAxisLabel]="true" [yAxisLabel]="'Business Associate Details'" (select)="onSelect($event)">
-    </ngx-charts-bar-horizontal>
-</div>
-<div class="gridDiv7" *ngIf="HasDataLoaded&&DisplayBRMData">
-    <ngx-gauge [type]="'full'" [value]="dashBoardMapper.BADData[0].value" [label]="'BA Count'">
-    </ngx-gauge>
+    <div class="content3" fxLayout="row" fxLayout.xs="column" fxFlexFill fxLayoutGap="10px" fxLayoutGap.xs="0">
+        <div fxFlex="50" class="sec3" fxFlex.xs="200">
+            <div *ngIf="HasDataLoaded&&!DisplayBRMData ">
+                <ngx-charts-bar-horizontal [showDataLabel]="true " [scheme]="colorScheme " [results]="dashBoardMapper.BADData " [gradient]="true " [xAxis]="true " [yAxis]="true " [showYAxisLabel]="true " [yAxisLabel]="
+        'Business Associate Details' " (select)="onSelect($event) ">
+                </ngx-charts-bar-horizontal>
+            </div>
+            <div *ngIf="HasDataLoaded&&DisplayBRMData ">
+                <ngx-gauge [type]=" 'full' " [value]="dashBoardMapper.BADData[0].value " [label]=" 'BA Count' ">
+                </ngx-gauge>
+            </div>
+        </div>
+    </div>
 </div>

@@ -258,10 +258,10 @@ export class DashBoardDataMapper {
         this.InitializeAccountWiseLocationWiseChart();
         this.BillingDetails.Values().forEach(billingDetailsLocal => {
             this.BillableData.push({
-                name: billingDetailsLocal.BRMName, value: billingDetailsLocal.BillCount
-            });
-            this.NonBillableData.push({
-                name: billingDetailsLocal.BRMName, value: billingDetailsLocal.NBillCount
+                name: billingDetailsLocal.BRMName,
+                series:[
+                    { name: "Billable Count", value: billingDetailsLocal.BillCount },
+                    { name: "Non-Billable Count", value: billingDetailsLocal.NBillCount } ] 
             });
         });
         this.TraineeDetails.Values().forEach(traineeDetailLocal => {
@@ -285,10 +285,10 @@ export class DashBoardDataMapper {
         this.TraineeData = [];
         this.HeadCountMappingData.push({ name: "OffShore Total", value: this.HeadCounts.Item(selectedBRM).OffPerc });
         this.HeadCountMappingData.push({ name: "OnShore Total", value: this.HeadCounts.Item(selectedBRM).OnshorePerc });
-        this.SeniorJuniorData.push({ name: "Onshore Senior Count", value: this.SrJrRatios.Item(selectedBRM).OnSrCountTot });
-        this.SeniorJuniorData.push({ name: "Onshore Junior Count", value: this.SrJrRatios.Item(selectedBRM).OnJrCountTot });
-        this.SeniorJuniorData.push({ name: "Offshore Senior Count", value: this.SrJrRatios.Item(selectedBRM).OffSrCountPerc });
-        this.SeniorJuniorData.push({ name: "Offshore Junior Count", value: this.SrJrRatios.Item(selectedBRM).OffJrCountPerc });
+        this.SeniorJuniorData.push({ name: "Onshore Sr Count", value: this.SrJrRatios.Item(selectedBRM).OnSrCountTot });
+        this.SeniorJuniorData.push({ name: "Onshore Jr Count", value: this.SrJrRatios.Item(selectedBRM).OnJrCountTot });
+        this.SeniorJuniorData.push({ name: "Offshore Sr Count", value: this.SrJrRatios.Item(selectedBRM).OffSrCountPerc });
+        this.SeniorJuniorData.push({ name: "Offshore Jr Count", value: this.SrJrRatios.Item(selectedBRM).OffJrCountPerc });
         this.BADData.push({ name: "BA Data", value: this.BACounts.Item(selectedBRM).BACountPerc });
         this.BillableTypeData.push({ name: "Onshore FP Count", value: this.BillingTypeDetails.Item(selectedBRM).OnFPTotalPerc });
         this.BillableTypeData.push({ name: "Onshore TM Count", value: this.BillingTypeDetails.Item(selectedBRM).OnTMTotalPerc });

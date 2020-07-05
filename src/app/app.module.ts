@@ -23,6 +23,7 @@ import { NgxGaugeModule } from 'ngx-gauge';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {DashBoardServiceInvoker} from './home/Dashboard/executive-dashboard/DashBoardServiceInvoker';
 import {DashBoardDataMapper} from './home/Dashboard/executive-dashboard/DashBoardDataMapper';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, LoadingSpinnerComponent],
@@ -39,6 +40,7 @@ import {DashBoardDataMapper} from './home/Dashboard/executive-dashboard/DashBoar
     BillingRoutingModule,
     NgxGaugeModule,
     NgxChartsModule,
+    FlexLayoutModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: function tokenGetter() {

@@ -484,3 +484,48 @@ body {
     height: 100%;
     min-height: 100%;
 }
+
+.bounds {
+    background-color: #84CEEB;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.sec1 {
+    background: white;
+    color: white;
+    width: auto
+}
+
+.sec2 {
+    background: white;
+    color: blue;
+}
+
+.sec3 {
+    background: white;
+    color: black;
+}
+
+.sec1,
+.sec2,
+.sec3 {
+    padding-top: 20px;
+    text-align: center
+}
+
+.content {
+    min-width: 1275px;
+}
+
+.content2 {
+    min-width: 1275px;
+    padding-top: 10px;
+}
+
+.content3 {
+    min-width: 500px;
+    padding-top: 10px;
+}
