@@ -1,32 +1,118 @@
-[
-  {
-    "brmName": "Akkaiah",
-    "brnNumber": "1587565",
-    "baCountTot": "20",
-    "baCountPerc": "2"
-  },
-  {
-    "brmName": "Narayanan",
-    "brnNumber": "1587566",
-    "baCountTot": "25",
-    "baCountPerc": "5"
-  },
-  {
-    "brmName": "Anand_S",
-    "brnNumber": "1587567",
-    "baCountTot": "18",
-    "baCountPerc": "2"
-  },
-  {
-    "brmName": "Ganesh",
-    "brnNumber": "1587567",
-    "baCountTot": "25",
-    "baCountPerc": "2"
-  },
-  {
-    "brmName": "Ashok",
-    "brnNumber": "1587567",
-    "baCountTot": "60",
-    "baCountPerc": "2"
-  }
-]
+[{
+	"brmNo": "321667",
+	"brmName": "Bhooshan",
+	"baCountTot": "24.00",
+	"baCountPerc": "8.14",
+	"baCountTotOn": "10.00",
+	"baCountTotOff": "14.00",
+	"baCountPerOn": "7.46",
+	"baCountPerOff": "8.70"
+}, {
+	"brmNo": "321668",
+	"brmName": "Akkaiah",
+	"baCountTot": "18.00",
+	"baCountPerc": "4.41",
+	"baCountTotOn": "7.00",
+	"baCountTotOff": "11.00",
+	"baCountPerOn": "4.86",
+	"baCountPerOff": "4.17"
+}, {
+	"brmNo": "321689",
+	"brmName": "Prabhjeev Narang",
+	"baCountTot": "2.00",
+	"baCountPerc": "1.92",
+	"baCountTotOn": "2.00",
+	"baCountTotOff": "0.00",
+	"baCountPerOn": "1.92",
+	"baCountPerOff": "0.00"
+}, {
+	"brmNo": "321690",
+	"brmName": "Simson",
+	"baCountTot": "10.00",
+	"baCountPerc": "3.92",
+	"baCountTotOn": "8.00",
+	"baCountTotOff": "2.00",
+	"baCountPerOn": "6.90",
+	"baCountPerOff": "1.44"
+}, {
+	"brmNo": "582755",
+	"brmName": "Andi",
+	"baCountTot": "18.00",
+	"baCountPerc": "4.10",
+	"baCountTotOn": "10.00",
+	"baCountTotOff": "8.00",
+	"baCountPerOn": "5.71",
+	"baCountPerOff": "3.03"
+}, {
+	"brmNo": "756589",
+	"brmName": "Dharma",
+	"baCountTot": "15.00",
+	"baCountPerc": "8.77",
+	"baCountTotOn": "10.00",
+	"baCountTotOff": "5.00",
+	"baCountPerOn": "13.89",
+	"baCountPerOff": "5.05"
+}, {
+	"brmNo": "756588",
+	"brmName": "Samarth",
+	"baCountTot": "21.00",
+	"baCountPerc": "11.80",
+	"baCountTotOn": "13.00",
+	"baCountTotOff": "8.00",
+	"baCountPerOn": "17.11",
+	"baCountPerOff": "7.84"
+}, {
+	"brmNo": "100000",
+	"brmName": "Vaibhav",
+	"baCountTot": "6.00",
+	"baCountPerc": "30.00",
+	"baCountTotOn": "6.00",
+	"baCountTotOff": "0.00",
+	"baCountPerOn": "30.00",
+	"baCountPerOff": "0.00"
+}, {
+	"brmNo": "100001",
+	"brmName": "Ashu",
+	"baCountTot": "0.00",
+	"baCountPerc": "0.00",
+	"baCountTotOn": "0.00",
+	"baCountTotOff": "0.00",
+	"baCountPerOn": "0.00",
+	"baCountPerOff": "0.00"
+}, {
+	"brmNo": "100002",
+	"brmName": "Rama",
+	"baCountTot": "0.00",
+	"baCountPerc": "0.00",
+	"baCountTotOn": "0.00",
+	"baCountTotOff": "0.00",
+	"baCountPerOn": "0.00",
+	"baCountPerOff": "0.00"
+}, {
+	"brmNo": "100003",
+	"brmName": "Shama",
+	"baCountTot": "0.00",
+	"baCountPerc": "0.00",
+	"baCountTotOn": "0.00",
+	"baCountTotOff": "0.00",
+	"baCountPerOn": "0.00",
+	"baCountPerOff": "0.00"
+}, {
+	"brmNo": "100004",
+	"brmName": "Pooja",
+	"baCountTot": "0.00",
+	"baCountPerc": "0.00",
+	"baCountTotOn": "0.00",
+	"baCountTotOff": "0.00",
+	"baCountPerOn": "0.00",
+	"baCountPerOff": "0.00"
+}, {
+	"brmNo": "100005",
+	"brmName": "Sakthi",
+	"baCountTot": "1.00",
+	"baCountPerc": "0.79",
+	"baCountTotOn": "0.00",
+	"baCountTotOff": "1.00",
+	"baCountPerOn": "0.00",
+	"baCountPerOff": "0.79"
+}]
