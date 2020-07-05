@@ -28,6 +28,7 @@ export class DashBoardDataMapper {
     MapDashBoardData() {
         this.dashBoardService.InvokeDashBoardService();
         this.dashBoardService.OnDataFetched.subscribe(res => {
+            this.LoadBRMList();
             this.initializeView(res);
             this.OnDataInitialized.emit();
         });
@@ -59,7 +60,7 @@ export class DashBoardDataMapper {
         billingTypeDetails.map(billingType => {
             let billingTypeLocal = {
                 BRMId: billingType["brmNo"],
-                BRMName: billingType["brmName"],
+                BRMName: this.BRMList.ContainsKey(billingType["brmNo"]) ? this.BRMList.Item(billingType["brmNo"]) : billingType["brmName"],
                 FPTotal: Number(billingType["fpCountTotal"]),
                 TMTotal: Number(billingType["tmCountTotal"]),
                 OnFPTotal: Number(billingType["onFPCountTotal"]),
@@ -91,7 +92,7 @@ export class DashBoardDataMapper {
             })
             let locationWiseDetailsLocal = {
                 BRMId: locationWiseDetail["brmId"],
-                BRMName: locationWiseDetail["brmName"],
+                BRMName: this.BRMList.ContainsKey(locationWiseDetail["brmNo"]) ? this.BRMList.Item(locationWiseDetail["brmNo"]) : locationWiseDetail["brmName"],
                 LocationWise: LocationWise
             }
             this.LocationWiseDetails.Add(locationWiseDetailsLocal.BRMName, locationWiseDetailsLocal);
@@ -102,8 +103,8 @@ export class DashBoardDataMapper {
         this.BillingDetails = new Dictionary<any>();
         billingDetails.map((billingDetail) => {
             let billingDetailsLocal = {
-                BRMName: billingDetail["brmName"],
-                BRMNumber: billingDetail["brnNumber"],
+                BRMName: this.BRMList.ContainsKey(billingDetail["brmNo"]) ? this.BRMList.Item(billingDetail["brmNo"]) : billingDetail["brmName"],
+                BRMId: billingDetail["brmNo"],
                 BillCount: Number(billingDetail["billableCountTot"]),
                 NBillCount: Number(billingDetail["nbCountTot"]),
                 BillPerc: Number(billingDetail["billableCountPerc"]),
@@ -121,14 +122,16 @@ export class DashBoardDataMapper {
         this.SrJrRatios = new Dictionary<any>();
         srjrRatios.map((srjrRatio) => {
             let srjrRatioLocal = {
-                BRMName: srjrRatio["brmName"],
-                BRMNumber: srjrRatio["brnNumber"],
+                BRMName: this.BRMList.ContainsKey(srjrRatio["brmNo"]) ? this.BRMList.Item(srjrRatio["brmNo"]) : srjrRatio["brmName"],
+                BRMId: srjrRatio["brmNo"],
                 SrCount: Number(srjrRatio["srCountTot"]),
                 JrCount: Number(srjrRatio["jrCountTot"]),
                 SrCountPerc: Number(srjrRatio["srCountPerc"]),
                 JrCountPerc: Number(srjrRatio["jrCountPerc"]),
                 OnSrCountTot: Number(srjrRatio["onsrCountTot"]),
                 OnJrCountTot: Number(srjrRatio["onjrCountTot"]),
+                OnSrCountPerc: Number(srjrRatio["onsrCountPerc"]),
+                OnJrCountPerc: Number(srjrRatio["onjrCountPerc"]),
                 OffSrCountPerc: Number(srjrRatio["offsrCountPerc"]),
                 OffJrCountPerc: Number(srjrRatio["offjrCountPerc"]),
             };
@@ -141,8 +144,8 @@ export class DashBoardDataMapper {
         this.HeadCountMappingData = [];
         headCounts.map((headCount) => {
             let headCountLocal = {
-                BRMName: headCount["brmName"],
-                BRMNumber: headCount["brnNumber"],
+                BRMName: this.BRMList.ContainsKey(headCount["brmNo"]) ? this.BRMList.Item(headCount["brmNo"]) : headCount["brmName"],
+                BRMId: headCount["brmNo"],
                 OffTotal: Number(headCount["offTot"]),
                 OnShoreTotal: Number(headCount["onsiteTot"]),
                 TotalCount: Number(headCount["totalCnt"]),
@@ -157,8 +160,8 @@ export class DashBoardDataMapper {
         this.TraineeDetails = new Dictionary<any>();
         traineeDetails.map((traineeDetail) => {
             let traineeDetailLocal = {
-                BRMName: traineeDetail["brmName"],
-                BRMNumber: traineeDetail["brnNumber"],
+                BRMName: this.BRMList.ContainsKey(traineeDetail["brmNo"]) ? this.BRMList.Item(traineeDetail["brmNo"]) : traineeDetail["brmName"],
+                BRMId: traineeDetail["brmNo"],
                 TraineeCountTotal: Number(traineeDetail["trCountTot"]),
                 TraineeCountPer: Number(traineeDetail["trCountPerc"]),
                 OnTraineeCount: Number(traineeDetail["ontrCountTot"]),
@@ -174,8 +177,8 @@ export class DashBoardDataMapper {
         this.BACounts = new Dictionary<any>();
         baCounts.map((baCount) => {
             let baCountLocal = {
-                BRMName: baCount["brmName"],
-                BRMNumber: baCount["brnNumber"],
+                BRMName: this.BRMList.ContainsKey(baCount["brmNo"]) ? this.BRMList.Item(baCount["brmNo"]) : baCount["brmName"],
+                BRMId: baCount["brmNo"],
                 BACountTotal: Number(baCount["baCountTot"]),
                 BACountPerc: Number(baCount["baCountPerc"]),
             };
@@ -239,8 +242,8 @@ export class DashBoardDataMapper {
             this.SeniorJuniorData.push({
                 name: srjrRatioLocal.BRMName,
                 series: [
-                    { name: "Senior Count", value: srjrRatioLocal.SrCount },
-                    { name: "Junior Count", value: srjrRatioLocal.JrCount }]
+                    { name: "Senior Perc", value: srjrRatioLocal.SrCountPerc },
+                    { name: "Junior Perc", value: srjrRatioLocal.JrCountPerc }]
             });
         });
         this.BACounts.Values().forEach(baCountLocal => {
@@ -250,8 +253,8 @@ export class DashBoardDataMapper {
             this.BillableTypeData.push({
                 name: billingTypeLocal.BRMName,
                 series: [
-                    { name: "FP Total", value: billingTypeLocal.FPTotal },
-                    { name: "TM Total", value: billingTypeLocal.TMTotal }]
+                    { name: "FP Perc", value: billingTypeLocal.FPTotalPerc },
+                    { name: "TM Perc", value: billingTypeLocal.TMTotalPerc }]
             });
         });
 
@@ -259,19 +262,19 @@ export class DashBoardDataMapper {
         this.BillingDetails.Values().forEach(billingDetailsLocal => {
             this.BillableData.push({
                 name: billingDetailsLocal.BRMName,
-                series:[
-                    { name: "Billable Count", value: billingDetailsLocal.BillCount },
-                    { name: "Non-Billable Count", value: billingDetailsLocal.NBillCount } ] 
+                series: [
+                    { name: "Billable Perc", value: billingDetailsLocal.BillPerc },
+                    { name: "Non-Billable Perc", value: billingDetailsLocal.NBillPerc }]
             });
         });
         this.TraineeDetails.Values().forEach(traineeDetailLocal => {
             this.TraineeData.push({
                 name: traineeDetailLocal.BRMName,
                 series: [
-                    { name: "Onshore Trainee Total", value: traineeDetailLocal.OnTraineeCount },
-                    { name: "Onshore Non-Trainee Total", value: traineeDetailLocal.TraineeCountTotal },
-                    { name: "Offshore Trainee Total", value: traineeDetailLocal.OffShoreTraineeCount },
-                    { name: "Offshore Non-Trainee Total", value: traineeDetailLocal.TraineeCountTotal }]
+                    { name: "Onshore Trainee Perc", value: traineeDetailLocal.OnTraineeCount },
+                    { name: "Onshore Non-Trainee Perc", value: traineeDetailLocal.TraineeCountTotal },
+                    { name: "Offshore Trainee Perc", value: traineeDetailLocal.OffShoreTraineeCount },
+                    { name: "Offshore Non-Trainee Perc", value: traineeDetailLocal.TraineeCountTotal }]
             });
         });
     }
@@ -285,8 +288,8 @@ export class DashBoardDataMapper {
         this.TraineeData = [];
         this.HeadCountMappingData.push({ name: "OffShore Total", value: this.HeadCounts.Item(selectedBRM).OffPerc });
         this.HeadCountMappingData.push({ name: "OnShore Total", value: this.HeadCounts.Item(selectedBRM).OnshorePerc });
-        this.SeniorJuniorData.push({ name: "Onshore Sr Count", value: this.SrJrRatios.Item(selectedBRM).OnSrCountTot });
-        this.SeniorJuniorData.push({ name: "Onshore Jr Count", value: this.SrJrRatios.Item(selectedBRM).OnJrCountTot });
+        this.SeniorJuniorData.push({ name: "Onshore Sr Count", value: this.SrJrRatios.Item(selectedBRM).OnSrCountPerc });
+        this.SeniorJuniorData.push({ name: "Onshore Jr Count", value: this.SrJrRatios.Item(selectedBRM).OnJrCountPerc });
         this.SeniorJuniorData.push({ name: "Offshore Sr Count", value: this.SrJrRatios.Item(selectedBRM).OffSrCountPerc });
         this.SeniorJuniorData.push({ name: "Offshore Jr Count", value: this.SrJrRatios.Item(selectedBRM).OffJrCountPerc });
         this.BADData.push({ name: "BA Data", value: this.BACounts.Item(selectedBRM).BACountPerc });

@@ -34,7 +34,7 @@
     <div class="content2" fxLayout="row" fxLayout.xs="column" fxFlexFill fxLayoutGap="10px" fxLayoutGap.xs="0">
         <div fxFlex="50" class="sec1" fxFlex.xs="200">
             <div *ngIf=" HasDataLoaded&&!DisplayBRMData ">
-                <ngx-charts-bar-vertical-2d [groupPadding]="5 " [noBarWhenZero]="true" [showDataLabel]="true " [scheme]="colorScheme " [results]="dashBoardMapper.TraineeData " [gradient]="false " [xAxis]="true " [yAxis]="true " [showYAxisLabel]="true
+                <ngx-charts-bar-vertical-2d [groupPadding]="2 " [barPadding]="1" [noBarWhenZero]="true" [showDataLabel]="true " [scheme]="colorScheme " [results]="dashBoardMapper.TraineeData " [gradient]="false " [xAxis]="true " [yAxis]="true " [showYAxisLabel]="true
                 " [yAxisLabel]=" 'Trainee Details' " (select)="onSelect($event) ">
                 </ngx-charts-bar-vertical-2d>
             </div>
@@ -71,7 +71,7 @@
         </div>
         <div fxFlex="50" class="sec2" fxFlex.xs="200">
             <div *ngIf="HasDataLoaded&&!DisplayBRMData ">
-                <ngx-charts-bar-horizontal-2d [scheme]="colorScheme " [noBarWhenZero]="true" [xAxis]="true " [yAxis]="true " [results]="dashBoardMapper.SeniorJuniorData " [gradient]="true " [showYAxisLabel]="true " [yAxisLabel]=" 'Senior Junior Ratio'
+                <ngx-charts-bar-horizontal-2d [scheme]="colorScheme " [barPadding]="2" [groupPadding]="5" [noBarWhenZero]="true" [xAxis]="true " [yAxis]="true " [results]="dashBoardMapper.SeniorJuniorData " [gradient]="true " [showYAxisLabel]="true " [yAxisLabel]=" 'Senior Junior Ratio'
             " (select)="onSelect($event) ">
                 </ngx-charts-bar-horizontal-2d>
             </div>
@@ -89,7 +89,7 @@
                 </ngx-charts-bar-horizontal>
             </div>
             <div *ngIf="HasDataLoaded&&DisplayBRMData ">
-                <ngx-gauge [type]=" 'full' " [value]="dashBoardMapper.BADData[0].value " [label]=" 'BA Count' ">
+                <ngx-gauge [type]=" 'full' " [value]="dashBoardMapper.BADData[0].value " [label]=" 'BA Percentage' ">
                 </ngx-gauge>
             </div>
         </div>
