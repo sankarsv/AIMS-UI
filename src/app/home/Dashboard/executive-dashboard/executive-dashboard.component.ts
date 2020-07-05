@@ -37,10 +37,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   }
   public locationChartOptions: any;
   public locationChartLabels: any;
-  public locationWiseChartType: any;
-  public yAxisLabel: any;
   loadLocationWiseChart() {
-    this.locationWiseChartType = "bar";
     this.locationChartOptions = {
       title: {
         text: 'LocationWise',
@@ -60,7 +57,7 @@ export class ExecutiveDashboardComponent implements OnInit {
   }
 
 
-  public chartHovered(): void { }
+  public chartHovered(event): void { }
 
   onSelect(event) {
     console.log(event);

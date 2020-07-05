@@ -38,6 +38,7 @@ import { DashBoardBillableTyepChartComponent } from './Dashboard/executive-dashb
 import { DashBoardLocationWiseChartComponent } from './Dashboard/executive-dashboard/charts-dashboard/dash-board-location-wise-chart/dash-board-location-wise-chart.component';
 import { NgxGaugeModule } from 'ngx-gauge';
 import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
@@ -49,6 +50,7 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
     ChartsModule,
     NgxGaugeModule,
     NgxChartsModule,
+    FlexLayoutModule,
     NgCircleProgressModule.forRoot({}),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
