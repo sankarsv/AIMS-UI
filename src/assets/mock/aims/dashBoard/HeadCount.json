@@ -1,46 +1,105 @@
 [{
-        "brmName": "Akkaiah",
-        "brnNumber": "1587565",
-        "offTot": "15",
-        "onsiteTot": "105",
-        "totalCnt": "180",
-        "offPerc": "15",
-        "onsitePerc": "25"
-    },
-    {
-        "brmName": "Narayanan",
-        "brnNumber": "1345667",
-        "offTot": "400",
-        "onsiteTot": "100",
-        "totalCnt": "180",
-        "offPerc": "56",
-        "onsitePerc": "20"
-    },
-    {
-        "brmName": "Anand_S",
-        "brnNumber": "1524534",
-        "offTot": "335",
-        "onsiteTot": "10",
-        "totalCnt": "250",
-        "offPerc": "48",
-        "onsitePerc": "5"
-    },
-    {
-        "brmName": "Ashok",
-        "brnNumber": "1234534",
-        "offTot": "850",
-        "onsiteTot": "324",
-        "totalCnt": "560",
-        "offPerc": "18",
-        "onsitePerc": "75"
-    },
-    {
-        "brmName": "Ganesh",
-        "brnNumber": "524534",
-        "offTot": "773",
-        "onsiteTot": "97",
-        "totalCnt": "190",
-        "offPerc": "80",
-        "onsitePerc": "5"
-    }
-]
+	"brmNo": "321667",
+	"brmName": "Bhooshan",
+	"offTot": "161.00",
+	"onsiteTot": "134.00",
+	"totalCnt": "295.00",
+	"offPerc": "45.42",
+	"onsitePerc": "54.58"
+}, {
+	"brmNo": "321668",
+	"brmName": "Akkaiah",
+	"offTot": "264.00",
+	"onsiteTot": "144.00",
+	"totalCnt": "408.00",
+	"offPerc": "35.29",
+	"onsitePerc": "64.71"
+}, {
+	"brmNo": "321689",
+	"brmName": "Prabhjeev Narang",
+	"offTot": "0.00",
+	"onsiteTot": "104.00",
+	"totalCnt": "104.00",
+	"offPerc": "100.00",
+	"onsitePerc": "0.00"
+}, {
+	"brmNo": "321690",
+	"brmName": "Simson",
+	"offTot": "139.00",
+	"onsiteTot": "116.00",
+	"totalCnt": "255.00",
+	"offPerc": "45.49",
+	"onsitePerc": "54.51"
+}, {
+	"brmNo": "582755",
+	"brmName": "Andi",
+	"offTot": "264.00",
+	"onsiteTot": "175.00",
+	"totalCnt": "439.00",
+	"offPerc": "39.86",
+	"onsitePerc": "60.14"
+}, {
+	"brmNo": "756589",
+	"brmName": "Dharma",
+	"offTot": "99.00",
+	"onsiteTot": "72.00",
+	"totalCnt": "171.00",
+	"offPerc": "42.11",
+	"onsitePerc": "57.89"
+}, {
+	"brmNo": "756588",
+	"brmName": "Samarth",
+	"offTot": "102.00",
+	"onsiteTot": "76.00",
+	"totalCnt": "178.00",
+	"offPerc": "42.70",
+	"onsitePerc": "57.30"
+}, {
+	"brmNo": "100000",
+	"brmName": "Vaibhav",
+	"offTot": "0.00",
+	"onsiteTot": "20.00",
+	"totalCnt": "20.00",
+	"offPerc": "100.00",
+	"onsitePerc": "0.00"
+}, {
+	"brmNo": "100001",
+	"brmName": "Ashu",
+	"offTot": "4.00",
+	"onsiteTot": "3.00",
+	"totalCnt": "7.00",
+	"offPerc": "42.86",
+	"onsitePerc": "57.14"
+}, {
+	"brmNo": "100002",
+	"brmName": "Rama",
+	"offTot": "6.00",
+	"onsiteTot": "0.00",
+	"totalCnt": "6.00",
+	"offPerc": "0.00",
+	"onsitePerc": "100.00"
+}, {
+	"brmNo": "100003",
+	"brmName": "Shama",
+	"offTot": "0.00",
+	"onsiteTot": "5.00",
+	"totalCnt": "5.00",
+	"offPerc": "100.00",
+	"onsitePerc": "0.00"
+}, {
+	"brmNo": "100004",
+	"brmName": "Pooja",
+	"offTot": "80.00",
+	"onsiteTot": "2.00",
+	"totalCnt": "82.00",
+	"offPerc": "2.44",
+	"onsitePerc": "97.56"
+}, {
+	"brmNo": "100005",
+	"brmName": "Sakthi",
+	"offTot": "127.00",
+	"onsiteTot": "0.00",
+	"totalCnt": "127.00",
+	"offPerc": "0.00",
+	"onsitePerc": "100.00"
+}]
