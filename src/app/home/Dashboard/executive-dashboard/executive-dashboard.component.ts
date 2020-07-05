@@ -63,7 +63,6 @@ export class ExecutiveDashboardComponent implements OnInit {
     console.log(event);
     if (!this.DisplayBRMData) {
       this.DisplayBRMData=true;
-      this.dashBoardMapper.LoadBRMList();
       if(event.series!=null)
       this.selectedBRM = event.series;
       else if(event.label!=null)
